@@ -37,6 +37,29 @@ struct Node *insertAtEnd(struct Node **head, int value)
     current_node->next = last_node;
     return last_node;
 }
+void deleteNode(struct Node **head, int value)
+{
+    struct Node *cur = *head;
+    struct Node *prev = NULL;
+    while (cur)
+    {
+        if (cur->data == value)
+        {
+            if (prev)
+            {
+                prev->next = cur->next;
+            }
+            else
+            {
+                *head = cur->next;
+            }
+            free(cur);
+            break;
+        }
+        prev = cur;
+        cur = cur->next;
+    }
+}
 
 void traverse(struct Node **head)
 {
@@ -70,18 +93,23 @@ int main()
     struct Node *new_head = insertAtFirst(&head, 10);
     printf("First Node's Memory Address:%p", new_head);
 
-    printf("Traversing: \n\n(START)\n %i -> %i\n(END) \n\n", head->data, head->next->data);
+    printf("\nTraversing: \n\n(START)\n %i -> %i\n(END) \n\n", head->data, head->next->data);
     printf("---------------------------\n\n");
 
     // test insert at the end;
     printf("Insert At the End\nInserting 15..\n");
     struct Node *last_node = insertAtEnd(&head, 15);
     printf("Last Node's Memory Address:%p", last_node);
-    printf("Traversing: \n\n(START)\n%i -> %i -> %i\n(END)\n\n", head->data, head->next->data, head->next->next->data);
+    printf("\nTraversing: \n\n(START)\n%i -> %i -> %i\n(END)\n\n", head->data, head->next->data, head->next->next->data);
     printf("---------------------------\n\n");
 
     // TRAVERSE
     printf("Traversing the linked list\n");
+    traverse(&head);
+    printf("---------------------------\n\n");
+
+    printf("Deleting\n deleting 10\n");
+    deleteNode(&head, 10);
     traverse(&head);
     printf("---------------------------\n\n");
 
