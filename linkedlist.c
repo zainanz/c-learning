@@ -37,6 +37,20 @@ struct Node *insertAtEnd(struct Node **head, int value)
     current_node->next = last_node;
     return last_node;
 }
+
+struct Node *findNode(struct Node **head, int value)
+{
+    struct Node *cur = *head;
+    while (cur)
+    {
+        if (cur->data == value)
+        {
+            return cur;
+        }
+        cur = cur->next;
+    }
+    return NULL;
+}
 void deleteNode(struct Node **head, int value)
 {
     struct Node *cur = *head;
@@ -73,6 +87,19 @@ void traverse(struct Node **head)
 }
 int main()
 {
+    // NOTE:
+    /*
+    We passed "&head" always as a argument..
+    we recieve it as: struct Node **head
+    we assign it to temp node like: struct Node* tempNode = *head; (*head means what the head points to which is another pointer which has the value of a struct node);
+    we are sending memory location of the header which has the value of a pointer > basically
+    head is a pointer which points to a pointer which has the node struct;
+
+    We could also just pass "head" as the argument and it would be recieved as
+    struct Node *head because we are simply stating its a pointer that points to a value (in our case struct node);
+    we assign it to temp node like: struct Node *tcur = thead;
+
+    */
 
     // test create node
     struct Node *first_node = createNode(5);
@@ -108,8 +135,16 @@ int main()
     traverse(&head);
     printf("---------------------------\n\n");
 
-    printf("Deleting\n deleting 10\n");
+    printf("Deleting\nDeleting node with value 10\n");
     deleteNode(&head, 10);
+    traverse(&head);
+    printf("---------------------------\n\n");
+
+    printf("FindNode\n Finding node with value 5\n");
+    struct Node *node_found = findNode(&head, 5);
+    printf("Found node's memory location: %p\n", node_found);
+    printf("Value: %i\n", node_found->data);
+    printf("Next: %p\n\n", node_found->next);
     traverse(&head);
     printf("---------------------------\n\n");
 
