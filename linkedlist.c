@@ -38,6 +38,16 @@ struct Node *insertAtEnd(struct Node **head, int value)
     return last_node;
 }
 
+void traverse(struct Node **head)
+{
+    struct Node *current = *head;
+    while (current->next)
+    {
+        printf(" %d ->", current->data);
+        current = current->next;
+    }
+    printf(" %d\n\n", current->data);
+}
 int main()
 {
 
@@ -68,6 +78,11 @@ int main()
     struct Node *last_node = insertAtEnd(&head, 15);
     printf("Last Node's Memory Address:%p", last_node);
     printf("Traversing: \n\n(START)\n%i -> %i -> %i\n(END)\n\n", head->data, head->next->data, head->next->next->data);
+    printf("---------------------------\n\n");
+
+    // TRAVERSE
+    printf("Traversing the linked list\n");
+    traverse(&head);
     printf("---------------------------\n\n");
 
     return 1;
