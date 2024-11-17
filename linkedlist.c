@@ -1,18 +1,85 @@
 #include <stdio.h>
 #include <stdlib.h>
-struct node
+struct Node
 {
     int data;
-    struct node *next;
+    struct Node *next;
 };
+
+struct Node *createNode(int value)
+{
+    // The struct node* before is cast type. In c it isnt really needed
+    // malloc by default returns void* but in C++ it doesnt.
+    // this ensures compatibility with C++;
+    struct Node *node = malloc(sizeof(struct Node));
+    node->data = value;
+    node->next = NULL;
+    return node;
+}
+
+struct Node *insertAtFirst(struct Node **head, int value)
+{
+    printf("%p\n", &((*head)->next));
+    struct Node *new_node = createNode(value);
+    new_node->next = *head;
+    *head = new_node;
+    return new_node;
+}
+
+struct Node *insertAtEnd(struct Node **head, int value)
+{
+    struct Node *current_node = *head;
+    while (current_node->next)
+    {
+        current_node = current_node->next;
+    }
+    struct Node *last_node = createNode(value);
+    current_node->next = last_node;
+    return last_node;
+}
 
 int main()
 {
-    struct node *one;
-    struct node *two;
-    one = malloc(sizeof(struct node));
-    two = malloc(sizeof(struct node));
-    struct node *three;
+
+    // test create node
+    struct Node *first_node = createNode(5);
+    printf("Testing Create Node\n");
+
+    printf("First Node Location: %p\n", first_node);
+    printf("First Node's Value: %i\n", first_node->data);
+
+    struct Node *head = first_node;
+    printf("Head's Memory Location: %p\n", &head);
+    printf("Head's Stored Memory Location: %p\n", head);
+    printf("---------------------------\n\n");
+
+    // test insert at first
+
+    printf("Insert At First: \nInserting 10..\n");
+    // returns 10 as head and 5 as the next of the head;
+    struct Node *new_head = insertAtFirst(&head, 10);
+    printf("First Node's Memory Address:%p", new_head);
+
+    printf("Traversing: \n\n(START)\n %i -> %i\n(END) \n\n", head->data, head->next->data);
+    printf("---------------------------\n\n");
+
+    // test insert at the end;
+    printf("Insert At the End\nInserting 15..\n");
+    struct Node *last_node = insertAtEnd(&head, 15);
+    printf("Last Node's Memory Address:%p", last_node);
+    printf("Traversing: \n\n(START)\n%i -> %i -> %i\n(END)\n\n", head->data, head->next->data, head->next->next->data);
+    printf("---------------------------\n\n");
+
+    return 1;
+}
+
+void testFunction()
+{
+    struct Node *one;
+    struct Node *two;
+    one = malloc(sizeof(struct Node));
+    two = malloc(sizeof(struct Node));
+    struct Node *three;
     printf("First Node's Memory Location: %p\n", one);
     printf("Second Node's Memory Location: %p\n", two);
     one->data = 5;
@@ -24,5 +91,4 @@ int main()
     {
         printf("Next Node: %i\n", two->next->data);
     }
-    return 1;
 }
