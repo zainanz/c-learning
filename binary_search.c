@@ -17,43 +17,99 @@ treeNode *createTreeNode(int value)
     return node;
 }
 
+treeNode *findMin(treeNode *root)
+{
+    if (root == NULL)
+    {
+        return NULL;
+    }
+    else if (root->left != NULL)
+    {
+        return findMin(root->left);
+    }
+    return root;
+}
+
 treeNode *addTreeNode(treeNode *head, int value)
 {
-
-    if (!head)
+    if (head->value > value)
     {
-        printf("last got here");
-        treeNode *node = createTreeNode(value);
-        head = node;
-        printf("%p", head);
-    }
-    else
-    {
-        if (head->value > value)
+        // printf("%i, %i", head->value, value);
+        if (head->left == NULL)
         {
-            // printf("%i, %i", head->value, value);
-            if (head->left == NULL)
-            {
-                treeNode *node = createTreeNode(value);
-                head->left = node;
-            }
-            else
-            {
-                addTreeNode(head->left, value);
-            }
+            treeNode *node = createTreeNode(value);
+            head->left = node;
         }
         else
         {
-            if (head->right == NULL)
+            addTreeNode(head->left, value);
+        }
+    }
+    else
+    {
+        if (head->right == NULL)
+        {
+            treeNode *node = createTreeNode(value);
+            head->right = node;
+        }
+        else
+        {
+            addTreeNode(head->right, value);
+        }
+    }
+}
+
+treeNode *removeTreeNode(treeNode *head, int value)
+{
+    treeNode *cur = head;
+    if (head == NULL)
+        return NULL;
+    if (value > head->value)
+    {
+        head->right = removeTreeNode(head->right, value);
+    }
+    else if (value < head->value)
+    {
+        head->left = removeTreeNode(head->left, value);
+    }
+    else
+    {
+        // Free it
+        if (head->left == NULL && head->right == NULL)
+        {
+            free(head);
+            return NULL;
+        }
+        else if (head->left == NULL || head->right == NULL)
+        {
+            treeNode *temp;
+            if (head->left == NULL)
             {
-                treeNode *node = createTreeNode(value);
-                head->right = node;
+                temp = head->right;
             }
             else
             {
-                addTreeNode(head->right, value);
+                temp = head->left;
             }
+            free(head);
+            return temp;
         }
+        else
+        {
+            treeNode *temp = findMin(head->right);
+            head->value = temp->value;
+            head->right = removeTreeNode(head->right, temp->value);
+        }
+    }
+}
+
+void inOrder(treeNode *head)
+{
+    if (head != NULL)
+    {
+        inOrder(head->left);
+        printf(" %d ", head->value);
+        inOrder(head->right);
     }
 }
 
@@ -68,10 +124,13 @@ int main()
     printf("  --> expected: 5 | GOT: %i\n", head->left->value);
     printf("  --> expected: 10 | GOT: %i\n", head->right->value);
     printf("  --> expected: 50 | GOT: %i\n", head->right->right->value);
-
-    // treeNode *testNode = NULL;
-    // printf("%p", testNode);
-    // addTreeNode(testNode, 10);
-    // printf("Testing addTreeNode with null head: --> Expected: 10 | GOT: %i", testNode->value);
+    removeTreeNode(head, 50);
+    printf("Removed 50! \n Printing in Order:\n");
+    inOrder(head);
+    removeTreeNode(head, 5);
+    printf("Removed 5! \n Printing in Order:\n");
+    inOrder(head);
+    removeTreeNode(head, 10);
+    inOrder(head);
     return 0;
 }
