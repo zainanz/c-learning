@@ -10,11 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-
-int	ft_tolower(int c)
+int	ft_islower(int c)
 {
-	if (ft_islower(c))
-		c += 32;
-	return (c);
+	return (c >= 'a' && c <= 'z');
 }

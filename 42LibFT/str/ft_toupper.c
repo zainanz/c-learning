@@ -10,15 +10,11 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-void	ft_toupper(char *s)
-{
-	int	i;
+#include "libft.h"
 
-	i = 0;
-	while (s[i])
-	{
-		if (s[i] >= 'a' && s[i] <= 'z')
-			s[i] -= 32;
-		i++;
-	}
+int	ft_toupper(int c)
+{
+	if (ft_isupper(c))
+		c -= 32;
+	return (c);
 }

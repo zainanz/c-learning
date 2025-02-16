@@ -1,20 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_tolower.c                                       :+:      :+:    :+:   */
+/*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: zali <zali@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/16 12:21:36 by zali              #+#    #+#             */
-/*   Updated: 2025/02/16 12:21:59 by zali             ###   ########.fr       */
+/*   Created: 2025/02/16 16:37:24 by zali              #+#    #+#             */
+/*   Updated: 2025/02/16 16:41:43 by zali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-
-int	ft_tolower(int c)
+char	*ft_strchr(const char *str, int search_str)
 {
-	if (ft_islower(c))
-		c += 32;
-	return (c);
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == search_str)
+			return ((char *)&str[i]);
+		i++;
+	}
+	return (0);
 }
