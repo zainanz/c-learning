@@ -1,25 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strchr.c                                        :+:      :+:    :+:   */
+/*   ft_strrchr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: zali <zali@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 16:37:24 by zali              #+#    #+#             */
-/*   Updated: 2025/02/16 16:47:57 by zali             ###   ########.fr       */
+/*   Updated: 2025/02/16 16:47:37 by zali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-char	*ft_strchr(const char *str, int search_str)
+char	*ft_strrchr(const char *str, int search_str)
 {
-	int	i;
+	int		i;
+	char	*addr;
 
 	i = 0;
+	addr = 0;
 	while (str[i])
 	{
 		if (str[i] == search_str)
-			return ((char *)&str[i]);
+			addr = (char *) &str[i];
 		i++;
 	}
-	return (0);
+	return (addr);
 }
