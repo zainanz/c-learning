@@ -1,34 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strncat.c                                       :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: zali <zali@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/17 07:01:15 by zali              #+#    #+#             */
-/*   Updated: 2025/02/17 07:44:57 by zali             ###   ########.fr       */
+/*   Created: 2025/02/17 12:39:56 by zali              #+#    #+#             */
+/*   Updated: 2025/02/17 12:50:05 by zali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strlcat(char *destination, const char *source, size_t num)
+char	*ft_strdup(const char *s)
 {
-	size_t	i;
-	size_t	dest_size;
-	size_t	src_size;
+	int		s_len;
+	char	*s_cpy;
+	char	*start;
 
-	dest_size = ft_strlen(destination);
-	src_size = ft_strlen(source);
-	i = dest_size;
-	while (*source && i + 1 < size)
+	s_len = ft_strlen((char *)s);
+	s_cpy = malloc(s_len * sizeof(char));
+	if (!s_cpy)
+		return (NULL);
+	start = s_cpy;
+	while (*s)
 	{
-		destination[i] = *source;
-		i++;
-		source++;
+		*s_cpy = *s;
+		s++;
+		s_cpy++;
 	}
-	destination[i] = '\0';
-	if (dest_size > size)
-		return ((src_size + size));
-	return ((src_size + dest_size));
+	*s_cpy = '\0';
+	return (start);
 }
