@@ -25,6 +25,7 @@ char	*ft_strchr(const char *str, int search_str);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
 int		ft_strcmp(const char *s1, const char *s2);
 char	*ft_strncat(char *destination, const char *source, size_t num);
+size_t	ft_strlcat(char *destination, const char *source, size_t num);
 char	*ft_strcat(char *destination, const char *source);
 int		ft_strlen(char *str);
 // is (true false) funcs
