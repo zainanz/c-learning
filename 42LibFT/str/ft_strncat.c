@@ -1,16 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_islower.c                                       :+:      :+:    :+:   */
+/*   ft_strncat.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: zali <zali@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/16 12:21:36 by zali              #+#    #+#             */
-/*   Updated: 2025/02/17 07:51:55 by zali             ###   ########.fr       */
+/*   Created: 2025/02/17 07:01:15 by zali              #+#    #+#             */
+/*   Updated: 2025/02/17 07:44:57 by zali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_islower(int c)
+#include "libft.h"
+
+char	*ft_strncat(char *destination, const char *source, size_t num)
 {
-	return (c >= 'a' && c <= 'z');
+	char	*start;
+	size_t	i;
+
+	i = 0;
+	start = destination;
+	while (*destination)
+		destination++;
+	while (source[i] && i < num)
+	{
+		destination[i] = source[i];
+		i++;
+	}
+	destination[i] = '\0';
+	return (start);
 }

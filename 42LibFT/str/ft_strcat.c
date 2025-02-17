@@ -1,16 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_islower.c                                       :+:      :+:    :+:   */
+/*   ft_strcat.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: zali <zali@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/16 12:21:36 by zali              #+#    #+#             */
-/*   Updated: 2025/02/17 07:51:55 by zali             ###   ########.fr       */
+/*   Created: 2025/02/17 07:01:15 by zali              #+#    #+#             */
+/*   Updated: 2025/02/17 07:29:47 by zali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_islower(int c)
+char	*ft_strcat(char *destination, const char *source)
 {
-	return (c >= 'a' && c <= 'z');
+	char	*start;
+
+	start = destination;
+	while (*destination)
+		destination++;
+	while (*source)
+	{
+		*destination = *source;
+		destination++;
+		source++;
+	}
+	*destination = '\0';
+	return (start);
 }
