@@ -1,30 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strncpy.c                                       :+:      :+:    :+:   */
+/*   ft_memchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: zali <zali@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/17 12:29:48 by zali              #+#    #+#             */
-/*   Updated: 2025/02/18 12:10:31 by zali             ###   ########.fr       */
+/*   Created: 2025/02/18 10:13:55 by zali              #+#    #+#             */
+/*   Updated: 2025/02/18 11:04:50 by zali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strncpy(char *destination, const char *source, size_t n)
+void	*ft_memchr(const void *str, int c, size_t n)
 {
 	size_t	i;
 
 	i = 0;
 	while (i < n)
 	{
-		if (*source)
-			destination[i] = *(source++);
-		else
-			destination[i] = '\0';
+		if (((int *)str)[i] == c)
+			return (&((int *)str)[i]);
 		i++;
 	}
-	destination[i] = '\0';
-	return (destination);
+	return (0);
 }

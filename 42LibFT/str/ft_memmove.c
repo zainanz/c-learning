@@ -1,30 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strncpy.c                                       :+:      :+:    :+:   */
+/*   ft_memmove.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: zali <zali@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/17 12:29:48 by zali              #+#    #+#             */
-/*   Updated: 2025/02/18 12:10:31 by zali             ###   ########.fr       */
+/*   Created: 2025/02/18 10:13:55 by zali              #+#    #+#             */
+/*   Updated: 2025/02/18 12:17:56 by zali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strncpy(char *destination, const char *source, size_t n)
+void	*ft_memmove (void *destination, const void *source, size_t num)
 {
-	size_t	i;
+	char 	cpy[num];
+	int	i;
 
+	if (ft_strlen(destination) < num || ft_strlen((void *)source) < num)
+		return (NULL);
 	i = 0;
-	while (i < n)
+	ft_strncpy(cpy, source, num);
+	while (i < num)
 	{
-		if (*source)
-			destination[i] = *(source++);
-		else
-			destination[i] = '\0';
+		((char *)destination)[i] = ((char *)cpy)[i];
 		i++;
 	}
-	destination[i] = '\0';
 	return (destination);
 }
