@@ -34,7 +34,7 @@ char	*ft_strcpy(char *destination, const char *source);
 char	*ft_strncpy(char *destination, const char *source, size_t n);
 // strstr
 char	*ft_strstr(char *s1, char *s2);
-char	*ft_strnstr(char *s1, char *s2, int n, size_t len);
+char	*ft_strnstr(char *s1, char *s2, size_t len);
 // strchr
 char	*ft_strrchr(const char *str, int search_str);
 char	*ft_strchr(const char *str, int search_str);

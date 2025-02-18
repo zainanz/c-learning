@@ -1,32 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strnstr.c                                       :+:      :+:    :+:   */
+/*   ft_memcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: zali <zali@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/16 15:09:39 by zali              #+#    #+#             */
-/*   Updated: 2025/02/16 15:19:52 by zali             ###   ########.fr       */
+/*   Created: 2025/02/18 13:49:35 by zali              #+#    #+#             */
+/*   Updated: 2025/02/18 13:59:03 by zali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-char	*ft_strnstr(char *s1, char *s2, int n, size_t len)
+#include "libft.h"
+
+void	*ft_memcpy(void *destination, const void *source, size_t n)
 {
-	int	i;
-	int	j;
+	size_t	i;
 
 	i = 0;
-	j = 0;
-	while (s1[i])
+	if ((size_t)ft_strlen(destination) < n
+		|| (size_t)ft_strlen((void *)source) < n)
+		return (NULL);
+	while (i < n)
 	{
-		j = 0;
-		while (s1[i + j] == s2[j] && j < len)
-		{
-			if (s2[j + 1] == '\0')
-				return (&s1[i]);
-			j++;
-		}
+		((char *)destination)[i] = ((char *)source)[i];
 		i++;
 	}
-	return (0);
+	return (destination);
 }
