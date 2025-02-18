@@ -6,7 +6,7 @@
 /*   By: zali <zali@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 07:42:08 by zali              #+#    #+#             */
-/*   Updated: 2025/02/17 12:40:24 by zali             ###   ########.fr       */
+/*   Updated: 2025/02/18 14:42:55 by zali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef LIBFT_H
@@ -15,6 +15,14 @@
 # include <unistd.h>
 # include <stddef.h>
 # include <stdlib.h>
+// Memory funcs
+void	bzero(void *s, size_t n);
+void	*ft_memset(void *str, int c, size_t n);
+void	*ft_memcpy(void *destination, const void *source, size_t n);
+void	*ft_memccpy(void *destination, const void *source, int c, size_t n);
+void	*ft_memchr(const void *str, int c, size_t n);
+int		ft_memcmp(const void *str1, const void *str2, size_t n);
+void	*ft_memmove(void *destination, const void *source, size_t num);
 // String mani/info
 int		ft_atoi(char *s);
 int		ft_toupper(int c);

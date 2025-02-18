@@ -1,41 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memccpy.c                                       :+:      :+:    :+:   */
+/*   ft_memset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: zali <zali@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/18 12:26:14 by zali              #+#    #+#             */
-/*   Updated: 2025/02/18 14:36:08 by zali             ###   ########.fr       */
+/*   Created: 2025/02/18 14:30:20 by zali              #+#    #+#             */
+/*   Updated: 2025/02/18 14:38:04 by zali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	*ft_memccpy(void *destination, const void *source, int c, size_t n)
+void	*ft_memset(void *str, int c, size_t n)
 {
-	int	i;
+	size_t	i;
 
 	i = 0;
+	if (ft_strlen(str) < n)
+		return (NULL);
 	while (i < n)
 	{
-		((char *)destination)[i] = ((char *)source)[i];
-		if (((char *)source)[i] == (char)c)
-			return (destination + i + 1);
+		((char *)str)[i] = (char)c;
 		i++;
 	}
-	return (NULL);
+	return (str);
 }
-/*
-#include <string.h>
-#include <stdio.h>
-
-int	main(void)
-{
-	char name[] = "zainaaa ali";
-	char name2[] = "zayann";
-	char *ptr = (char *)ft_memccpy(name, name2, 0, 12);
-	printf("%s\n", ptr);
-	printf("%s\n", name);
-}
-*/
