@@ -6,7 +6,7 @@
 /*   By: zali <zali@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 07:42:08 by zali              #+#    #+#             */
-/*   Updated: 2025/02/19 13:56:21 by zali             ###   ########.fr       */
+/*   Updated: 2025/02/19 14:06:31 by zali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef LIBFT_H
@@ -34,6 +34,7 @@ int		ft_strlen(char *str);
 char	*ft_strdup(const char *s);
 // Str - Part 2
 char	*ft_strnew(size_t size);
+int		ft_strequ(char const *s1, char const *s2);
 char	*ft_strmap(char const *s, char (*f)(char));
 char	*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 void	ft_strdel(char **as);
