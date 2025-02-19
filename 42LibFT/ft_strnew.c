@@ -1,25 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   ft_strnew.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: zali <zali@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/16 19:45:38 by zali              #+#    #+#             */
-/*   Updated: 2025/02/19 13:43:24 by zali             ###   ########.fr       */
+/*   Created: 2025/02/18 19:12:26 by zali              #+#    #+#             */
+/*   Updated: 2025/02/19 13:53:01 by zali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_strlen(char *str)
+char	*ft_strnew(size_t size)
 {
-	int	i;
+	char	*ptr;
 
-	i = 0;
-	if (!str)
-		return (0);
-	while (str[i])
-		i++;
-	return (i);
+	ptr = malloc(size);
+	if (!ptr || size == 0)
+	{
+		free(ptr);
+		return (NULL);
+	}
+	ft_memset((void *)ptr, '\0', size);
+	return (ptr);
 }
