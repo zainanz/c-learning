@@ -1,30 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strjoin.c                                       :+:      :+:    :+:   */
+/*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: zali <zali@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/21 08:38:02 by zali              #+#    #+#             */
-/*   Updated: 2025/02/21 09:15:23 by zali             ###   ########.fr       */
+/*   Created: 2025/02/21 09:04:43 by zali              #+#    #+#             */
+/*   Updated: 2025/02/21 09:18:08 by zali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strjoin(char const *s1, char const *s2)
+int	ft_iswhitespace(int c)
 {
-	char	*ptr;
-	int		i;
+	return ((c == ' ' || c == '\t' || c == '\n'));
+}
 
+char	*ft_strtrim(char const *s)
+{
+	int		start;
+	int		end;
+	int		i;
+	char	*ptr;
+
+	start = 0;
 	i = 0;
-	ptr = ft_strnew(ft_strlen((char *)s1) + ft_strlen((char *)s2) + 1);
-	if (!ptr || !s1 || !s2)
+	end = ft_strlen((char *)s) - 1;
+	while (ft_iswhitespace(s[start]))
+		start++;
+	while (ft_iswhitespace(s[end]))
+		end--;
+	ptr = ft_strnew(end - start + 1);
+	if (!ptr)
 		return (NULL);
-	while (*s1)
-		ptr[i++] = *s1++;
-	while (*s2)
-		ptr[i++] = *s2++;
+	while (start <= end)
+		ptr[i++] = s[start++];
 	ptr[i] = '\0';
 	return (ptr);
 }
