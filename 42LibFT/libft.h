@@ -6,7 +6,7 @@
 /*   By: zali <zali@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 07:42:08 by zali              #+#    #+#             */
-/*   Updated: 2025/02/22 15:17:40 by zali             ###   ########.fr       */
+/*   Updated: 2025/02/22 15:56:43 by zali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef LIBFT_H
@@ -35,6 +35,7 @@ char	*ft_strdup(const char *s);
 // Str - Part 2
 void	ft_putchar(char c);
 void	ft_putstr(char const *s);
+void	ft_putendl(char const *s);
 char	*ft_strnew(size_t size);
 char	*ft_strsub(char const *s, unsigned int start, size_t len);
 char	*ft_strjoin(char const *s1, char const *s2);
@@ -77,6 +78,7 @@ int		ft_isalnum(char c);
 int		ft_count_words(char *s, char c);
 int		ft_iswhitespace(int c);
 int		ft_get_word_len(char *s, char c);
+int		ft_pow(int n, int power);
 int		ft_total_digits(int n);
 char	*ft_get_word(char *s, char c);
 

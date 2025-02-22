@@ -6,24 +6,11 @@
 /*   By: zali <zali@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 11:27:06 by zali              #+#    #+#             */
-/*   Updated: 2025/02/22 12:20:47 by zali             ###   ########.fr       */
+/*   Updated: 2025/02/22 15:45:10 by zali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-
-int	ft_total_digits(int n)
-{
-	int	i;
-
-	i = 0;
-	while (n)
-	{
-		n = n / 10;
-		i++;
-	}
-	return (i);
-}
 
 char	*ft_itoa(int n)
 {
