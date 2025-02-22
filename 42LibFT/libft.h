@@ -6,7 +6,7 @@
 /*   By: zali <zali@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 07:42:08 by zali              #+#    #+#             */
-/*   Updated: 2025/02/21 09:18:23 by zali             ###   ########.fr       */
+/*   Updated: 2025/02/21 09:46:13 by zali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef LIBFT_H
@@ -36,6 +36,7 @@ char	*ft_strdup(const char *s);
 char	*ft_strnew(size_t size);
 char	*ft_strsub(char const *s, unsigned int start, size_t len);
 char	*ft_strjoin(char const *s1, char const *s2);
+char	**ft_strsplit(char const *s, char c);
 char	*ft_strtrim(char const *s);
 int		ft_strequ(char const *s1, char const *s2);
 int		ft_strnequ(char const *s1, char const *s2, size_t n);
@@ -63,11 +64,15 @@ char	*ft_strcat(char *destination, const char *source);
 // --------------- is (true false) funcs --------------------
 int		ft_isupper(int c);
 int		ft_islower(int c);
-int		ft_iswhitespace(int c);
 int		ft_isprint(char c);
 int		ft_isdigit(char c);
 int		ft_isascii(char c);
 int		ft_isalpha(char c);
 int		ft_isalnum(char c);
+// My personal funcs
+int		ft_count_words(char *s, char c);
+int		ft_iswhitespace(int c);
+int		ft_get_word_len(char *s, char c);
+char	*ft_get_word(char *s, char c);
 
 #endif
