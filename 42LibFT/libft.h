@@ -6,7 +6,7 @@
 /*   By: zali <zali@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 07:42:08 by zali              #+#    #+#             */
-/*   Updated: 2025/02/21 09:46:13 by zali             ###   ########.fr       */
+/*   Updated: 2025/02/22 12:22:08 by zali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef LIBFT_H
@@ -61,6 +61,8 @@ int		ft_strcmp(const char *s1, const char *s2);
 char	*ft_strncat(char *destination, const char *source, size_t num);
 size_t	ft_strlcat(char *destination, const char *source, size_t num);
 char	*ft_strcat(char *destination, const char *source);
+// Converts int into a String
+char	*ft_itoa(int n);
 // --------------- is (true false) funcs --------------------
 int		ft_isupper(int c);
 int		ft_islower(int c);
@@ -73,6 +75,7 @@ int		ft_isalnum(char c);
 int		ft_count_words(char *s, char c);
 int		ft_iswhitespace(int c);
 int		ft_get_word_len(char *s, char c);
+int		ft_total_digits(int n);
 char	*ft_get_word(char *s, char c);
 
 #endif
