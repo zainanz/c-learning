@@ -6,7 +6,7 @@
 /*   By: zali <zali@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 07:42:08 by zali              #+#    #+#             */
-/*   Updated: 2025/02/22 12:22:08 by zali             ###   ########.fr       */
+/*   Updated: 2025/02/22 15:17:40 by zali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef LIBFT_H
@@ -33,6 +33,8 @@ int		ft_tolower(int c);
 int		ft_strlen(char *str);
 char	*ft_strdup(const char *s);
 // Str - Part 2
+void	ft_putchar(char c);
+void	ft_putstr(char const *s);
 char	*ft_strnew(size_t size);
 char	*ft_strsub(char const *s, unsigned int start, size_t len);
 char	*ft_strjoin(char const *s1, char const *s2);
