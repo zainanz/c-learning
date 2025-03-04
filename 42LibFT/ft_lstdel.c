@@ -1,28 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memcpy.c                                        :+:      :+:    :+:   */
+/*   ft_lstdel.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: zali <zali@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/18 13:49:35 by zali              #+#    #+#             */
-/*   Updated: 2025/02/18 13:59:03 by zali             ###   ########.fr       */
+/*   Created: 2025/03/02 12:37:02 by zali              #+#    #+#             */
+/*   Updated: 2025/03/02 12:45:44 by zali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	*ft_memcpy(void *destination, const void *source, size_t n)
+void	ft_lstdel(t_list **alst, void (*del)(void *, size_t))
 {
-	size_t	i;
+	t_list	*temp;
+	t_list	*next;
 
-	i = 0;
-	if (!destination || !source)
-		return (NULL);
-	while (i < n)
+	temp = *alst;
+	while (temp)
 	{
-		((char *)destination)[i] = ((char *)source)[i];
-		i++;
+		next = temp->next;
+		ft_lstdelone(&temp, del);
+		temp = next;
 	}
-	return (destination);
 }

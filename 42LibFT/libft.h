@@ -6,7 +6,7 @@
 /*   By: zali <zali@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 07:42:08 by zali              #+#    #+#             */
-/*   Updated: 2025/02/27 12:05:38 by zali             ###   ########.fr       */
+/*   Updated: 2025/03/02 12:47:12 by zali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef LIBFT_H
@@ -15,6 +15,14 @@
 # include <unistd.h>
 # include <stddef.h>
 # include <stdlib.h>
+
+typedef struct s_list
+{
+	struct s_list	*next;
+	void			*content;
+	size_t			content_size;
+}	t_list;
+
 // ---------------------- Memory funcs ---------------------------
 void	bzero(void *s, size_t n);
 void	*ft_memset(void *str, int c, size_t n);
@@ -37,6 +45,7 @@ void	ft_putchar(char c);
 void	ft_putchar_fd(char c, int fd);
 void	ft_putstr_fd(char *s, int fd);
 void	ft_putnbr_fd(int n, int fd);
+void	ft_putnbr(int n);
 void	ft_putendl_fd(char *s, int fd);
 void	ft_putstr(char const *s);
 void	ft_putendl(char const *s);
@@ -78,6 +87,11 @@ int		ft_isdigit(char c);
 int		ft_isascii(char c);
 int		ft_isalpha(char c);
 int		ft_isalnum(char c);
+// List Functions
+void	ft_lstdel(t_list **alst, void (*del)(void *, size_t));
+void	ft_lstdelone(t_list **alst, void (*del)(void *, size_t));
+t_list	*ft_lstnew(void const *content, size_t content_size);
+
 // My personal funcs
 int		ft_count_words(char *s, char c);
 int		ft_iswhitespace(int c);
