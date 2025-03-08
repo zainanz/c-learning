@@ -85,7 +85,7 @@ int		ft_islower(int c);
 int		ft_isprint(char c);
 int		ft_isdigit(char c);
 int		ft_isascii(char c);
-int		ft_isalpha(char c);
+int		ft_isalpha(int c);
 int		ft_isalnum(char c);
 // List Functions
 void	ft_lstdel(t_list **alst, void (*del)(void *, size_t));
