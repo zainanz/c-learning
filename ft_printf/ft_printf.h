@@ -18,9 +18,10 @@
 # include <stdarg.h>
 # include "libft.h"
 //
-int	ft_print_hex(int nbr, int upcase);
+int	ft_print_base(long int nbr, int upcase, int base);
 int	ft_print_mem(void *ptr);
 int	ft_print_int(int nbr);
 int	ft_print_str(char *str);
+int	ft_print_char(int c);
 
 #endif

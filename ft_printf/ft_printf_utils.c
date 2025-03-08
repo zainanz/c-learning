@@ -22,12 +22,6 @@ int	ft_print_str(char *str)
 	return (count);
 }
 
-int	ft_print_int(int nbr)
-{
-	ft_putnbr(nbr);
-	return (sizeof(int));
-}
-
 int	ft_print_mem(void *ptr)
 {
 	unsigned int	val;
@@ -57,17 +51,28 @@ void	ft_print_hex_with_upcase(int c, int upcase)
 		ft_putchar(c);
 }
 
-int	ft_print_hex(int nbr, int upcase)
+int	ft_print_char(int c)
+{
+	ft_putchar(c);
+	return (sizeof(char));
+}
+
+int	ft_print_base(long int nbr, int upcase, int base)
 {
 	int	sum;
 
 	sum = 0;
-	if (nbr < 16)
+	if (nbr < 0)
+	{
+		sum = write(1, "-", 1);
+		nbr *= -1;
+	}
+	if (nbr < base)
 	{
 		ft_print_hex_with_upcase(HEX[nbr], upcase);
 		return (1);
 	}
-	sum = ft_print_hex(nbr / 16, upcase) + 1;
-	ft_print_hex_with_upcase(HEX[nbr % 16], upcase);
+	sum += ft_print_base(nbr / base, upcase, base) + 1;
+	ft_print_hex_with_upcase(HEX[nbr % base], upcase);
 	return (sum);
 }
