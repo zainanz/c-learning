@@ -15,5 +15,10 @@
 
 int	main(void)
 {
-	printf("[%05c]\n", 'h');
+	t_print_data	*data;
+
+	data = ft_init_pdata();
+	ft_display_data(data);
+	ft_data_parse("-010casd", data);
+	ft_display_data(data);
 }

@@ -21,20 +21,24 @@
 
 typedef struct print_data
 {
-	int	width;
-	int	precision;
+	int		width;
+	int		precision;
 	char	format;
-	int	left_just;
-	int	space;
-	int	zero;
-	int	sign;
-	int	hashtag;
-}	print_data;
+	int		left_just;
+	int		space;
+	int		zero;
+	int		sign;
+	int		hashtag;
+}		t_print_data;
 
-int	ft_print_base(long int nbr, int upcase, int base);
-int	ft_print_mem(void *ptr);
-int	ft_print_int(int nbr);
-int	ft_print_str(char *str);
-int	ft_print_char(int c);
+int		ft_print_base(long int nbr, int upcase, int base);
+int		ft_print_mem(void *ptr);
+int		ft_print_int(int nbr);
+int		ft_print_str(char *str);
+int		ft_print_char(int c);
+void	ft_data_parse(char *format, t_print_data *data);
+void	ft_pdata_set_default(t_print_data *data);
+void	ft_display_data(t_print_data *data);
+t_print_data	*ft_init_pdata(void);
 
 #endif
