@@ -12,24 +12,24 @@
 
 #include "ft_printf.h"
 
-int	ft_display_params(va_list args, char c)
+int	ft_display_params(va_list args, t_print_data *data)
 {
 	int	size;
 
 	size = 0;
-	if (c == 's')
+	if (data->format == 's')
 		size = ft_print_str(va_arg(args, char *));
-	else if (c == 'i' || c == 'd')
+	else if (data->format == 'i' || data->format == 'd')
 		size = ft_print_base(va_arg(args, int), 0, 10);
-	else if (c == 'u')
+	else if (data->format == 'u')
 		size = ft_print_base(va_arg(args, unsigned int), 0, 10);
-	else if (c == 'c')
-		size = ft_print_char(va_arg(args, int));
-	else if (c == 'p')
+	else if (data->format == 'c')
+		size = ft_print_char(va_arg(args, int), data);
+	else if (data->format == 'p')
 		size = ft_print_mem(va_arg(args, void *));
-	else if (c == 'x' || c == 'X')
-		size = ft_print_base(va_arg(args, unsigned int), c == 'X', 16);
-	else if (c == '%')
+	else if (data->format == 'x' || data->format == 'X')
+		size = ft_print_base(va_arg(args, unsigned int), data->format == 'X', 16);
+	else if (data->format == '%')
 		size = write(1, "%", 1);
 	return (size);
 }
@@ -39,15 +39,20 @@ int	ft_printf(char *str, ...)
 	va_list	args;
 	int		i;
 	int		total_bytes;
+	t_print_data	*data;
 
 	va_start(args, str);
 	i = 0;
 	total_bytes = 0;
+	data = NULL;
 	while (str[i])
 	{
 		if (str[i] == '%')
 		{
-			total_bytes += ft_display_params(args, str[++i]);
+			data = ft_init_pdata();
+			i += ft_data_parse(&str[i], data);
+			//ft_display_data(data);
+			total_bytes += ft_display_params(args, data);
 		}
 		else
 		{

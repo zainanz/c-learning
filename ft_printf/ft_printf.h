@@ -31,12 +31,13 @@ typedef struct print_data
 	int		hashtag;
 }		t_print_data;
 
+int		ft_printf(char *str, ...);
 int		ft_print_base(long int nbr, int upcase, int base);
 int		ft_print_mem(void *ptr);
 int		ft_print_int(int nbr);
 int		ft_print_str(char *str);
-int		ft_print_char(int c);
-void	ft_data_parse(char *format, t_print_data *data);
+int		ft_print_char(int c, t_print_data *data);
+int		ft_data_parse(char *format, t_print_data *data);
 void	ft_pdata_set_default(t_print_data *data);
 void	ft_display_data(t_print_data *data);
 t_print_data	*ft_init_pdata(void);

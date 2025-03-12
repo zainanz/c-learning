@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+#include "libft.h"
 
 int	ft_print_str(char *str)
 {
@@ -51,7 +52,7 @@ void	ft_print_hex_with_upcase(int c, int upcase)
 		ft_putchar(c);
 }
 
-int	ft_print_char(int c)
+int	ft_print_char(int c, t_print_data *data)
 {
 	ft_putchar(c);
 	return (sizeof(char));

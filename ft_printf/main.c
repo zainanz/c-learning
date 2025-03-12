@@ -15,10 +15,8 @@
 
 int	main(void)
 {
-	t_print_data	*data;
-
-	data = ft_init_pdata();
-	ft_display_data(data);
-	ft_data_parse("-010casd", data);
-	ft_display_data(data);
+	int size = ft_printf("%10c\n", 'a');
+	ft_printf("SIZE: %i\n", size);
+	size = printf("%-10c\n", 'a');
+	ft_printf("SIZE: %i\n", size);
 }

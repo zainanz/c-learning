@@ -63,33 +63,25 @@ void	ft_display_data(t_print_data *data)
 	ft_putchar('\n');
 }
 
-void	ft_data_parse(char *format, t_print_data *data)
+int	ft_data_parse(char *format, t_print_data *data)
 {
 	int	i;
 
-	i = 0;
+	i = 1;
 	while (format[i])
 	{
 		if (format[i] == '-')
-		{
 			data->left_just = 1;
-		}
+		else if (format[i] == '#')
+			data->hashtag = 1;
 		else if (format[i] == '0')
-		{
 			data->zero = 1;
-		}
 		else if (format[i] == '+')
-		{
 			data->sign = 1;
-		}
 		else if (format[i] == ' ')
-		{
 			data->space = 1;
-		}
 		else if (format[i] == '%')
-		{
 			break ;
-		}
 		else if (ft_isdigit(format[i]))
 		{
 			data->width = ft_atoi(&format[i]);
@@ -112,4 +104,5 @@ void	ft_data_parse(char *format, t_print_data *data)
 		}
  		i++;
     	}
+	return (i);
 }
