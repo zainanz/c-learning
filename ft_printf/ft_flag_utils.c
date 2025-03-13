@@ -1,22 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_flag_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: zali <zali@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/09 15:50:34 by zali              #+#    #+#             */
-/*   Updated: 2025/03/13 11:41:33 by zali             ###   ########.fr       */
+/*   Created: 2025/03/13 11:18:17 by zali              #+#    #+#             */
+/*   Updated: 2025/03/13 11:27:00 by zali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-#include <stdio.h>
 
-int	main(void)
+void	ft_add_char(int c, size_t n)
 {
-	int size = ft_printf("%10s\n", "hello");
-	ft_printf("SIZE: %i\n", size);
-	size = printf("%10s\n", "hello");
-	ft_printf("SIZE: %i\n", size);
+	int	i;
+
+	i = 0;
+	while (i < n)
+	{
+		ft_putchar(c);
+		i++;
+	}
 }

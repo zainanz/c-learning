@@ -6,7 +6,7 @@
 /*   By: zali <zali@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 14:14:00 by zali              #+#    #+#             */
-/*   Updated: 2025/03/08 07:58:35 by zali             ###   ########.fr       */
+/*   Updated: 2025/03/13 11:36:31 by zali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	ft_display_params(va_list args, t_print_data *data)
 
 	size = 0;
 	if (data->format == 's')
-		size = ft_print_str(va_arg(args, char *));
+		size = ft_print_str(va_arg(args, char *), data);
 	else if (data->format == 'i' || data->format == 'd')
 		size = ft_print_base(va_arg(args, int), 0, 10);
 	else if (data->format == 'u')
@@ -36,7 +36,7 @@ int	ft_display_params(va_list args, t_print_data *data)
 
 int	ft_printf(char *str, ...)
 {
-	va_list	args;
+	va_list		args;
 	int		i;
 	int		total_bytes;
 	t_print_data	*data;

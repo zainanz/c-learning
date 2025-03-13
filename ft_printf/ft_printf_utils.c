@@ -6,20 +6,27 @@
 /*   By: zali <zali@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/07 15:00:53 by zali              #+#    #+#             */
-/*   Updated: 2025/03/08 08:06:34 by zali             ###   ########.fr       */
+/*   Updated: 2025/03/13 11:40:55 by zali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-#include "libft.h"
 
-int	ft_print_str(char *str)
+int	ft_print_str(char *str, t_print_data *data)
 {
 	int	count;
+	int	str_len;
 
+	str_len = ft_strlen(str);
 	count = 0;
+	if (!data->left_just && data->width > str_len)
+		ft_add_char(' ', data->width - str_len);
 	while (str[count])
 		ft_putchar(str[count++]);
+	if (data->left_just && data->width > str_len)
+		ft_add_char(' ', data->width - str_len);
+	if (data->width > str_len)
+		count += data->width - str_len;
 	return (count);
 }
 
@@ -54,8 +61,12 @@ void	ft_print_hex_with_upcase(int c, int upcase)
 
 int	ft_print_char(int c, t_print_data *data)
 {
+	if (data->width > 1 && !data->left_just)
+		ft_add_char(' ', data->width - 1);
 	ft_putchar(c);
-	return (sizeof(char));
+	if (data->width > 1 && data->left_just)
+		ft_add_char(' ', data->width - 1);
+	return (sizeof(char) + ((data->width - 1) * sizeof(char)));
 }
 
 int	ft_print_base(long int nbr, int upcase, int base)
