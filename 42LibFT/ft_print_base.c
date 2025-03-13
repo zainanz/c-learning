@@ -20,7 +20,7 @@ void	ft_print_hex_with_upcase(int c, int upcase)
 		ft_putchar(c);
 }
 
-int	ft_print_base_core(long int nbr, int upcase, int base)
+int	ft_print_base(long int nbr, int upcase, int base)
 {
 	int	sum;
 
@@ -35,7 +35,7 @@ int	ft_print_base_core(long int nbr, int upcase, int base)
 		ft_print_hex_with_upcase(HEX[nbr], upcase);
 		return (1);
 	}
-	sum += ft_print_base_core(nbr / base, upcase, base) + 1;
+	sum += ft_print_base(nbr / base, upcase, base) + 1;
 	ft_print_hex_with_upcase(HEX[nbr % base], upcase);
 	return (sum);
 }

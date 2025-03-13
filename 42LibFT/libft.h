@@ -101,6 +101,6 @@ int		ft_pow(int n, int power);
 int		ft_total_digits(int n);
 char	*ft_get_word(char *s, char c);
 void	ft_print_hex_with_upcase(int c, int upcase);
-int		ft_print_base_core(long int nbr, int upcase, int base);
+int		ft_print_base(long int nbr, int upcase, int base);
 
 #endif
