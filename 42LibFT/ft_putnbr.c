@@ -19,6 +19,8 @@ void	ft_putnbr(int n)
 
 	ln = n;
 	offset = ft_pow(10, ft_total_digits(n) - 1);
+	if (n == 0)
+		write(1, "0", 1);
 	if (ln < 0)
 	{
 		write(1, "-", 1);
