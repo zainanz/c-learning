@@ -88,7 +88,7 @@ int	ft_data_parse(char *format, t_print_data *data)
 			while (ft_isdigit(format[i]))
 				i++;
 			i--;
-        	}
+		}
 		else if (format[i] == '.')
 		{
 			i++;
@@ -96,13 +96,13 @@ int	ft_data_parse(char *format, t_print_data *data)
 			while (ft_isdigit(format[i]))
 				i++;
 			i--;
-        	}
+		}
 		else if (ft_isalpha(format[i]))
 		{
 			data->format = format[i];
 			break ;
 		}
- 		i++;
-    	}
+		i++;
+	}
 	return (i);
 }

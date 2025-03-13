@@ -77,12 +77,12 @@ int	ft_print_base_core(long int nbr, int upcase, int base, t_print_data *data)
 		nbr = ft_add_sign(nbr, data);
 	total_bytes += ft_total_digits(nbr);
 	ft_add_char_if(data->width > total_bytes && !data->left_just, data->zero,
-			data->width - total_bytes);
+		data->width - total_bytes);
 	if ((data->sign || data->space) && !data->zero)
 		nbr = ft_add_sign(nbr, data);
 	ft_print_base(nbr, upcase, base);
 	ft_add_char_if(data->width > total_bytes && data->left_just, 0,
-			data->width - total_bytes);
+		data->width - total_bytes);
 	if (data->width > total_bytes)
 		total_bytes += data->width - total_bytes;
 	return (total_bytes);

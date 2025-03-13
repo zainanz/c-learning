@@ -32,7 +32,8 @@ typedef struct print_data
 }		t_print_data;
 
 int		ft_printf(char *str, ...);
-int		ft_print_base_core(long int nbr, int upcase, int base, t_print_data *data);
+int		ft_print_base_core(long int nbr, int upcase, int base,
+			t_print_data *data);
 int		ft_print_mem(void *ptr);
 int		ft_print_int(int nbr);
 int		ft_print_str(char *str, t_print_data *data);

@@ -28,7 +28,8 @@ int	ft_display_params(va_list args, t_print_data *data)
 	else if (data->format == 'p')
 		size = ft_print_mem(va_arg(args, void *));
 	else if (data->format == 'x' || data->format == 'X')
-		size = ft_print_base_core(va_arg(args, unsigned int), data->format == 'X', 16, data);
+		size = ft_print_base_core(va_arg(args, unsigned int),
+				data->format == 'X', 16, data);
 	else if (data->format == '%')
 		size = write(1, "%", 1);
 	return (size);
@@ -36,30 +37,27 @@ int	ft_display_params(va_list args, t_print_data *data)
 
 int	ft_printf(char *str, ...)
 {
-	va_list		args;
-	int		i;
 	int		total_bytes;
 	t_print_data	*data;
+	va_list		args;
 
 	va_start(args, str);
-	i = 0;
 	total_bytes = 0;
 	data = NULL;
-	while (str[i])
+	while (*str)
 	{
-		if (str[i] == '%')
+		if (*str == '%')
 		{
 			data = ft_init_pdata();
-			i += ft_data_parse(&str[i], data);
-			//ft_display_data(data);
+			str = str + ft_data_parse(str, data);
 			total_bytes += ft_display_params(args, data);
 		}
 		else
 		{
-			ft_putchar(str[i]);
+			ft_putchar(*str);
 			total_bytes++;
 		}
-		i++;
+		str++;
 	}
 	va_end(args);
 	return (total_bytes);
