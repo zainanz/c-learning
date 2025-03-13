@@ -23,3 +23,32 @@ void	ft_add_char(int c, size_t n)
 		i++;
 	}
 }
+
+void	ft_add_char_if(int condition, int zero, size_t n)
+{
+	if (!condition)
+		return ;
+	if (zero)
+		ft_add_char('0', n);
+	else
+		ft_add_char(' ', n);
+}
+
+int	ft_add_sign(int nbr, t_print_data *data)
+{
+	if (data->sign)
+	{
+		if (nbr >= 0)
+			write(1, "+", 1);
+		if (nbr < 0)
+		{
+			write(1, "-", 1);
+			nbr *= -1;
+		}
+	}
+	else if (data->space)
+	{
+		write(1, " ", 1);
+	}
+	return (nbr);
+}

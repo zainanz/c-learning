@@ -51,14 +51,6 @@ int	ft_print_mem(void *ptr)
 	return (14);
 }
 
-void	ft_print_hex_with_upcase(int c, int upcase)
-{
-	if (upcase)
-		ft_putchar(ft_toupper(c));
-	else
-		ft_putchar(c);
-}
-
 int	ft_print_char(int c, t_print_data *data)
 {
 	int	size;
@@ -73,55 +65,25 @@ int	ft_print_char(int c, t_print_data *data)
 		size += data->width - sizeof(char);
 	return (size);
 }
-int	ft_print_base(long int nbr, int upcase, int base, t_print_data *data)
+
+int	ft_print_base_core(long int nbr, int upcase, int base, t_print_data *data)
 {
 	int	total_bytes;
 
 	total_bytes = 0;
-	if (data->sign)
-	{
-		if (nbr > 0)
-		{
-			write(1, "+", 1);
-		}
-		if (nbr < 0)
-		{
-			write(1, "-", 1);
-			nbr *= -1;
-		}
+	if (data->sign || data->space)
 		total_bytes++;
-	}
-	if (data->width > ft_total_digits(nbr) && !data->left_just)
-	{
-		if (data->zero)
-			ft_add_char('0', data->width - (ft_total_digits(nbr) + total_bytes));
-		else
-			ft_add_char(' ', data->width - (ft_total_digits(nbr) + total_bytes));
-	}
-	total_bytes += ft_print_base_core(nbr, upcase, base);
-	if (data->width > ft_total_digits(nbr) && data->left_just)
-		ft_add_char(' ', data->width - total_bytes);
+	if ((data->sign || data->space) && data->zero)
+		nbr = ft_add_sign(nbr, data);
+	total_bytes += ft_total_digits(nbr);
+	ft_add_char_if(data->width > total_bytes && !data->left_just, data->zero,
+			data->width - total_bytes);
+	if ((data->sign || data->space) && !data->zero)
+		nbr = ft_add_sign(nbr, data);
+	ft_print_base(nbr, upcase, base);
+	ft_add_char_if(data->width > total_bytes && data->left_just, 0,
+			data->width - total_bytes);
 	if (data->width > total_bytes)
 		total_bytes += data->width - total_bytes;
 	return (total_bytes);
-}
-
-int	ft_print_base_core(long int nbr, int upcase, int base)
-{
-	int	sum;
-
-	sum = 0;
-	if (nbr < 0)
-	{
-		sum = write(1, "-", 1);
-		nbr *= -1;
-	}
-	if (nbr < base)
-	{
-		ft_print_hex_with_upcase(HEX[nbr], upcase);
-		return (1);
-	}
-	sum += ft_print_base_core(nbr / base, upcase, base) + 1;
-	ft_print_hex_with_upcase(HEX[nbr % base], upcase);
-	return (sum);
 }

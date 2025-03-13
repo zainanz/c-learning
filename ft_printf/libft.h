@@ -6,11 +6,12 @@
 /*   By: zali <zali@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 07:42:08 by zali              #+#    #+#             */
-/*   Updated: 2025/03/02 12:47:12 by zali             ###   ########.fr       */
+/*   Updated: 2025/03/13 15:37:57 by zali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef LIBFT_H
 # define LIBFT_H
+# define HEX "0123456789abcdef"
 
 # include <unistd.h>
 # include <stddef.h>
@@ -99,5 +100,7 @@ int		ft_get_word_len(char *s, char c);
 int		ft_pow(int n, int power);
 int		ft_total_digits(int n);
 char	*ft_get_word(char *s, char c);
+void	ft_print_hex_with_upcase(int c, int upcase);
+int		ft_print_base(long int nbr, int upcase, int base);
 
 #endif
