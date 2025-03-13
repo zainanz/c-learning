@@ -61,15 +61,52 @@ void	ft_print_hex_with_upcase(int c, int upcase)
 
 int	ft_print_char(int c, t_print_data *data)
 {
-	if (data->width > 1 && !data->left_just)
-		ft_add_char(' ', data->width - 1);
+	int	size;
+
+	size = sizeof(char);
+	if (data->width > sizeof(char) && !data->left_just)
+		ft_add_char(' ', data->width - sizeof(char));
 	ft_putchar(c);
-	if (data->width > 1 && data->left_just)
-		ft_add_char(' ', data->width - 1);
-	return (sizeof(char) + ((data->width - 1) * sizeof(char)));
+	if (data->width > sizeof(char) && data->left_just)
+		ft_add_char(' ', data->width - sizeof(char));
+	if (data->width > sizeof(char))
+		size += data->width - sizeof(char);
+	return (size);
+}
+int	ft_print_base(long int nbr, int upcase, int base, t_print_data *data)
+{
+	int	total_bytes;
+
+	total_bytes = 0;
+	if (data->sign)
+	{
+		if (nbr > 0)
+		{
+			write(1, "+", 1);
+		}
+		if (nbr < 0)
+		{
+			write(1, "-", 1);
+			nbr *= -1;
+		}
+		total_bytes++;
+	}
+	if (data->width > ft_total_digits(nbr) && !data->left_just)
+	{
+		if (data->zero)
+			ft_add_char('0', data->width - (ft_total_digits(nbr) + total_bytes));
+		else
+			ft_add_char(' ', data->width - (ft_total_digits(nbr) + total_bytes));
+	}
+	total_bytes += ft_print_base_core(nbr, upcase, base);
+	if (data->width > ft_total_digits(nbr) && data->left_just)
+		ft_add_char(' ', data->width - total_bytes);
+	if (data->width > total_bytes)
+		total_bytes += data->width - total_bytes;
+	return (total_bytes);
 }
 
-int	ft_print_base(long int nbr, int upcase, int base)
+int	ft_print_base_core(long int nbr, int upcase, int base)
 {
 	int	sum;
 
@@ -84,7 +121,7 @@ int	ft_print_base(long int nbr, int upcase, int base)
 		ft_print_hex_with_upcase(HEX[nbr], upcase);
 		return (1);
 	}
-	sum += ft_print_base(nbr / base, upcase, base) + 1;
+	sum += ft_print_base_core(nbr / base, upcase, base) + 1;
 	ft_print_hex_with_upcase(HEX[nbr % base], upcase);
 	return (sum);
 }

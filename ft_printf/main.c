@@ -15,8 +15,8 @@
 
 int	main(void)
 {
-	int size = ft_printf("%010s\n", "hello");
+	int size = ft_printf("%-05i\n", 10);
 	ft_printf("SIZE: %i\n", size);
-	size = printf("%10s\n", "hello");
+	size = printf("%-05i\n", 10);
 	ft_printf("SIZE: %i\n", size);
 }

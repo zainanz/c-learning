@@ -20,15 +20,15 @@ int	ft_display_params(va_list args, t_print_data *data)
 	if (data->format == 's')
 		size = ft_print_str(va_arg(args, char *), data);
 	else if (data->format == 'i' || data->format == 'd')
-		size = ft_print_base(va_arg(args, int), 0, 10);
+		size = ft_print_base(va_arg(args, int), 0, 10, data);
 	else if (data->format == 'u')
-		size = ft_print_base(va_arg(args, unsigned int), 0, 10);
+		size = ft_print_base(va_arg(args, unsigned int), 0, 10, data);
 	else if (data->format == 'c')
 		size = ft_print_char(va_arg(args, int), data);
 	else if (data->format == 'p')
 		size = ft_print_mem(va_arg(args, void *));
 	else if (data->format == 'x' || data->format == 'X')
-		size = ft_print_base(va_arg(args, unsigned int), data->format == 'X', 16);
+		size = ft_print_base(va_arg(args, unsigned int), data->format == 'X', 16, data);
 	else if (data->format == '%')
 		size = write(1, "%", 1);
 	return (size);
