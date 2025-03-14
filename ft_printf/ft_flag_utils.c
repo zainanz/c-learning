@@ -24,6 +24,15 @@ void	ft_add_char(int c, size_t n)
 	}
 }
 
+int	ft_display_hashtag_sign(int upcase)
+{
+	if (upcase)
+		write(1, "0X", 2);
+	else
+		write(1, "0x", 2);
+	return (2);
+}
+
 void	ft_add_char_if(int condition, int zero, size_t n)
 {
 	if (!condition)

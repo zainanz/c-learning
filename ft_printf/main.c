@@ -15,8 +15,9 @@
 
 int	main(void)
 {
-	int size = ft_printf("%+10i\n", 10);
+	int size = ft_printf("%#X\n", 0);
 	ft_printf("SIZE: %i\n", size);
-	size = printf("%+10i\n", 10);
-	ft_printf("SIZE: %i\n", size);
+	char name[] = "zainan";
+	size = printf("%#X\n", 0);
+	printf("SIZE: %i\n", size);
 }

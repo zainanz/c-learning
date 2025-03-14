@@ -39,6 +39,7 @@ int		ft_print_int(int nbr);
 int		ft_print_str(char *str, t_print_data *data);
 int		ft_print_char(int c, t_print_data *data);
 int		ft_data_parse(char *format, t_print_data *data);
+int		ft_display_hashtag_sign(int upcase);
 void	ft_pdata_set_default(t_print_data *data);
 void	ft_add_char(int c, size_t n);
 void	ft_add_char_if(int condition, int zero, size_t n);
