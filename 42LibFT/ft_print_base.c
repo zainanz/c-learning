@@ -39,3 +39,16 @@ int	ft_print_base(long int nbr, int upcase, int base)
 	ft_print_hex_with_upcase(HEX[nbr % base], upcase);
 	return (sum);
 }
+
+int	ft_base_size(long int nbr, int upcase, int base)
+{
+	int	sum;
+
+	sum = 0;
+	if (nbr < 0)
+		nbr *= -1;
+	if (nbr < base)
+		return (1);
+	sum += ft_base_size(nbr / base, upcase, base) + 1;
+	return (sum);
+}
