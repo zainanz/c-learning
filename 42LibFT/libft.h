@@ -6,7 +6,7 @@
 /*   By: zali <zali@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 07:42:08 by zali              #+#    #+#             */
-/*   Updated: 2025/03/13 15:37:57 by zali             ###   ########.fr       */
+/*   Updated: 2025/03/17 19:27:44 by zali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef LIBFT_H
@@ -21,7 +21,6 @@ typedef struct s_list
 {
 	struct s_list	*next;
 	void			*content;
-	size_t			content_size;
 }	t_list;
 
 // ---------------------- Memory funcs ---------------------------
@@ -89,9 +88,15 @@ int		ft_isascii(char c);
 int		ft_isalpha(int c);
 int		ft_isalnum(char c);
 // List Functions
-void	ft_lstdel(t_list **alst, void (*del)(void *, size_t));
-void	ft_lstdelone(t_list **alst, void (*del)(void *, size_t));
-t_list	*ft_lstnew(void const *content, size_t content_size);
+int		ft_lstsize(t_list *lst);
+void	ft_lstclear(t_list **lst, void (*del)(void *));
+void	ft_lstadd_front(t_list **lst, t_list *new);
+void	ft_lstadd_back(t_list **lst, t_list *new);
+void	ft_lstdelone(t_list *lst, void (*del)(void *));
+void	ft_lstiter(t_list *lst, void (*f)(void *));
+t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
+t_list	*ft_lstnew(void const *content);
+t_list	*ft_lstlast(t_list *lst);
 
 // My personal funcs
 int		ft_count_words(char *s, char c);

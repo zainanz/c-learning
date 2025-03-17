@@ -1,27 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstdel.c                                        :+:      :+:    :+:   */
+/*   ft_lstmap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: zali <zali@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/02 12:37:02 by zali              #+#    #+#             */
-/*   Updated: 2025/03/02 12:45:44 by zali             ###   ########.fr       */
+/*   Created: 2025/03/17 19:27:52 by zali              #+#    #+#             */
+/*   Updated: 2025/03/17 20:20:27 by zali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_lstdel(t_list **alst, void (*del)(void *, size_t))
+t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 {
-	t_list	*temp;
-	t_list	*next;
+	t_list	**start;
+	t_list	*new_lst;
+	t_list	*n;
 
-	temp = *alst;
-	while (temp)
+	start = &lst;
+	new_lst = NULL;
+	while (lst)
 	{
-		next = temp->next;
-		ft_lstdelone(&temp, del);
-		temp = next;
+		n = ft_lstnew(f(lst->content));
+		if (!n)
+		{
+			ft_lstclear(&new_lst, del);
+			return (NULL);
+		}
+		ft_lstadd_back(&new_lst, n);
+		lst = lst->next;
 	}
+	return (new_lst);
 }
