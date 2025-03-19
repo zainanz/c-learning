@@ -6,7 +6,7 @@
 /*   By: zali <zali@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 18:26:11 by zali              #+#    #+#             */
-/*   Updated: 2025/03/19 16:26:45 by zali             ###   ########.fr       */
+/*   Updated: 2025/03/19 16:27:50 by zali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,6 @@ char	*get_next_line(int fd)
 	buffer = ft_extract_buffer_size(fd, buffer);
 	line = ft_extract_new_line(buffer);
 	buffer = ft_skip_new_line(buffer);
-	printf("LAST BUFFER: %s\n", buffer);
 	return (line);
 }
 
