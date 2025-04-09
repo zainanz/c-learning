@@ -20,6 +20,7 @@ void	ft_putnbr_fd(int n, int fd)
 	if (!ptr)
 		return ;
 	write(fd, ptr, ft_strlen(ptr));
+	free(ptr);
 }
 /*
 #include <fcntl.h>
