@@ -26,7 +26,7 @@ int	ft_display_params(va_list args, t_print_data *data)
 	else if (data->format == 'c')
 		size = ft_print_char(va_arg(args, int), data);
 	else if (data->format == 'p')
-		size = ft_print_mem(va_arg(args, void *));
+		size = ft_print_mem(va_arg(args, void *), data);
 	else if (data->format == 'x' || data->format == 'X')
 		size = ft_print_base_core(va_arg(args, unsigned int),
 				data->format == 'X', 16, data);

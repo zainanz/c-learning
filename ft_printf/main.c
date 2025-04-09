@@ -4,6 +4,6 @@
 
 int	main(void)
 {
-	ft_printf(" - %d\n", ft_printf(" %% "));	
-	printf(" - %d\n", printf(" %% "));	
+	ft_printf("- %i\n", ft_printf(" %-13p %p ", ULONG_MAX, -ULONG_MAX));
+	printf("- %i\n", printf(" %-13p %p ", ULONG_MAX, -ULONG_MAX));
 }

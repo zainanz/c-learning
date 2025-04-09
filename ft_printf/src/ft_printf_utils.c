@@ -43,17 +43,25 @@ int	ft_put_hex(uintptr_t n)
 	return (count + 1);
 }
 
-int	ft_print_mem(void *ptr)
+int	ft_print_mem(void *ptr, t_print_data *data)
 {
 	uintptr_t	addr;
 	int			count;	
+	int			is_width_greater;
 
 	count = 0;
 	addr = (uintptr_t)ptr;
+	is_width_greater = (long unsigned int) data->width > (sizeof(void *) + 2);
+	if (!data->left_just && is_width_greater)
+		ft_add_char(' ', (long unsigned int)data->width - (sizeof(void *) + 2));
 	if (!ptr)
 		return (write(1, "(nil)", 5));
 	count += write(1, "0x", 2);
 	count += ft_put_hex(addr);
+	if (data->left_just && is_width_greater)
+		ft_add_char(' ', (long unsigned int)data->width - (sizeof(void *) + 2));
+	if ((long unsigned int)data->width > (sizeof(void *) + 2))
+		count += (long unsigned int) data->width - (sizeof(void *) + 2);
 	return (count);
 }
 
