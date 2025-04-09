@@ -1,23 +1,26 @@
-CC = gcc
 C_FLAGS = -Wall -Werror -Wextra
-SRC = ${wildcard *.c}
+SRC_DIR = src
+SRC = ${wildcard ${SRC_DIR}/*.c}
 OBJ = ${SRC:.c=.o}
-HEADER = libft.h ft_printf.h
-LIB_INC = libft.a
+INC = includes/
+HEADER = ${INC}/libft.h ${INC}/ft_printf.h
+NAME = libftprintf.a
 
-all: lib
+all: ${NAME} 
 
-compile: ${OBJ}
-	${CC} ${C_FLAGS} ${OBJ} -I. ${LIB_INC}
-
-lib: ${OBJ} ${HEADER}
-	ar -rc libft_printf.a ${OBJ} ${LIB_INC}
+${NAME}: ${OBJ}
+	make -C libft
+	cp libft/libft.a .
+	mv libft.a ${NAME}
+	ar -rc ${NAME} ${OBJ}
+gcc:
+	gcc ${C_FLAGS} -I. src/ft_printf.c $(NAME)
 
 %.o: %.c ${HEADER}
-	${CC} ${C_FLAGS} -c -I. $< -o $@
+	cc ${C_FLAGS} -c -I${INC} $< -o $@
 
 clean:
-	rm ${OBJ}
-
+	rm ${SRC_DIR}/*.o
 fclean: clean
-	rm libft_printf.a
+	rm ${NAME}
+re: fclean all
