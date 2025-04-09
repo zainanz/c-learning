@@ -1,42 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strsub.c                                        :+:      :+:    :+:   */
+/*   ft_calloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: zali <zali@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/20 19:26:28 by zali              #+#    #+#             */
-/*   Updated: 2025/02/20 19:49:48 by zali             ###   ########.fr       */
+/*   Created: 2025/04/08 12:38:38 by zali              #+#    #+#             */
+/*   Updated: 2025/04/08 12:45:39 by zali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strsub(char const *s, unsigned int start, size_t len)
+void	*ft_calloc(size_t nmemb, size_t size)
 {
-	char			*ptr;
-	unsigned int	i;
-	unsigned int	size;
+	void	*ptr;
 
-	i = 0;
-	size = len - start;
-	ptr = ft_strnew(size);
+	if ((size != 0 && nmemb != 0) && nmemb > SIZE_MAX / size)
+		return (NULL);
+	ptr = malloc(size * nmemb);
 	if (!ptr)
 		return (NULL);
-	while (i < size)
-	{
-		ptr[i] = s[start + i];
-		i++;
-	}
+	ft_memset(ptr, 0, nmemb * size);
 	return (ptr);
 }
-/*
-#include <stdio.h>
-int main(void)
-{
-	char intro[] = "my name is zainan";
-
-	char *name = ft_strsub(intro, 11, 17);
-	printf("%s\n", name);
-}
-*/

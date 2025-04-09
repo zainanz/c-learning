@@ -6,7 +6,7 @@
 /*   By: zali <zali@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 07:42:08 by zali              #+#    #+#             */
-/*   Updated: 2025/03/17 19:27:44 by zali             ###   ########.fr       */
+/*   Updated: 2025/04/08 15:29:34 by zali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef LIBFT_H
@@ -16,6 +16,7 @@
 # include <unistd.h>
 # include <stddef.h>
 # include <stdlib.h>
+# include <stdint.h>
 
 typedef struct s_list
 {
@@ -24,7 +25,7 @@ typedef struct s_list
 }	t_list;
 
 // ---------------------- Memory funcs ---------------------------
-void	bzero(void *s, size_t n);
+void	ft_bzero(void *s, size_t n);
 void	*ft_memset(void *str, int c, size_t n);
 void	*ft_memcpy(void *destination, const void *source, size_t n);
 void	*ft_memccpy(void *destination, const void *source, int c, size_t n);
@@ -32,10 +33,11 @@ void	*ft_memchr(const void *str, int c, size_t n);
 int		ft_memcmp(const void *str1, const void *str2, size_t n);
 void	*ft_memmove(void *destination, const void *source, size_t num);
 // Mem - Part 2
+void	*ft_calloc(size_t nmemb, size_t size);
 void	*ft_memalloc(size_t size);
 void	ft_memdel(void **ap);
 // ----------------- String mani/info ----------------------------
-int		ft_atoi(char *s);
+int		ft_atoi(const char *str);
 int		ft_toupper(int c);
 int		ft_tolower(int c);
 int		ft_strlen(char *str);
@@ -50,10 +52,10 @@ void	ft_putendl_fd(char *s, int fd);
 void	ft_putstr(char const *s);
 void	ft_putendl(char const *s);
 char	*ft_strnew(size_t size);
-char	*ft_strsub(char const *s, unsigned int start, size_t len);
+char	*ft_substr(char const *s, unsigned int start, size_t len);
 char	*ft_strjoin(char const *s1, char const *s2);
 char	**ft_strsplit(char const *s, char c);
-char	*ft_strtrim(char const *s);
+char	*ft_strtrim(const char *s1, const char *set);
 int		ft_strequ(char const *s1, char const *s2);
 int		ft_strnequ(char const *s1, char const *s2, size_t n);
 char	*ft_strmap(char const *s, char (*f)(char));
@@ -61,8 +63,11 @@ char	*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 void	ft_strdel(char **as);
 void	ft_strclr(char *s);
 void	ft_striteri(char *s, void (*f)(unsigned int, char *));
+char	**ft_split(char const *s, char c);
+//char	*ft_substr(char const *s, unsigned int start, size_t len);
 // strcpy
 char	*ft_strcpy(char *destination, const char *source);
+size_t	ft_strlcpy(char *destination, const char *source, size_t n);
 char	*ft_strncpy(char *destination, const char *source, size_t n);
 // strstr
 char	*ft_strstr(char *s1, char *s2);

@@ -17,6 +17,8 @@ int	ft_count_words(char *s, char c)
 
 	words = 0;
 	i = 0;
+	if (!*s)
+		return (0);
 	while (s[i] == c)
 		i++;
 	if (s[i] != c || s[i] != '\0')

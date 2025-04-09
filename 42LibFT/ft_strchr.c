@@ -22,6 +22,6 @@ char	*ft_strchr(const char *str, int search_str)
 		i++;
 	}
 	if ((char)search_str == '\0')
-		return (str + i);
+		return ((char *)str + i);
 	return (0);
 }

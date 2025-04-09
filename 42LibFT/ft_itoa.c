@@ -12,6 +12,13 @@
 
 #include "libft.h"
 
+int	ft_neutralize_n(int n)
+{
+	n /= 10;
+	n *= -1;
+	return (n);
+}
+
 char	*ft_itoa(int n)
 {
 	int		neg;
@@ -22,14 +29,15 @@ char	*ft_itoa(int n)
 	if (n < 0)
 		neg = 1;
 	len = ft_total_digits(n);
-	str = ft_strnew(len + neg);
+	str = ft_strnew(len + neg + 1);
 	if (!str)
 		return (NULL);
+	if (n == 0)
+		str[0] = '0';
 	if (neg)
 	{
 		str[len] = (((long int)n * -1) % 10) + '0';
-		n /= 10;
-		n *= -1;
+		n = ft_neutralize_n(n);
 		str[0] = '-';
 	}
 	while (n)
@@ -44,6 +52,6 @@ char	*ft_itoa(int n)
 
 int	main(void)
 {
-	printf("%s\n", ft_itoa(-123));
-	printf("%s\n", ft_itoa(2147483647));
-}*/
+	printf("%s\n", ft_itoa(0));
+}
+*/

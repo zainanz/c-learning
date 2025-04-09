@@ -19,9 +19,11 @@ char	*ft_strrchr(const char *str, int search_str)
 	addr = 0;
 	while (str[i])
 	{
-		if (str[i] == search_str)
+		if (str[i] == (char)search_str)
 			addr = (char *) &str[i];
 		i++;
 	}
+	if (search_str == '\0')
+		return ((char *)&str[i]);
 	return (addr);
 }

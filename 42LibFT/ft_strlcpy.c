@@ -1,37 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*   ft_strncpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: zali <zali@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/16 12:48:43 by zali              #+#    #+#             */
-/*   Updated: 2025/02/16 13:14:39 by zali             ###   ########.fr       */
+/*   Created: 2025/02/17 12:29:48 by zali              #+#    #+#             */
+/*   Updated: 2025/02/18 12:10:31 by zali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_atoi(const char *str)
-{
-	int		total;
-	int		sign;
-	char	*s;
+#include "libft.h"
 
-	total = 0;
-	sign = 1;
-	s = (char *)str;
-	while (*s == ' ' || (*s >= 9 && *s <= 13))
-		s++;
-	if (*s == '+' || *s == '-')
+size_t	ft_strlcpy(char *destination, const char *source, size_t n)
+{
+	size_t	i;
+	size_t	s_len;
+
+	i = 0;
+	s_len = 0;
+	if (!source)
+		return (0);
+	s_len = ft_strlen((char *)source);
+	if (!n)
+		return (s_len);
+	while (source[i] != '\0' && (i < (n - 1)))
 	{
-		if (*s == '-')
-			sign *= -1;
-		s++;
+		destination[i] = source[i];
+		i++;
 	}
-	while (*s >= '0' && *s <= '9')
-	{
-		total *= 10;
-		total += *s - '0';
-		s++;
-	}
-	return (total * sign);
+	destination[i] = '\0';
+	return (s_len);
 }
