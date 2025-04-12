@@ -37,9 +37,9 @@ int	ft_display_params(va_list args, t_print_data *data)
 
 int	ft_printf(const char *str, ...)
 {
-	int		total_bytes;
+	int				total_bytes;
 	t_print_data	*data;
-	va_list		args;
+	va_list			args;
 
 	va_start(args, str);
 	total_bytes = 0;
