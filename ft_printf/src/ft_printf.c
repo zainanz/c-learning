@@ -35,7 +35,7 @@ int	ft_display_params(va_list args, t_print_data *data)
 	return (size);
 }
 
-int	ft_printf(char *str, ...)
+int	ft_printf(const char *str, ...)
 {
 	int		total_bytes;
 	t_print_data	*data;
@@ -49,7 +49,7 @@ int	ft_printf(char *str, ...)
 		if (*str == '%')
 		{
 			data = ft_init_pdata();
-			str = str + ft_data_parse(str, data);
+			str = str + ft_data_parse((char *)str, data);
 			total_bytes += ft_display_params(args, data);
 			free(data);
 		}

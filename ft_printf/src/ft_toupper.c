@@ -1,26 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_calloc.c                                        :+:      :+:    :+:   */
+/*   ft_toupper.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: zali <zali@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/08 12:38:38 by zali              #+#    #+#             */
-/*   Updated: 2025/04/08 12:45:39 by zali             ###   ########.fr       */
+/*   Created: 2025/02/16 12:16:01 by zali              #+#    #+#             */
+/*   Updated: 2025/02/16 12:22:09 by zali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "ft_printf.h"
 
-void	*ft_calloc(size_t nmemb, size_t size)
+int	ft_toupper(int c)
 {
-	void	*ptr;
-
-	if ((size != 0 && nmemb != 0) && nmemb > SIZE_MAX / size)
-		return (NULL);
-	ptr = malloc(size * nmemb);
-	if (!ptr)
-		return (NULL);
-	ft_memset(ptr, 0, nmemb * size);
-	return (ptr);
+	if (ft_islower(c))
+		c -= 32;
+	return (c);
 }

@@ -1,36 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_total_digits.c                                  :+:      :+:    :+:   */
+/*   ft_putchar.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: zali <zali@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/22 15:45:25 by zali              #+#    #+#             */
-/*   Updated: 2025/02/22 15:45:42 by zali             ###   ########.fr       */
+/*   Created: 2025/02/22 15:16:01 by zali              #+#    #+#             */
+/*   Updated: 2025/02/22 15:16:43 by zali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-#include "limits.h"
+#include "ft_printf.h"
 
-int	ft_total_digits(int n)
+void	ft_putchar(char c)
 {
-	int	i;
-
-	i = 0;
-	if (n == 0)
-		return (1);
-	while (n)
-	{
-		n = n / 10;
-		i++;
-	}
-	return (i);
+	write(1, &c, 1);
 }
-/*
-#include <stdio.h>
-int	main(void)
-{
-	printf("%i", ft_total_digits(0));
-}
-*/
