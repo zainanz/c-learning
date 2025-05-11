@@ -14,49 +14,62 @@
 
 size_t	ft_strlen(char *str)
 {
-	size_t	i;
+		size_t	i;
 
-	i = 0;
-	if (str == NULL)
-		return (0);
-	while (str[i])
-		i++;
-	return (i);
+		i = 0;
+		if (str == NULL)
+				return (0);
+		while (str[i])
+				i++;
+		return (i);
 }
 
 char	*ft_strchr(char *str, int search_str)
 {
-	int	i;
+		int	i;
 
-	i = 0;
-	while (str[i])
-	{
+		i = 0;
+		while (str[i])
+		{
 		if (str[i] == (char)search_str)
-			return ((char *)&str[i]);
+				return ((char *)&str[i]);
 		i++;
-	}
-	if ((char)search_str == '\0')
-		return (str + i);
-	return (0);
+		}
+		if ((char)search_str == '\0')
+				return (str + i);
+		return (0);
 }
 
 char	*ft_strjoin(char *s1, char *s2)
 {
-	char	*ptr;
-	int		i;
+		char	*ptr;
+		int		i;
+
+		i = 0;
+		ptr = malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
+		if (!ptr)
+				return (NULL);
+		if (s1)
+				while (*s1)
+						ptr[i++] = *s1++;
+		if (s2)
+				while (*s2)
+						ptr[i++] = *s2++;
+		ptr[i] = '\0';
+		return (ptr);
+}
+
+void	*ft_memset(void *str, int c, size_t n)
+{
+	size_t	i;
 
 	i = 0;
-	ptr = malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
-	if (!ptr)
-		return (NULL);
-	if (s1)
-		while (*s1)
-			ptr[i++] = *s1++;
-	if (s2)
-		while (*s2)
-			ptr[i++] = *s2++;
-	ptr[i] = '\0';
-	return (ptr);
+	while (i < n)
+	{
+		((char *)str)[i] = (char)c;
+		i++;
+	}
+	return (str);
 }
 /*
 char	*ft_free(char **str)

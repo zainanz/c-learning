@@ -15,7 +15,7 @@
 
 char	*ft_extract_buffer_size(int fd, char *buffer)
 {
-	int	read_bytes;
+	int		read_bytes;
 	char	*t_buff;
 	char	*prev;
 
@@ -24,6 +24,7 @@ char	*ft_extract_buffer_size(int fd, char *buffer)
 	t_buff = malloc(sizeof(char) * (BUFFER_SIZE + 1));
 	if (!t_buff)
 		return (NULL);
+	ft_memset(t_buff, 0, BUFFER_SIZE + 1);
 	while (!ft_strchr(t_buff, '\n') && read_bytes > 0)
 	{
 		read_bytes = read(fd, t_buff, BUFFER_SIZE);
@@ -71,10 +72,10 @@ char	*ft_extract_new_line(char *buffer)
 char	*ft_skip_new_line(char *buffer)
 {
 	char	*ptr;
-	int	new_buff_size;
+	int		new_buff_size;
 	char	*new_buff;
-	int	start;
-	int	i;
+	int		start;
+	int		i;
 
 	i = 0;
 	ptr = ft_strchr(buffer, '\n');
@@ -96,7 +97,7 @@ char	*ft_skip_new_line(char *buffer)
 char	*get_next_line(int fd)
 {
 	static char	*buffer = NULL;
-	char	*line;
+	char		*line;
 
 	line = NULL;
 	buffer = ft_extract_buffer_size(fd, buffer);
@@ -104,8 +105,7 @@ char	*get_next_line(int fd)
 	buffer = ft_skip_new_line(buffer);
 	return (line);
 }
-
-
+/*
 int	main(int argc, char *argv[])
 {
 	int fd = open(argv[1], O_RDONLY);
@@ -125,4 +125,6 @@ int	main(int argc, char *argv[])
 		printf("%s\n", buffer);
 	}
 	close(fd);
+	return (argc);
 }
+*/

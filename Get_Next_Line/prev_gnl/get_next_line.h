@@ -21,5 +21,6 @@ char	*get_next_line(int fd);
 size_t	ft_strlen(char *str);
 char	*ft_strchr(char *str, int search_str);
 char	*ft_strjoin(char *s1, char *s2);
+void	*ft_memset(void *str, int c, size_t n);
 
 #endif
