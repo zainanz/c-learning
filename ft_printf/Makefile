@@ -17,7 +17,7 @@ gcc:
 	cc ${C_FLAGS} -c -I${INC} $< -o $@
 
 clean:
-	rm -f ${SRC_DIR}/*.o
+	rm -f ${OBJ}
 fclean: clean
 	rm -f ${NAME}
 
