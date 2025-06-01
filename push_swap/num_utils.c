@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*   num_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: zali <zali@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 12:48:43 by zali              #+#    #+#             */
-/*   Updated: 2025/02/16 13:14:39 by zali             ###   ########.fr       */
+/*   Updated: 2025/06/01 15:33:02 by zali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,18 +37,15 @@ int	ft_atoi(const char *str)
 	}
 	return (total * sign);
 }
+
 int	valid_num(char *str)
 {
 	while (*str)
 	{
-		if ((*str != '+' && *str != '-' && *str != ' ') && !((*str >= 9 && *str <= 13) || (*str >= '0' && *str <= '9')))
+		if ((*str != '+' && *str != '-' && *str != ' ') && !((*str >= 9
+					&& *str <= 13) || (*str >= '0' && *str <= '9')))
 			return (0);
 		str++;
 	}
 	return (1);
-}
-int	display_error(void)
-{
-	write(1, "Error\n", 6);
-	exit(EXIT_FAILURE);
 }

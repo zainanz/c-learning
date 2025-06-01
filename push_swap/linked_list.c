@@ -6,7 +6,7 @@
 /*   By: zali <zali@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 19:49:30 by zali              #+#    #+#             */
-/*   Updated: 2025/05/26 20:39:20 by zali             ###   ########.fr       */
+/*   Updated: 2025/06/01 14:35:22 by zali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,27 +25,31 @@ t_list	*lst_init(void)
 	return (lst);
 }
 
-void	push_node(t_list *lst, t_node	*node)
+void	push_node(t_list *lst, t_node *node)
 {
 	if (!lst || !node)
+	{
+		handle_malloc_error(NULL);
 		return ;
+	}
 	node->next = lst->head;
 	if (lst->head == NULL)
 		lst->head = node;
 	if (lst->tail == NULL)
 		lst->tail = node;
-	lst->head->prev = node;
+	if (lst->head != node)
+		lst->head->prev = node;
 	lst->head = node;
 	lst->size++;
 }
 
 void	clear_lst(t_list *lst)
 {
-	if (!lst)
-		return ;
 	t_node	*next;
 	t_node	*cur;
 
+	if (!lst)
+		return ;
 	cur = lst->head;
 	next = NULL;
 	lst->head = NULL;
@@ -62,9 +66,13 @@ void	print_lst(t_list *lst)
 	t_node	*n;
 
 	n = lst->head;
+	printf("\n======STACK=======\n");
+	printf("\n=HEAD: %p - TAIL: (&%p)=\n", lst->head, lst->tail);
 	while (n)
 	{
-		printf("%i\n", n->value);
+		printf("%p | PREV: (%p) - VAL: %i - INDEX: (%i) - NEXT: &(%p)\n", n,
+			n->prev, n->value, n->index, n->next);
 		n = n->next;
 	}
+	printf("\n==================\n");
 }

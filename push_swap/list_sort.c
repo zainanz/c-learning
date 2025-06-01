@@ -11,8 +11,6 @@
 /* ************************************************************************** */
 
 #include "linked_list.h"
-#include <stdio.h>
-#include <unistd.h>
 
 void	three_sort(t_list *stack)
 {
@@ -21,6 +19,8 @@ void	three_sort(t_list *stack)
 
 	curr = stack->head;
 	highest_node = stack->head;
+	if (stack->size == 1)
+		return ;
 	while (curr)
 	{
 		if (highest_node->value < curr->value)
@@ -28,11 +28,11 @@ void	three_sort(t_list *stack)
 		curr = curr->next;
 	}
 	if (stack->head == highest_node)
-		shift_up(stack);
+		ra(stack, 1);
 	else if (stack->head->next == highest_node)
-		shift_down(stack);
+		rra(stack, 1);
 	if (stack->head->value > stack->head->next->value)
-		swap(stack);
+		sa(stack, 1);
 }
 
 t_node	*find_closest_lowest(t_list *stack_a, t_node *node)
@@ -40,7 +40,7 @@ t_node	*find_closest_lowest(t_list *stack_a, t_node *node)
 	int		node_index;
 	t_node	*closest_node;
 	t_node	*curr;
-	
+
 	node_index = 0;
 	closest_node = NULL;
 	curr = stack_a->head;
@@ -56,42 +56,40 @@ t_node	*find_closest_lowest(t_list *stack_a, t_node *node)
 	return (closest_node);
 }
 
-void	send_top(t_list *stack_a, t_node *node)
+t_node	*find_smallest(t_list *lst)
 {
-	int 	i;
+	t_node	*smallest;
+	t_node	*curr;
+	int		index;
 
-	i = 0;
-	if (node->index > stack_a->size / 2)
+	smallest = lst->head;
+	curr = lst->head;
+	index = 0;
+	while (curr)
 	{
-		while (i < stack_a->size - node->index)
-		{
-			shift_down(stack_a);
-			i++;
-		}
+		if (curr->value < smallest->value)
+			smallest = curr;
+		curr->index = index++;
+		curr = curr->next;
 	}
-	else
-	{
-		while (i < node->index)
-		{
-			shift_up(stack_a);
-			i++;
-		}
-	}
+	return (smallest);
 }
 
-void perform_sort(t_list *stack_a, t_list *stack_b)
+void	perform_sort(t_list *stack_a, t_list *stack_b)
 {
 	t_node	*curr;
 	t_node	*node;
+	t_node	*temp;
 
 	node = NULL;
 	curr = stack_b->head;
 	while (curr)
 	{
-		t_node *temp = curr;
+		temp = curr;
 		node = find_closest_lowest(stack_a, curr);
-		send_top(stack_a, node);
+		if (node)
+			send_top(stack_a, node);
 		curr = curr->next;
-		push_to_from(stack_a, stack_b);	
+		pa(stack_a, stack_b);
 	}
 }

@@ -6,13 +6,14 @@
 /*   By: zali <zali@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 20:37:46 by zali              #+#    #+#             */
-/*   Updated: 2025/05/26 20:57:24 by zali             ###   ########.fr       */
+/*   Updated: 2025/06/01 15:09:13 by zali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "linked_list.h"
+#include <stdio.h>
 
-void	swap(t_list	*lst)
+void	swap(t_list *lst)
 {
 	t_node	*temp;
 
@@ -21,6 +22,9 @@ void	swap(t_list	*lst)
 	temp = lst->head;
 	lst->head = lst->head->next;
 	temp->next = lst->head->next;
+	temp->prev = lst->head;
+	if (lst->head->next)
+		lst->head->next->prev = temp;
 	lst->head->next = temp;
 	lst->head->prev = NULL;
 	temp->prev = lst->head;
@@ -34,11 +38,15 @@ void	push_to_from(t_list *to, t_list *from)
 		return ;
 	from_next = from->head->next;
 	from->head->next = to->head;
-	to->head->prev = from->head;
+	if (to->head)
+		to->head->prev = from->head;
 	to->head = from->head;
 	from->head = from_next;
 	if (from->head)
 		from->head->prev = NULL;
+	to->head->prev = NULL;
+	if (!to->tail)
+		to->tail = to->head;
 	from->size--;
 	to->size++;
 }
@@ -61,8 +69,19 @@ void	shift_down(t_list *lst)
 		return ;
 	lst->head->prev = lst->tail;
 	lst->tail->next = lst->head;
+	lst->head = lst->tail;
 	lst->tail = lst->tail->prev;
-	lst->head = lst->tail->next;
 	lst->head->prev = NULL;
 	lst->tail->next = NULL;
+}
+
+void	send_top(t_list *stack_a, t_node *node)
+{
+	int	i;
+
+	i = 0;
+	if (node->index > stack_a->size / 2)
+		rra(stack_a, stack_a->size - node->index);
+	else
+		ra(stack_a, node->index);
 }
