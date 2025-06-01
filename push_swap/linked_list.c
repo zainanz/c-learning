@@ -33,11 +33,9 @@ void	push_node(t_list *lst, t_node *node)
 		return ;
 	}
 	node->next = lst->head;
-	if (lst->head == NULL)
-		lst->head = node;
-	if (lst->tail == NULL)
+	if (!lst->tail)
 		lst->tail = node;
-	if (lst->head != node)
+	if (lst->head)
 		lst->head->prev = node;
 	lst->head = node;
 	lst->size++;
@@ -67,7 +65,8 @@ void	print_lst(t_list *lst)
 
 	n = lst->head;
 	printf("\n======STACK=======\n");
-	printf("\n=HEAD: %p - TAIL: (&%p)=\n", lst->head, lst->tail);
+	printf("\n=HEAD: %p - TAIL: (&%p) - SIZE: (%i)=\n",
+		lst->head, lst->tail, lst->size);
 	while (n)
 	{
 		printf("%p | PREV: (%p) - VAL: %i - INDEX: (%i) - NEXT: &(%p)\n", n,

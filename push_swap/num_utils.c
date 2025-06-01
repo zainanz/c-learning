@@ -40,10 +40,13 @@ int	ft_atoi(const char *str)
 
 int	valid_num(char *str)
 {
+	while (*str == ' ' || (*str >= 9 && *str <= 13))
+		str++;
+	if (*str == '+' || *str == '-')
+		str++;
 	while (*str)
 	{
-		if ((*str != '+' && *str != '-' && *str != ' ') && !((*str >= 9
-					&& *str <= 13) || (*str >= '0' && *str <= '9')))
+		if (!(*str >= '0' && *str <= '9'))
 			return (0);
 		str++;
 	}

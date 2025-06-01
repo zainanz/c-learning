@@ -28,6 +28,8 @@ void	swap(t_list *lst)
 	lst->head->next = temp;
 	lst->head->prev = NULL;
 	temp->prev = lst->head;
+	if (lst->size == 2)
+		lst->tail = lst->head->next;
 }
 
 void	push_to_from(t_list *to, t_list *from)
@@ -36,6 +38,8 @@ void	push_to_from(t_list *to, t_list *from)
 
 	if (from->size == 0 || !to || !from)
 		return ;
+	if (from->size == 1)
+		from->tail = NULL;
 	from_next = from->head->next;
 	from->head->next = to->head;
 	if (to->head)

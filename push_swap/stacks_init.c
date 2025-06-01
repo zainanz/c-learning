@@ -65,6 +65,8 @@ static void	sort_stacks(t_stacks *stacks)
 			write(1, "pb\n", 3);
 		i++;
 	}
+	print_lst(stacks->stack_a);
+	print_lst(stacks->stack_b);
 }
 
 void	stacks_init_string_split(int argc, char *argv[], t_stacks *stacks)
@@ -79,10 +81,10 @@ void	stacks_init_string_split(int argc, char *argv[], t_stacks *stacks)
 		while (argv[1][i] == ' ')
 			i++;
 		if (!argv[1][i])
-			return ;
+			break ;
 		str_len = str_end(argv[1] + i);
 		if (str_len != -1)
-			argv[1][str_len] = '\0';
+			argv[1][i + str_len] = '\0';
 		if (!valid_num(argv[1] + i))
 			handle_str_error(stacks);
 		push_node(stacks->stack_b, create_node(ft_atoi(argv[1] + i)));

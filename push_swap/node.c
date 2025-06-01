@@ -22,5 +22,6 @@ t_node	*create_node(int value)
 	n->value = value;
 	n->next = NULL;
 	n->prev = NULL;
+	n->index = 0;
 	return (n);
 }

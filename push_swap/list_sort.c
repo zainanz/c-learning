@@ -12,6 +12,17 @@
 
 #include "linked_list.h"
 
+static int	sort_two(t_list *stack)
+{
+	if (stack->size == 2)
+	{
+		if (stack->head->value > stack->tail->value)
+			ra(stack, 1);
+		return (1);
+	}
+	return (0);
+}
+
 void	three_sort(t_list *stack)
 {
 	t_node	*highest_node;
@@ -20,6 +31,8 @@ void	three_sort(t_list *stack)
 	curr = stack->head;
 	highest_node = stack->head;
 	if (stack->size == 1)
+		return ;
+	if (sort_two(stack))
 		return ;
 	while (curr)
 	{
