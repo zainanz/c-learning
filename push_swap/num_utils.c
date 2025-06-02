@@ -12,9 +12,9 @@
 
 #include "linked_list.h"
 
-int	ft_atoi(const char *str)
+long	ft_atol(const char *str)
 {
-	int		total;
+	long	total;
 	int		sign;
 	char	*s;
 
@@ -35,6 +35,8 @@ int	ft_atoi(const char *str)
 		total += *s - '0';
 		s++;
 	}
+	if (total * sign < INT_MIN || total * sign > INT_MAX)
+		handle_str_error(NULL);
 	return (total * sign);
 }
 
@@ -44,6 +46,9 @@ int	valid_num(char *str)
 		str++;
 	if (*str == '+' || *str == '-')
 		str++;
+	if ((*(str - 1) == '-' || *(str - 1) == '+') && (*str == ' '
+			|| *str == '\0'))
+		return (0);
 	while (*str)
 	{
 		if (!(*str >= '0' && *str <= '9'))

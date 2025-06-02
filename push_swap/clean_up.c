@@ -25,7 +25,7 @@ void	handle_malloc_error(t_stacks *stacks)
 	if (!stacks)
 		stacks = init_stacks();
 	clean_up_stacks(stacks);
-	perror("malloc error");
+	write(STDERR_FILENO, "Error\n", 7);
 	exit(EXIT_FAILURE);
 }
 
@@ -34,6 +34,6 @@ void	handle_str_error(t_stacks *stacks)
 	if (!stacks)
 		stacks = init_stacks();
 	clean_up_stacks(stacks);
-	write(1, "Error\n", 6);
+	write(STDERR_FILENO, "Error\n", 6);
 	exit(EXIT_FAILURE);
 }

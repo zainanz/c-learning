@@ -81,9 +81,6 @@ void	shift_down(t_list *lst)
 
 void	send_top(t_list *stack_a, t_node *node)
 {
-	int	i;
-
-	i = 0;
 	if (node->index > stack_a->size / 2)
 		rra(stack_a, stack_a->size - node->index);
 	else

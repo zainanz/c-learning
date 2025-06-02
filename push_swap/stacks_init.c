@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "linked_list.h"
-#include <stdio.h>
 
 t_stacks	*init_stacks(void)
 {
@@ -50,7 +49,7 @@ int	str_end(char *s)
 	return (i);
 }
 
-static void	sort_stacks(t_stacks *stacks)
+void	sort_stacks(t_stacks *stacks)
 {
 	int	i;
 	int	b_size;
@@ -65,55 +64,53 @@ static void	sort_stacks(t_stacks *stacks)
 			write(1, "pb\n", 3);
 		i++;
 	}
-	print_lst(stacks->stack_a);
-	print_lst(stacks->stack_b);
+}
+
+static t_node	*validate_create_node(t_stacks *stacks, char *str)
+{
+	long	nbr;
+	t_node	*curr;
+
+	nbr = ft_atol(str);
+	curr = stacks->stack_b->tail;
+	if (!valid_num(str))
+		handle_str_error(stacks);
+	if (nbr > INT_MAX || nbr < INT_MIN)
+		handle_str_error(stacks);
+	while (curr)
+	{
+		if (curr->value == nbr)
+			handle_str_error(stacks);
+		curr = curr->prev;
+	}
+	return (create_node(nbr));
 }
 
 void	stacks_init_string_split(int argc, char *argv[], t_stacks *stacks)
 {
 	int	i;
+	int	j;
 	int	str_len;
 
 	str_len = 0;
 	i = 0;
-	while (argv[1][i])
+	j = 1;
+	while (j < argc)
 	{
-		while (argv[1][i] == ' ')
+		while (argv[j][i] == ' ')
 			i++;
-		if (!argv[1][i])
-			break ;
-		str_len = str_end(argv[1] + i);
+		str_len = str_end(argv[j] + i);
 		if (str_len != -1)
-			argv[1][i + str_len] = '\0';
-		if (!valid_num(argv[1] + i))
-			handle_str_error(stacks);
-		push_node(stacks->stack_b, create_node(ft_atoi(argv[1] + i)));
-		if (str_len == -1)
-			break ;
+			argv[j][i + str_len] = '\0';
+		if (argv[j][i])
+			push_node(stacks->stack_b, validate_create_node(stacks, argv[j]
+					+ i));
+		if (str_len == -1 || !argv[j][i])
+		{
+			j++;
+			i = 0;
+			continue ;
+		}
 		i += str_len + 1;
 	}
-	sort_stacks(stacks);
-}
-
-int	stacks_init_argvs(int argc, char *argv[], t_stacks *stacks)
-{
-	int			len;
-
-	len = 1;
-	while (argc - 1 > 0)
-	{
-		if (!valid_num(argv[argc - 1]))
-			return (handle_str_error(stacks), 1);
-		if (stacks->stack_a->size == 3)
-			break ;
-		push_node(stacks->stack_a, create_node(ft_atoi(argv[argc - 1])));
-		argc--;
-	}
-	while (len < argc)
-	{
-		push_node(stacks->stack_b, create_node(ft_atoi(argv[len])));
-		write(1, "pb\n", 3);
-		len++;
-	}
-	return (0);
 }

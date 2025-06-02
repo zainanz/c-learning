@@ -66,6 +66,8 @@ t_node	*find_closest_lowest(t_list *stack_a, t_node *node)
 		curr->index = node_index++;
 		curr = curr->next;
 	}
+	if (!closest_node)
+		closest_node = find_smallest(stack_a);
 	return (closest_node);
 }
 
@@ -92,13 +94,11 @@ void	perform_sort(t_list *stack_a, t_list *stack_b)
 {
 	t_node	*curr;
 	t_node	*node;
-	t_node	*temp;
 
 	node = NULL;
 	curr = stack_b->head;
 	while (curr)
 	{
-		temp = curr;
 		node = find_closest_lowest(stack_a, curr);
 		if (node)
 			send_top(stack_a, node);

@@ -65,8 +65,8 @@ void	print_lst(t_list *lst)
 
 	n = lst->head;
 	printf("\n======STACK=======\n");
-	printf("\n=HEAD: %p - TAIL: (&%p) - SIZE: (%i)=\n",
-		lst->head, lst->tail, lst->size);
+	printf("\n=HEAD: %p - TAIL: (&%p) - SIZE: (%i)=\n", lst->head, lst->tail,
+		lst->size);
 	while (n)
 	{
 		printf("%p | PREV: (%p) - VAL: %i - INDEX: (%i) - NEXT: &(%p)\n", n,

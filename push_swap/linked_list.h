@@ -13,6 +13,7 @@
 #ifndef LINKED_LIST_H
 
 # define LINKED_LIST_H
+# include <limits.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
@@ -39,7 +40,7 @@ typedef struct s_stacks
 }							t_stacks;
 
 // Helper
-int							ft_atoi(const char *str);
+long						ft_atol(const char *str);
 int							valid_num(char *str);
 void						handle_str_error(t_stacks *stacks);
 void						handle_malloc_error(t_stacks *stacks);
@@ -60,7 +61,7 @@ void						shift_up(t_list *lst);
 void						shift_down(t_list *lst);
 void						send_top(t_list *stack_a, t_node *node);
 
-//CMD
+// CMD
 void						ra(t_list *lst, int n);
 void						rra(t_list *lst, int n);
 void						sa(t_list *lst, int n);
@@ -70,10 +71,11 @@ void						pa(t_list *stack_a, t_list *stack_b);
 void						three_sort(t_list *stack);
 void						perform_sort(t_list *stack_a, t_list *stack_b);
 t_node						*find_smallest(t_list *lst);
+void						sort_stacks(t_stacks *stacks);
 
-//Stack Inits
-void						stacks_init_string_split(int argc,
-								char *argv[], t_stacks *stacks);
+// Stack Inits
+void						stacks_init_string_split(int argc, char *argv[],
+								t_stacks *stacks);
 int							stacks_init_argvs(int argc, char *argv[],
 								t_stacks *stacks);
 int							str_end(char *s);
