@@ -59,7 +59,9 @@ void	sort_stacks(t_stacks *stacks)
 	while (i < b_size)
 	{
 		if (i < 3)
+		{
 			push_to_from(stacks->stack_a, stacks->stack_b);
+		}
 		else
 			write(1, "pb\n", 3);
 		i++;

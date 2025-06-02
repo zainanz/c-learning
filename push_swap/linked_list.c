@@ -69,8 +69,8 @@ void	print_lst(t_list *lst)
 		lst->size);
 	while (n)
 	{
-		printf("%p | PREV: (%p) - VAL: %i - INDEX: (%i) - NEXT: &(%p)\n", n,
-			n->prev, n->value, n->index, n->next);
+		printf("%p | PREV: (%p) - VAL: %i - INDEX: (%i) MOVES: (%i) Closest: &(%p) - NEXT: &(%p)\n", n,
+			n->prev, n->value, n->index, n->moves, n->closest, n->next);
 		n = n->next;
 	}
 	printf("\n==================\n");

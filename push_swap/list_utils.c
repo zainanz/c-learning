@@ -79,10 +79,20 @@ void	shift_down(t_list *lst)
 	lst->tail->next = NULL;
 }
 
-void	send_top(t_list *stack_a, t_node *node)
+void	send_top(t_list *stack, t_node *node, int type)
 {
-	if (node->index > stack_a->size / 2)
-		rra(stack_a, stack_a->size - node->index);
+	void	(*rr)(t_list *, int);
+	void	(*r)(t_list *, int);
+
+	rr = rrb;
+	r = rb;
+	if (type == TYPE_STACK_A)
+	{
+		rr = rra;
+		r = ra;
+	}
+	if (node->index > stack->size / 2)
+		rr(stack, stack->size - node->index);
 	else
-		ra(stack_a, node->index);
+		r(stack, node->index);
 }

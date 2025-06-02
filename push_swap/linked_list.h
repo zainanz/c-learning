@@ -13,6 +13,10 @@
 #ifndef LINKED_LIST_H
 
 # define LINKED_LIST_H
+
+# define TYPE_STACK_B 1
+# define TYPE_STACK_A 0
+
 # include <limits.h>
 # include <stdio.h>
 # include <stdlib.h>
@@ -22,6 +26,8 @@ typedef struct node
 {
 	int						value;
 	int						index;
+	int						moves;
+	struct node				*closest;
 	struct node				*next;
 	struct node				*prev;
 }							t_node;
@@ -59,13 +65,18 @@ void						swap(t_list *lst);
 void						push_to_from(t_list *to, t_list *from);
 void						shift_up(t_list *lst);
 void						shift_down(t_list *lst);
-void						send_top(t_list *stack_a, t_node *node);
+void						send_top(t_list *stack_a, t_node *node, int type);
+void						update_index(t_list *stack);
 
 // CMD
 void						ra(t_list *lst, int n);
 void						rra(t_list *lst, int n);
 void						sa(t_list *lst, int n);
 void						pa(t_list *stack_a, t_list *stack_b);
+void						rb(t_list *lst, int n);
+void						rrb(t_list *lst, int n);
+void						rrr(t_list *stack_a, t_list *stack_b, int n);
+void						rr(t_list *stack_a, t_list *stack_b, int n);
 
 // Sort
 void						three_sort(t_list *stack);

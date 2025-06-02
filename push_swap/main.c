@@ -12,30 +12,25 @@
 
 #include "linked_list.h"
 
-int	is_stack_sorted_b(t_node *curr)
-{
-	int	prev_val;
-
-	prev_val = curr->value;
-	curr = curr->prev;
-	while (curr)
-	{
-		if (prev_val > curr->value)
-			return (0);
-		prev_val = curr->value;
-		curr = curr->prev;
-	}
-	return (1);
-}
-
-int	stack_sorted(t_stacks *stacks)
+static int	stack_sorted(t_stacks *stacks)
 {
 	t_node	*curr;
+	int	prev_val;
 
 	curr = stacks->stack_b->tail;
 	if (curr)
-		if (!is_stack_sorted_b(curr))
-			return (0);
+	{
+		prev_val = curr->value;
+		curr = curr->prev;
+		while (curr)
+		{
+			if (prev_val > curr->value)
+				return (0);
+			prev_val = curr->value;
+			curr = curr->prev;
+		}
+
+	}
 	return (1);
 }
 
@@ -53,7 +48,6 @@ int	main(int argc, char *argv[])
 		sort_stacks(stacks);
 	three_sort(stacks->stack_a);
 	perform_sort(stacks->stack_a, stacks->stack_b);
-	send_top(stacks->stack_a, find_smallest(stacks->stack_a));
 	clean_up_stacks(init_stacks());
 	return (0);
 }
