@@ -64,7 +64,6 @@ void	print_lst(t_list *lst)
 	t_node	*n;
 
 	n = lst->head;
-	printf("\n======STACK=======\n");
 	printf("\n=HEAD: %p - TAIL: (&%p) - SIZE: (%i)=\n", lst->head, lst->tail,
 		lst->size);
 	while (n)
@@ -73,5 +72,4 @@ void	print_lst(t_list *lst)
 			n->prev, n->value, n->index, n->moves, n->closest, n->next);
 		n = n->next;
 	}
-	printf("\n==================\n");
 }

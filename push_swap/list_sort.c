@@ -175,7 +175,7 @@ void	send_stacks_top(t_list *stack_a, t_list *stack_b, t_node *cheapest_node)
 			(cheapest_node->closest->index > stack_a->size / 2))
 		double_shift_down(stack_a, stack_b, cheapest_node);
 	else if ((cheapest_node->index <= stack_b->size / 2) &&
-			(cheapest_node->closest->index <= stack_a->size))
+			(cheapest_node->closest->index <= stack_a->size / 2))
 		double_shift_up(stack_a, stack_b, cheapest_node);
 	stacks_shift(stack_a, stack_b, cheapest_node);	
 }
