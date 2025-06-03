@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   linked_list.c                                      :+:      :+:    :+:   */
+/*   linked_list_and_node.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: zali <zali@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 19:49:30 by zali              #+#    #+#             */
-/*   Updated: 2025/06/01 14:35:22 by zali             ###   ########.fr       */
+/*   Updated: 2025/06/03 12:21:18 by zali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,25 @@ void	print_lst(t_list *lst)
 		lst->size);
 	while (n)
 	{
-		printf("%p | PREV: (%p) - VAL: %i - INDEX: (%i) MOVES: (%i) Closest: &(%p) - NEXT: &(%p)\n", n,
+		printf("%p | PREV: (%p) - VAL: %i\
+			- INDEX: (%i) MOVES: (%i) Closest: &(%p) - NEXT: &(%p)\n", n,
 			n->prev, n->value, n->index, n->moves, n->closest, n->next);
 		n = n->next;
 	}
+}
+
+t_node	*create_node(int value)
+{
+	t_node	*n;
+
+	n = malloc(sizeof(t_node));
+	if (!n)
+		return (NULL);
+	n->value = value;
+	n->next = NULL;
+	n->prev = NULL;
+	n->index = 0;
+	n->moves = 0;
+	n->closest = NULL;
+	return (n);
 }

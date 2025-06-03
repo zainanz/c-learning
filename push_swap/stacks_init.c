@@ -6,7 +6,7 @@
 /*   By: zali <zali@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 14:07:10 by zali              #+#    #+#             */
-/*   Updated: 2025/06/01 15:33:49 by zali             ###   ########.fr       */
+/*   Updated: 2025/06/03 12:29:08 by zali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,25 +20,18 @@ t_stacks	*init_stacks(void)
 	{
 		stacks.stack_a = lst_init();
 		if (!stacks.stack_a)
-		{
-			perror("Malloc error");
-			exit(EXIT_FAILURE);
-		}
+			handle_malloc_error(&stacks);
 	}
 	if (!stacks.stack_b)
 	{
 		stacks.stack_b = lst_init();
 		if (!stacks.stack_b)
-		{
-			free(stacks.stack_a);
-			perror("MALLOC ERROR");
-			exit(EXIT_FAILURE);
-		}
+			handle_malloc_error(&stacks);
 	}
 	return (&stacks);
 }
 
-int	str_end(char *s)
+static int	str_end(char *s)
 {
 	int	i;
 
@@ -49,7 +42,7 @@ int	str_end(char *s)
 	return (i);
 }
 
-void	sort_stacks(t_stacks *stacks)
+void	init_sort_stacks(t_stacks *stacks)
 {
 	int	i;
 	int	b_size;

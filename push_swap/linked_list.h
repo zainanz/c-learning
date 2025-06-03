@@ -6,7 +6,7 @@
 /*   By: zali <zali@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 19:49:49 by zali              #+#    #+#             */
-/*   Updated: 2025/06/01 14:26:45 by zali             ###   ########.fr       */
+/*   Updated: 2025/06/03 12:33:39 by zali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,11 @@ typedef struct s_stacks
 // Helper
 long						ft_atol(const char *str);
 int							valid_num(char *str);
+
+// Error Handling and Cleanup
 void						handle_str_error(t_stacks *stacks);
 void						handle_malloc_error(t_stacks *stacks);
+void						clean_up_stacks(t_stacks *stacks);
 
 // Nodes
 t_node						*create_node(int value);
@@ -81,16 +84,20 @@ void						rr(t_list *stack_a, t_list *stack_b, int n);
 // Sort
 void						three_sort(t_list *stack);
 void						perform_sort(t_list *stack_a, t_list *stack_b);
+
+// Sort Utils
 t_node						*find_smallest(t_list *lst);
-void						sort_stacks(t_stacks *stacks);
+void						top_selected_nodes(t_list *stack_a, t_list *stack_b,
+								t_node *cheapest_node);
+void						update_index(t_list *stack);
+t_node						*set_moves_and_find_cheapest(t_list *stack_a,
+								t_list *stack_b);
+t_node						*find_closest_lowest(t_list *stack_a, t_node *node);
 
 // Stack Inits
 void						stacks_init_string_split(int argc, char *argv[],
 								t_stacks *stacks);
-int							stacks_init_argvs(int argc, char *argv[],
-								t_stacks *stacks);
-int							str_end(char *s);
 t_stacks					*init_stacks(void);
-void						clean_up_stacks(t_stacks *stacks);
+void						init_sort_stacks(t_stacks *stacks);
 
 #endif

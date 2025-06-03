@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   clean_up.c                                         :+:      :+:    :+:   */
+/*   clean_and_error.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: zali <zali@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 15:33:10 by zali              #+#    #+#             */
-/*   Updated: 2025/06/01 15:33:47 by zali             ###   ########.fr       */
+/*   Updated: 2025/06/03 12:21:10 by zali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	handle_malloc_error(t_stacks *stacks)
 	if (!stacks)
 		stacks = init_stacks();
 	clean_up_stacks(stacks);
-	write(STDERR_FILENO, "Error\n", 7);
+	perror("Malloc Error");
 	exit(EXIT_FAILURE);
 }
 
