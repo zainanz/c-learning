@@ -58,14 +58,11 @@ static void	stacks_shift(t_list *stack_a, t_list *stack_b,
 void	top_selected_nodes(t_list *stack_a, t_list *stack_b,
 		t_node *cheapest_node)
 {
-	if (cheapest_node->method == 1)
-	{
-		if ((cheapest_node->index > stack_b->size / 2)
-			&& (cheapest_node->closest->index > stack_a->size / 2))
-			double_shift_down(stack_a, stack_b, cheapest_node);
-		else if ((cheapest_node->index <= stack_b->size / 2)
-			&& (cheapest_node->closest->index <= stack_a->size / 2))
-			double_shift_up(stack_a, stack_b, cheapest_node);
-	}
+	if ((cheapest_node->index > stack_b->size / 2)
+		&& (cheapest_node->closest->index > stack_a->size / 2))
+		double_shift_down(stack_a, stack_b, cheapest_node);
+	else if ((cheapest_node->index <= stack_b->size / 2)
+		&& (cheapest_node->closest->index <= stack_a->size / 2))
+		double_shift_up(stack_a, stack_b, cheapest_node);
 	stacks_shift(stack_a, stack_b, cheapest_node);
 }

@@ -94,17 +94,20 @@ void						sort_cheapest_node(t_list *stack_a, t_list *stack_b,
 // Sort Methods
 void						top_selected_nodes(t_list *stack_a, t_list *stack_b,
 								t_node *cheapest_node);
-void						sort_method_d(t_list *stack_a, t_list *stack_b, t_node *cheapest);
-void						sort_method_c(t_list *stack_a, t_list *stack_b, t_node *cheapest);
+void						sort_method_d(t_list *stack_a, t_list *stack_b,
+								t_node *cheapest);
+void						sort_method_c(t_list *stack_a, t_list *stack_b,
+								t_node *cheapest);
 
 // Calculation
-t_node						*calculate_best_moves(t_list *stack_a, t_list *stack_b);
+t_node						*calculate_best_moves(t_list *stack_a,
+								t_list *stack_b);
 void						calculate_cross_method(t_node *curr, t_node *node);
 int							nodes_same_median(t_node *node_a, t_node *node_b);
 
 // Calc methods
 void						calc_moves_method_base(t_node *curr, t_node *closest);
-int							calc_moves_method_b(t_node *curr, t_node *closest);
+int							calc_moves_method_base_b(t_node *curr, t_node *closest);
 int							calc_moves_method_c(t_node *curr, t_node *closest);
 int							calc_moves_method_d(t_node *curr, t_node *closest);
 

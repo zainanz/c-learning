@@ -12,7 +12,7 @@
 
 #include "push_swap.h"
 
-int	calc_moves_method_b(t_node *curr, t_node *closest)
+int	calc_moves_method_base_b(t_node *curr, t_node *closest)
 {
 	t_stacks	*stacks;
 	int			moves;
@@ -34,19 +34,26 @@ void	calc_moves_method_base(t_node *curr, t_node *closest)
 {
 	int	m_a;
 	int	m_b;
+	int	dist_curr;
+	int	dist_closest;
 
 	m_a = find_max(curr->index, closest->index);
-	m_b = calc_moves_method_b(curr, closest);
-	if (m_a > m_b)
+	if (nodes_same_median(curr, closest))
 	{
+		dist_curr = curr->index;
+		if (curr->index > init_stacks()->stack_b->size / 2)
+			dist_curr = init_stacks()->stack_b->size - curr->index;
+		dist_closest = closest->index;
+		if (closest->index > init_stacks()->stack_a->size / 2)
+			dist_closest = init_stacks()->stack_a->size - closest->index;
+		m_a = find_max(dist_closest, dist_curr);
+	}
+	m_b = calc_moves_method_base_b(curr, closest);
+	curr->moves = find_min(m_b, m_a);
+	if (m_a >= m_b)
 		curr->method = METHOD_B;
-		curr->moves = m_b;
-	}
-	else
-	{
+	if (m_a < m_b)
 		curr->method = METHOD_A;
-		curr->moves = m_a;
-	}
 }
 
 int	calc_moves_method_c(t_node *curr, t_node *closest)

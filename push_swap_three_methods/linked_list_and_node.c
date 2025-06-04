@@ -86,7 +86,7 @@ t_node	*create_node(int value)
 	n->next = NULL;
 	n->prev = NULL;
 	n->index = 0;
-	n->moves = 0;
+	n->moves = INT_MAX;
 	n->method = -1;
 	n->closest = NULL;
 	return (n);
