@@ -26,7 +26,6 @@ void	send_bits(int sender_pid, char c)
 			kill(sender_pid, SIGUSR1);
 		else
 			kill(sender_pid, SIGUSR2);
-		write(1, "sent\n", 5);
 		bits++;
 		while (g_wait_ack)
 			usleep(10);
@@ -38,10 +37,7 @@ void	handler(int signo, siginfo_t *info, void *more)
 {
 	(void)more;
 	if (signo == SIGUSR1)
-	{
-		write(1, "ACK RECV\n", 9);
 		g_wait_ack = 0;
-	}
 	else if (signo == SIGUSR2)
 	{
 		g_wait_ack = 0;

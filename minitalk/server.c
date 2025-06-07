@@ -14,18 +14,17 @@
 
 void	msg_recieved(pid_t pid)
 {
-	write(1, "completed.\n", 11);
 	kill(pid, SIGUSR2);
 }
 
 void	send_ack(pid_t pid)
 {
-	write(1, "ack sent\n", 9);
 	kill(pid, SIGUSR1);
 }
 
 void	sig_handler(int signo, siginfo_t *info, void *more)
 {
+	(void)more;
 	static int		bits;
 	static char		c;
 	static pid_t	sender_pid;
@@ -33,7 +32,7 @@ void	sig_handler(int signo, siginfo_t *info, void *more)
 	if (info->si_pid)
 		sender_pid = info->si_pid;
 	if (signo == SIGUSR1)
-		c |= 0b10000000 >> bits;
+		c |= (0b10000000 >> bits);
 	else if (signo == SIGUSR2)
 		c &= ~(0b10000000 >> bits);
 	bits++;
@@ -55,7 +54,9 @@ void	sig_handler(int signo, siginfo_t *info, void *more)
 int	main(void)
 {
 	set_server_sigaction(sig_handler, 1);
+	write(1, "Server running PID: ", 20);
 	ft_putnbr(getpid());
+	write(1, "\n", 1);
 	while (1)
 		pause();
 }
