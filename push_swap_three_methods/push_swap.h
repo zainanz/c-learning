@@ -10,21 +10,28 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LINKED_LIST_H
+#ifndef PUSH_SWAP_H
 
-# define LINKED_LIST_H
-
-# define TYPE_STACK_B 1
-# define TYPE_STACK_A 0
-# define METHOD_A 1;
-# define METHOD_B 2;
-# define METHOD_C_STACK_A 3;
-# define METHOD_C_STACK_B 4;
+# define PUSH_SWAP_H
 
 # include <limits.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
+
+enum
+{
+	TYPE_STACK_A,
+	TYPE_STACK_B
+};
+
+enum
+{
+	METHOD_A = 1,
+	METHOD_B,
+	METHOD_C_STACK_A,
+	METHOD_C_STACK_B
+};
 
 typedef struct node
 {
@@ -106,8 +113,10 @@ void						calculate_cross_method(t_node *curr, t_node *node);
 int							nodes_same_median(t_node *node_a, t_node *node_b);
 
 // Calc methods
-void						calc_moves_method_base(t_node *curr, t_node *closest);
-int							calc_moves_method_base_b(t_node *curr, t_node *closest);
+void						calc_moves_method_base(t_node *curr,
+								t_node *closest);
+int							calc_moves_method_base_b(t_node *curr,
+								t_node *closest);
 int							calc_moves_method_c(t_node *curr, t_node *closest);
 int							calc_moves_method_d(t_node *curr, t_node *closest);
 
