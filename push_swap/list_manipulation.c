@@ -10,8 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "linked_list.h"
-#include <stdio.h>
+#include "push_swap.h"
 
 void	swap(t_list *lst)
 {

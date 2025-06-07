@@ -32,25 +32,26 @@ int	ft_print_str(char *str, t_print_data *data)
 	return (count);
 }
 
-int	ft_put_hex(uintptr_t n)
+int	ft_put_hex(size_t n)
 {
-	int	count;
+	const char	*hex = "0123456789abcdef";
+	int			count;
 
 	count = 0;
 	if (n >= 16)
 		count += ft_put_hex(n / 16);
-	ft_putchar(HEX[n % 16]);
+	ft_putchar(hex[n % 16]);
 	return (count + 1);
 }
 
 int	ft_print_mem(void *ptr, t_print_data *data)
 {
-	uintptr_t	addr;
+	size_t		addr;
 	int			count;	
 	int			is_width_greater;
 
 	count = 0;
-	addr = (uintptr_t)ptr;
+	addr = (size_t)ptr;
 	is_width_greater = (long unsigned int) data->width > (sizeof(void *) + 2);
 	if (!data->left_just && is_width_greater)
 		ft_add_char(' ', (long unsigned int)data->width - (sizeof(void *) + 2));

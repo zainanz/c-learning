@@ -6,11 +6,11 @@
 /*   By: zali <zali@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 12:09:31 by zali              #+#    #+#             */
-/*   Updated: 2025/06/03 12:10:57 by zali             ###   ########.fr       */
+/*   Updated: 2025/06/04 12:27:13 by zali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "linked_list.h"
+#include "push_swap.h"
 
 static void	double_shift_down(t_list *stack_a, t_list *stack_b,
 		t_node *cheapest_node)

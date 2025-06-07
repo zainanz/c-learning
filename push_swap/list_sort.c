@@ -6,12 +6,11 @@
 /*   By: zali <zali@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 11:00:43 by zali              #+#    #+#             */
-/*   Updated: 2025/06/03 12:33:47 by zali             ###   ########.fr       */
+/*   Updated: 2025/06/04 12:34:34 by zali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "linked_list.h"
-#include <stdio.h>
+#include "push_swap.h"
 
 static int	sort_two(t_list *stack)
 {
@@ -60,8 +59,8 @@ void	perform_sort(t_list *stack_a, t_list *stack_b)
 	{
 		update_index(stack_a);
 		update_index(stack_b);
-		cheapest_node = set_moves_and_find_cheapest(stack_a, stack_b);
-		top_selected_nodes(stack_a, stack_b, cheapest_node);
+		cheapest_node = calculate_best_moves(stack_a, stack_b);
+		sort_cheapest_node(stack_a, stack_b, cheapest_node);
 		pa(stack_a, stack_b);
 	}
 	update_index(stack_a);

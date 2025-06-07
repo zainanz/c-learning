@@ -10,7 +10,21 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "linked_list.h"
+#include "push_swap.h"
+
+int	find_min(int a, int b)
+{
+	if (a < b)
+		return (a);
+	return (b);
+}
+
+int	find_max(int a, int b)
+{
+	if (a > b)
+		return (a);
+	return (b);
+}
 
 t_node	*find_smallest(t_list *lst)
 {
@@ -60,34 +74,4 @@ void	update_index(t_list *stack)
 		curr->index = index++;
 		curr = curr->next;
 	}
-}
-
-t_node	*set_moves_and_find_cheapest(t_list *stack_a, t_list *stack_b)
-{
-	t_node	*curr;
-	t_node	*cheapest_node;
-	t_node	*node;
-
-	curr = stack_b->head;
-	cheapest_node = NULL;
-	node = NULL;
-	while (curr)
-	{
-		node = find_closest_lowest(stack_a, curr);
-		if (node->index > stack_a->size / 2)
-			curr->moves = stack_a->size - node->index;
-		else
-			curr->moves = node->index;
-		if (curr->index > stack_b->size / 2)
-			curr->moves += stack_b->size - curr->index;
-		else
-			curr->moves += curr->index;
-		if (!cheapest_node)
-			cheapest_node = curr;
-		if (cheapest_node->moves > curr->moves)
-			cheapest_node = curr;
-		curr->closest = node;
-		curr = curr->next;
-	}
-	return (cheapest_node);
 }

@@ -6,11 +6,11 @@
 /*   By: zali <zali@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 19:49:30 by zali              #+#    #+#             */
-/*   Updated: 2025/06/03 12:21:18 by zali             ###   ########.fr       */
+/*   Updated: 2025/06/04 12:27:15 by zali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "linked_list.h"
+#include "push_swap.h"
 
 t_list	*lst_init(void)
 {
@@ -86,7 +86,8 @@ t_node	*create_node(int value)
 	n->next = NULL;
 	n->prev = NULL;
 	n->index = 0;
-	n->moves = 0;
+	n->moves = INT_MAX;
+	n->method = -1;
 	n->closest = NULL;
 	return (n);
 }

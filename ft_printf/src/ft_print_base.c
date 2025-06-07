@@ -22,7 +22,8 @@ void	ft_print_hex_with_upcase(int c, int upcase)
 
 int	ft_print_base(long int nbr, int upcase, int base)
 {
-	int	sum;
+	int			sum;
+	const char	*hex = "0123456789abcdef";
 
 	sum = 0;
 	if (nbr < 0)
@@ -32,11 +33,11 @@ int	ft_print_base(long int nbr, int upcase, int base)
 	}
 	if (nbr < base)
 	{
-		ft_print_hex_with_upcase(HEX[nbr], upcase);
+		ft_print_hex_with_upcase(hex[nbr], upcase);
 		return (1);
 	}
 	sum += ft_print_base(nbr / base, upcase, base) + 1;
-	ft_print_hex_with_upcase(HEX[nbr % base], upcase);
+	ft_print_hex_with_upcase(hex[nbr % base], upcase);
 	return (sum);
 }
 
