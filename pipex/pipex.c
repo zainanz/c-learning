@@ -6,7 +6,7 @@
 /*   By: zali <zali@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 17:16:35 by zali              #+#    #+#             */
-/*   Updated: 2025/06/07 18:56:10 by zali             ###   ########.fr       */
+/*   Updated: 2025/06/07 22:23:20 by zali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ int	main(int argc, char *argv[])
 	int		pipefd[2];
 	pid_t	pid1;
 	pid_t	pid2;
+	int		status;
 
 	if (argc != 5)
 	{
@@ -34,7 +35,8 @@ int	main(int argc, char *argv[])
 	pid2 = fork();
 	if (pid2 == 0)
 		pid2_exec(fd, pipefd, argv[3]);
-	wait(NULL);
 	close_files(fd, pipefd);
-	return (1);
+	waitpid(pid1, &status, 0);
+	waitpid(pid2, &status, 0);
+	return ((status >> 8) & 0xFF);
 }

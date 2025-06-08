@@ -12,6 +12,23 @@
 
 #include "pipex.h"
 
+char	*ft_strnew(size_t size)
+{
+	char	*ptr;
+	size_t	i;
+
+	ptr = malloc(size);
+	i = 0;
+	if (!ptr || size == 0)
+		return (free(ptr), NULL);
+	while (i < size)
+	{
+		ptr[i] = '\0';
+		i++;
+	}
+	return (ptr);
+}
+
 char	*ft_strjoin(char const *s1, char const *s2)
 {
 	char	*ptr;

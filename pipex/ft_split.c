@@ -34,12 +34,12 @@ static char	*ft_substr(char const *s, unsigned int start, size_t len)
 		return (NULL);
 	s_len = ft_strlen((char *)s);
 	if (start >= s_len)
-		return (malloc(0));
+		return (ft_strnew(1));
 	if (s_len - start < len)
 		size = s_len - start;
 	else
 		size = len;
-	ptr = malloc(size + 1);
+	ptr = ft_strnew(size + 1);
 	if (!ptr)
 		return (NULL);
 	while (i < size)
