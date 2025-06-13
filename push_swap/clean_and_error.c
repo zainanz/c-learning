@@ -25,7 +25,6 @@ void	handle_malloc_error(t_stacks *stacks)
 	if (!stacks)
 		stacks = init_stacks();
 	clean_up_stacks(stacks);
-	perror("Malloc Error");
 	exit(EXIT_FAILURE);
 }
 

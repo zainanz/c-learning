@@ -33,10 +33,10 @@ long	ft_atol(const char *str)
 	{
 		total *= 10;
 		total += *s - '0';
+		if (total * sign < INT_MIN || total * sign > INT_MAX)
+			handle_str_error(NULL);
 		s++;
 	}
-	if (total * sign < INT_MIN || total * sign > INT_MAX)
-		handle_str_error(NULL);
 	return (total * sign);
 }
 
