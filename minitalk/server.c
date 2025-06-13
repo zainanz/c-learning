@@ -24,11 +24,11 @@ void	send_ack(pid_t pid)
 
 void	sig_handler(int signo, siginfo_t *info, void *more)
 {
-	(void)more;
-	static int		bits;
 	static char		c;
 	static pid_t	sender_pid;
+	static int		bits;
 
+	(void)more;
 	if (info->si_pid)
 		sender_pid = info->si_pid;
 	if (signo == SIGUSR1)
@@ -36,7 +36,7 @@ void	sig_handler(int signo, siginfo_t *info, void *more)
 	else if (signo == SIGUSR2)
 		c &= ~(0b10000000 >> bits);
 	bits++;
-	if (bits == 8)
+	if (bits >= 8)
 	{
 		bits = 0;
 		if (c == '\0')
@@ -45,8 +45,7 @@ void	sig_handler(int signo, siginfo_t *info, void *more)
 			msg_recieved(sender_pid);
 			return ;
 		}
-		else
-			write(1, &c, 1);
+		write(1, &c, 1);
 	}
 	send_ack(sender_pid);
 }

@@ -13,7 +13,7 @@
 #include "minitalk.h"
 #include <stdlib.h>
 
-volatile sig_atomic_t	g_wait_ack = 0;
+volatile sig_atomic_t	g_wait_ack = 1;
 
 void	send_bits(int sender_pid, char c)
 {
@@ -22,6 +22,7 @@ void	send_bits(int sender_pid, char c)
 	bits = 0;
 	while (bits < 8)
 	{
+		g_wait_ack = 1;
 		if (c & (0b10000000 >> bits))
 			kill(sender_pid, SIGUSR1);
 		else
@@ -29,7 +30,6 @@ void	send_bits(int sender_pid, char c)
 		bits++;
 		while (g_wait_ack)
 			usleep(10);
-		g_wait_ack = 1;
 	}
 }
 
