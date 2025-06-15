@@ -30,9 +30,7 @@ void	run_process(char **cmd, char **envp)
 	path = ft_strjoin("/bin/", cmd[0]);
 	execve(path, cmd, envp);
 	free(path);
-	path = ft_strjoin("./", cmd[0]);
-	execve(path, cmd, envp);
-	free(path);
+	execve(cmd[0], cmd, envp);
 	free_array_strings(cmd);
 	exit(127);
 }
