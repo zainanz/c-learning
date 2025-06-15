@@ -28,9 +28,9 @@ char	*ft_strjoin(char const *s1, char const *s2);
 char	*ft_strnew(size_t size);
 
 // Pipex Utils
-void	pid2_exec(int *fd, int *pipefd, char *cmd_arg);
-void	pid1_exec(int *fd, int *pipefd, char *cmd_arg);
-void	run_process(char **cmd);
+void	pid2_exec(int *fd, int *pipefd, char *cmd_arg, char **envp);
+void	pid1_exec(int *fd, int *pipefd, char *cmd_arg, char **envp);
+void	run_process(char **cmd, char **envp);
 void	open_files(int *fd, char *argv[]);
 
 // Clean up pipex

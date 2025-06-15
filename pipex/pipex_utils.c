@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "pipex.h"
+#include <unistd.h>
 
 void	open_files(int *fd, char *argv[])
 {
@@ -22,19 +23,21 @@ void	open_files(int *fd, char *argv[])
 		perror(argv[4]);
 }
 
-void	run_process(char **cmd)
+void	run_process(char **cmd, char **envp)
 {
 	char	*path;
 
 	path = ft_strjoin("/bin/", cmd[0]);
-	execve(path, cmd, NULL);
-	free_array_strings(cmd);
+	execve(path, cmd, envp);
 	free(path);
-	perror("execve failed");
+	path = ft_strjoin("./", cmd[0]);
+	execve(path, cmd, envp);
+	free(path);
+	free_array_strings(cmd);
 	exit(127);
 }
 
-void	pid1_exec(int *fd, int *pipefd, char *cmd_arg)
+void	pid1_exec(int *fd, int *pipefd, char *cmd_arg, char **envp)
 {
 	char	**cmd;
 
@@ -46,10 +49,10 @@ void	pid1_exec(int *fd, int *pipefd, char *cmd_arg)
 	if (*cmd_arg == '\0')
 		exit(127);
 	cmd = ft_split(cmd_arg, ' ');
-	run_process(cmd);
+	run_process(cmd, envp);
 }
 
-void	pid2_exec(int *fd, int *pipefd, char *cmd_arg)
+void	pid2_exec(int *fd, int *pipefd, char *cmd_arg, char **envp)
 {
 	char	**cmd;
 
@@ -61,5 +64,5 @@ void	pid2_exec(int *fd, int *pipefd, char *cmd_arg)
 	if (*cmd_arg == '\0')
 		exit(127);
 	cmd = ft_split(cmd_arg, ' ');
-	run_process(cmd);
+	run_process(cmd, envp);
 }

@@ -11,8 +11,6 @@
 /* ************************************************************************** */
 
 #include "pipex.h"
-#include <stdio.h>
-#include <unistd.h>
 
 void	free_array_strings(char *args[])
 {

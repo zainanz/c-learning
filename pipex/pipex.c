@@ -12,7 +12,7 @@
 
 #include "pipex.h"
 
-int	main(int argc, char *argv[])
+int	main(int argc, char *argv[], char **envp)
 {
 	int		fd[2];
 	int		pipefd[2];
@@ -31,10 +31,10 @@ int	main(int argc, char *argv[])
 		exit(EXIT_FAILURE);
 	pid1 = fork();
 	if (pid1 == 0)
-		pid1_exec(fd, pipefd, argv[2]);
+		pid1_exec(fd, pipefd, argv[2], envp);
 	pid2 = fork();
 	if (pid2 == 0)
-		pid2_exec(fd, pipefd, argv[3]);
+		pid2_exec(fd, pipefd, argv[3], envp);
 	close_files(fd, pipefd);
 	waitpid(pid1, &status, 0);
 	waitpid(pid2, &status, 0);
