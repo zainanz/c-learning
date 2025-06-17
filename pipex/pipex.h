@@ -30,7 +30,7 @@ char	*ft_strnew(size_t size);
 // Pipex Utils
 void	pid2_exec(int *fd, int *pipefd, char *cmd_arg, char **envp);
 void	pid1_exec(int *fd, int *pipefd, char *cmd_arg, char **envp);
-void	run_process(char **cmd, char **envp);
+void	run_process(char *cmd_arg, char **envp);
 void	open_files(int *fd, char *argv[]);
 
 // Clean up pipex

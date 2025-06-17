@@ -23,44 +23,40 @@ void	open_files(int *fd, char *argv[])
 		perror(argv[4]);
 }
 
-void	run_process(char **cmd, char **envp)
+void	run_process(char *cmd_arg, char **envp)
 {
 	char	*path;
+	char	**cmd;
 
-	path = ft_strjoin("/bin/", cmd[0]);
-	execve(path, cmd, envp);
-	free(path);
-	execve(cmd[0], cmd, envp);
+	cmd = ft_split(cmd_arg, ' ');
+	if (cmd[0])
+	{
+		path = ft_strjoin("/bin/", cmd[0]);
+		execve(path, cmd, envp);
+		free(path);
+		execve(cmd[0], cmd, envp);
+	}
+	write(STDERR_FILENO, "Command not found.\n", 19);
 	free_array_strings(cmd);
 	exit(127);
 }
 
 void	pid1_exec(int *fd, int *pipefd, char *cmd_arg, char **envp)
 {
-	char	**cmd;
-
 	if (dup2(fd[0], STDIN_FILENO) < 0)
 		dup_failure();
 	if (dup2(pipefd[1], STDOUT_FILENO) < 0)
 		dup_failure();
 	close_files(fd, pipefd);
-	if (*cmd_arg == '\0')
-		exit(127);
-	cmd = ft_split(cmd_arg, ' ');
-	run_process(cmd, envp);
+	run_process(cmd_arg, envp);
 }
 
 void	pid2_exec(int *fd, int *pipefd, char *cmd_arg, char **envp)
 {
-	char	**cmd;
-
 	if (dup2(fd[1], STDOUT_FILENO) < 0)
 		dup_failure();
 	if (dup2(pipefd[0], STDIN_FILENO) < 0)
 		dup_failure();
 	close_files(fd, pipefd);
-	if (*cmd_arg == '\0')
-		exit(127);
-	cmd = ft_split(cmd_arg, ' ');
-	run_process(cmd, envp);
+	run_process(cmd_arg, envp);
 }

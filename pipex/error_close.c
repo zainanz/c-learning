@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "pipex.h"
+#include <unistd.h>
 
 void	free_array_strings(char *args[])
 {
@@ -29,12 +30,13 @@ void	close_files(int *fd, int *pipefd)
 {
 	close(pipefd[0]);
 	close(pipefd[1]);
-	close(fd[0]);
-	close(fd[1]);
+	if (fd[0] != -1)
+		close(fd[0]);
+	if (fd[1] != -1)
+		close(fd[1]);
 }
 
 void	dup_failure(void)
 {
-	perror("dup2 failure");
 	exit(EXIT_FAILURE);
 }

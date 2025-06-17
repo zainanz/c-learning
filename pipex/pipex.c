@@ -22,7 +22,7 @@ int	main(int argc, char *argv[], char **envp)
 
 	if (argc != 5)
 	{
-		write(STDERR_FILENO, "Usage: ./pipex infile 'ls -l' 'wc -l' outfile.\n",
+		write(STDERR_FILENO, "Usage: ./pipex <infile> <cmd> <cmd> <outfile>.\n",
 			47);
 		exit(EXIT_FAILURE);
 	}
