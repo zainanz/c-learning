@@ -15,8 +15,11 @@
 
 # include <signal.h>
 # include <unistd.h>
+# include <stdlib.h>
+# include <limits.h>
 
 void	ft_putnbr(int n);
 void	set_server_sigaction(void *handler, int sig_handler);
+int		ft_atoi(char *str);
 
 #endif

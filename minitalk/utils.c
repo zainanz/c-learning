@@ -26,6 +26,27 @@ void	ft_putnbr(int n)
 	}
 }
 
+int	ft_atoi(char *str)
+{
+	int	sign;
+	int	total;
+
+	sign = 1;
+	total = 0;
+	while (*str == ' ' || (*str >= 9 && *str <= 13))
+		str++;
+	if (*str == '-' || *str == '+')
+		if (*str++ == '-')
+			sign *= -1;
+	while (*str >= '0' && *str <= '9')
+	{
+		total *= 10;
+		total += *str - 48;
+		str++;
+	}
+	return (total * sign);
+}
+
 void	set_server_sigaction(void *handler, int sig_handler)
 {
 	struct sigaction	sa;
