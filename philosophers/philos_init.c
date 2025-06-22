@@ -45,8 +45,10 @@ static void	*routines(void *ptr)
 	{
 		if (!eat(phil))
 			continue ;
-		psleep(phil);
-		think(phil);
+		if (!psleep(phil))
+			continue ;
+		if (!think(phil))
+			continue ;
 	}
 	return (NULL);
 }

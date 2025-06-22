@@ -57,8 +57,8 @@ void	ft_putstr_fd(int fd, char *str);
 
 // Philosphers Action
 int		eat(philo *philo);
-void	psleep(philo *philo);
-void	think(philo *philo);
+int		psleep(philo *philo);
+int		think(philo *philo);
 
 // Args Struct Init
 void	set_args(philos_arg *args, int str_size, char **str);
@@ -70,5 +70,7 @@ void	wait_philos(philos_arg *args);
 
 // Observer
 void	start_observer(philos_arg *args);
+int		check_if_all_full(philos_arg *args);
+int		check_and_update_dead(philos_arg *args);
 
 #endif

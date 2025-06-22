@@ -12,7 +12,7 @@
 
 #include "philosophers.h"
 
-static int	check_if_all_full(philos_arg *args)
+int	check_if_all_full(philos_arg *args)
 {
 	int	i;
 	int	total_eaten;
@@ -37,7 +37,7 @@ static int	check_if_all_full(philos_arg *args)
 	return (0);
 }
 
-static int	check_and_update_dead(philos_arg *args)
+int	check_and_update_dead(philos_arg *args)
 {
 	int	i;
 	int	return_status;
@@ -75,7 +75,10 @@ void	*monitoring(void *ptr)
 		while (i < args->total)
 		{
 			if (check_if_all_full(args) || check_and_update_dead(args))
+			{
+				ft_putstr_fd(1, "someone died.\n");
 				return (NULL);
+			}
 			i++;
 		}
 	}
