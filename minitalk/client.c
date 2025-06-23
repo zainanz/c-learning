@@ -34,7 +34,7 @@ void	send_bits(int sender_pid, char c)
 		{
 			usleep(10);
 			wait_time += 10;
-			if (wait_time > 200 && g_wait_ack)
+			if (wait_time > 1000 && g_wait_ack)
 			{
 				write(1, "ERROR\n", 6);
 				exit(EXIT_FAILURE);
