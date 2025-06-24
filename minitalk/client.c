@@ -14,33 +14,53 @@
 
 volatile sig_atomic_t	g_wait_ack = 1;
 
+void	wait_ack(void)
+{
+	int	wait_time;
+
+	wait_time = 0;
+	while (g_wait_ack)
+	{
+		usleep(10);
+		wait_time += 10;
+		if (wait_time > 1000 && g_wait_ack)
+		{
+			write(1, "ERROR\n", 6);
+			exit(EXIT_FAILURE);
+		}
+	}
+}
+
 void	send_bits(int sender_pid, char c)
 {
 	int	bits;
-	int	wait_time;
 
 	bits = 0;
-	wait_time = 0;
 	while (bits < 8)
 	{
-		wait_time = 0;
 		g_wait_ack = 1;
 		if (c & (0b10000000 >> bits))
-			kill(sender_pid, SIGUSR1);
+			safe_kill(sender_pid, SIGUSR1);
 		else
-			kill(sender_pid, SIGUSR2);
+			safe_kill(sender_pid, SIGUSR2);
 		bits++;
-		while (g_wait_ack)
-		{
-			usleep(10);
-			wait_time += 10;
-			if (wait_time > 1000 && g_wait_ack)
-			{
-				write(1, "ERROR\n", 6);
-				exit(EXIT_FAILURE);
-			}
-		}
+		wait_ack();
 	}
+}
+
+void	send_len(int sender_pid, char *str)
+{
+	while (*str)
+	{
+		g_wait_ack = 1;
+		safe_kill(sender_pid, SIGUSR1);
+		wait_ack();
+		str++;
+	}
+	g_wait_ack = 1;
+	safe_kill(sender_pid, SIGUSR2);
+	wait_ack();
+	write(1, "Sent Len\n", 9);
 }
 
 void	handler(int signo)
@@ -70,6 +90,7 @@ int	main(int argc, char *argv[])
 		write(1, "ERROR\n", 6);
 		exit(EXIT_FAILURE);
 	}
+	send_len(sender_pid, argv[2]);
 	while (*argv[2])
 		send_bits(sender_pid, *argv[2]++);
 	send_bits(sender_pid, *argv[2]);

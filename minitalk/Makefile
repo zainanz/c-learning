@@ -1,6 +1,6 @@
 CC = cc
 CFLAGS = -Wall -Werror -Wextra
-SERVER_SRC = server.c utils.c
+SERVER_SRC = server.c server_handler_utils.c str_struct_server.c utils.c
 CLIENT_SRC = client.c utils.c
 HEADER = minitalk.h
 SERVER_OBJ = ${SERVER_SRC:.c=.o}

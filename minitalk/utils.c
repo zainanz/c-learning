@@ -1,16 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   server_utils.c                                     :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: zali <zali@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 19:15:29 by zali              #+#    #+#             */
-/*   Updated: 2025/06/05 19:30:44 by zali             ###   ########.fr       */
+/*   Updated: 2025/06/24 16:10:33 by zali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
+
+void	safe_kill(int sender_pid, int signo)
+{
+	if (kill(sender_pid, signo) == -1)
+	{
+		write(2, "Kill Error\n", 11);
+		exit(EXIT_FAILURE);
+	}
+}
 
 void	ft_putnbr(int n)
 {
@@ -47,10 +56,23 @@ int	ft_atoi(char *str)
 	return (total * sign);
 }
 
+void	remove_garbage_value(void *str, size_t size)
+{
+	size_t	i;
+
+	i = 0;
+	while (i < size)
+	{
+		((char *)str)[i] = 0;
+		i++;
+	}
+}
+
 void	set_server_sigaction(void *handler, int sig_handler)
 {
 	struct sigaction	sa;
 
+	remove_garbage_value(&sa, sizeof(sa));
 	if (sig_handler)
 	{
 		sa.sa_flags = SA_SIGINFO;
