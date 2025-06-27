@@ -14,11 +14,12 @@
 
 void	safe_kill(int sender_pid, int signo)
 {
-	if (kill(sender_pid, signo) == -1)
+	if (kill(sender_pid, 0) == -1)
 	{
 		write(2, "Kill Error\n", 11);
 		exit(EXIT_FAILURE);
 	}
+	kill(sender_pid, signo);
 }
 
 void	ft_putnbr(int n)

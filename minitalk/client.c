@@ -14,7 +14,7 @@
 
 volatile sig_atomic_t	g_wait_ack = 1;
 
-void	wait_ack(void)
+static void	wait_ack(void)
 {
 	int	wait_time;
 
@@ -31,7 +31,7 @@ void	wait_ack(void)
 	}
 }
 
-void	send_bits(int sender_pid, char c)
+static void	send_bits(int sender_pid, char c)
 {
 	int	bits;
 
@@ -48,7 +48,7 @@ void	send_bits(int sender_pid, char c)
 	}
 }
 
-void	send_len(int sender_pid, char *str)
+static void	send_len(int sender_pid, char *str)
 {
 	while (*str)
 	{
@@ -60,17 +60,24 @@ void	send_len(int sender_pid, char *str)
 	g_wait_ack = 1;
 	safe_kill(sender_pid, SIGUSR2);
 	wait_ack();
-	write(1, "Sent Len\n", 9);
 }
 
-void	handler(int signo)
+static void	handler(int signo)
 {
+	static int	success_sent;
+
 	if (signo == SIGUSR1)
 		g_wait_ack = 0;
 	else if (signo == SIGUSR2)
 	{
 		g_wait_ack = 0;
-		write(1, "Message Sent!\n", 14);
+		if (success_sent == 0)
+			success_sent++;
+		else
+		{
+			success_sent = 0;
+			write(1, "Message Sent!\n", 14);
+		}
 	}
 }
 

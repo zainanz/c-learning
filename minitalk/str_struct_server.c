@@ -32,6 +32,11 @@ void	append_to_string(char c)
 	t_string	*string;
 
 	string = string_init(0);
+	if (string->index >= string->size)
+	{
+		write(1, "Corrupted Data\n", 15);
+		exit(EXIT_FAILURE);
+	}
 	string->ptr[string->index] = c;
 	string->index++;
 }
