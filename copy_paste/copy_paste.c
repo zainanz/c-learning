@@ -8,11 +8,11 @@ int	file_already_exists(char *file_to_create)
 }
 void	ask_to_overwrite(char *file)
 {
-	int	c;
+	char	c;
 
 	ft_putstr_fd(1, file);
-	ft_putstr_fd(1, "already exists. Would you like to overwrite?\n (Y/N)");
-	scanf("%d", &c);
+	ft_putstr_fd(1, " already exists. would you like to overwrite?\n (Y/N): ");
+	scanf(" %c", &c);
 	if (c != 'y' || c != 'Y')
 		exit (EXIT_FAILURE);
 	else

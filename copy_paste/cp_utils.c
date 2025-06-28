@@ -19,7 +19,7 @@ static int	open_file(char *filename, int FLAG)
 	if (fd == -1)
 	{
 		ft_putstr_fd(2, filename);
-		ft_putstr_fd(2, "does not exist.\n");
+		ft_putstr_fd(2, " does not exist.\n");
 		exit(EXIT_FAILURE);
 	}
 	return (fd);
