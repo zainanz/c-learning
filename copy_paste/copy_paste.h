@@ -5,6 +5,7 @@
 # include <fcntl.h> // open - access
 # include <stdlib.h> // exit_success - exit_failure
 # include <stdio.h> // scanf 
+#include <sys/stat.h> // to get file permissions
 
 int	ft_putstr_fd(int fd, char *str);
 int	make_copy(char *cp_file, char *file_to_create);

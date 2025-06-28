@@ -1,5 +1,4 @@
 #include "copy_paste.h"
-#include <fcntl.h>
 
 int	ft_putstr_fd(int fd, char *str)
 {
@@ -44,6 +43,21 @@ static int	get_file_bytes(char *file_name)
 	return (total_read);
 }
 
+static void	copy_perms(char *file_name, char *file_created)
+{
+	struct stat st;
+	if (stat(file_name, &st) == -1)
+	{
+		perror("stat");
+		exit(EXIT_FAILURE);
+    }
+	if (chmod(file_created, st.st_mode & 0777) == -1)
+	{
+		perror("chmod");
+		exit(EXIT_FAILURE);
+	}
+}
+
 static void	copy_to_file(char *content, int content_size, char *file_name, char *file_to_create)
 {
 	int	fd;
@@ -56,6 +70,7 @@ static void	copy_to_file(char *content, int content_size, char *file_name, char 
 		exit(EXIT_FAILURE);
 	}
 	write_fd = open_file(file_to_create, O_WRONLY | O_CREAT);
+	copy_perms(file_name, file_to_create);
 	if (write(write_fd, content, content_size) == -1)
 	{
 		perror("write error");
