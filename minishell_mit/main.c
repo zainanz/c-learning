@@ -6,7 +6,7 @@
 /*   By: zali <zali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 20:40:28 by zali              #+#    #+#             */
-/*   Updated: 2025/07/16 14:02:30 by zali             ###   ########.fr       */
+/*   Updated: 2025/07/16 23:13:35 by zali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,10 @@ int	main(void)
 		// bultin_commands(ptr); - custom built commands
 		//printf("%s\n", ptr);
 		if (safe_fork() == 0)
-		run_cmd(ptr);
+			run_cmd(ptr);
 		wait(0);
 		add_history(ptr);
-			free(ptr);
+		free(ptr);
 		ptr = NULL;
 	}
 }
