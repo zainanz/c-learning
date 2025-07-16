@@ -6,7 +6,7 @@
 /*   By: zali <zali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 12:15:36 by zali              #+#    #+#             */
-/*   Updated: 2025/07/06 20:03:50 by zali             ###   ########.fr       */
+/*   Updated: 2025/07/07 12:46:40 by zali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,6 +121,11 @@ char	**ft_split(char *prompt)
 	return (str_ar);
 }
 
+void	parse_prompt(char *str, t_token *token)
+{
+	printf("Parsing: %s\n", str);
+}
+
 static t_token	**tokenize(char **strs)
 {
 	t_tokens	*tokens_ar;
@@ -131,11 +136,15 @@ static t_token	**tokenize(char **strs)
 	tokens_ar->size = 1;
 	tokens_ar->tokens = NULL;
 	while (strs[i])
-		if (strs[i++] == '|')
+		while (strs[i][++j])
+			if(strs[i][j] == '|')
 			tokens_ar->size++;
 	tokens_ar->tokens = malloc(sizeof(t_token) * tokens_ar->size);
-	while ()
+	i = 0;
+	while (i < tokens_ar->size)
 	{
+		parse_prompt(strs[i], tokens_ar->tokens[i]);
+		free(strs[i]);
 	}
 }
 
