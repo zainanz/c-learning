@@ -34,7 +34,7 @@ void	append_to_string(char c)
 	string = string_init(0);
 	if (string->index >= string->size)
 	{
-		write(1, "Corrupted Data\n", 15);
+		write(2, "Corrupted Data\n", 15);
 		exit(EXIT_FAILURE);
 	}
 	string->ptr[string->index] = c;

@@ -12,7 +12,7 @@
 
 #include "minitalk.h"
 
-volatile sig_atomic_t	g_wait_ack = 1;
+sig_atomic_t	g_wait_ack = 1;
 
 static void	wait_ack(void)
 {
@@ -23,9 +23,9 @@ static void	wait_ack(void)
 	{
 		usleep(10);
 		wait_time += 10;
-		if (wait_time > 1000 && g_wait_ack)
+		if (wait_time > 15000 && g_wait_ack)
 		{
-			write(1, "ERROR\n", 6);
+			write(2, "NO ACK TIMEOUT\n", 15);
 			exit(EXIT_FAILURE);
 		}
 	}
@@ -39,7 +39,7 @@ static void	send_bits(int sender_pid, char c)
 	while (bits < 8)
 	{
 		g_wait_ack = 1;
-		if (c & (0b10000000 >> bits))
+		if (c & (128 >> bits))
 			safe_kill(sender_pid, SIGUSR1);
 		else
 			safe_kill(sender_pid, SIGUSR2);
@@ -88,13 +88,13 @@ int	main(int argc, char *argv[])
 	set_server_sigaction(handler, 0);
 	if (argc != 3)
 	{
-		write(1, "ERROR\n", 6);
+		write(2, "Usage: ./client pid msg\n", 24);
 		exit(EXIT_FAILURE);
 	}
 	sender_pid = ft_atoi(argv[1]);
 	if (sender_pid <= 0 || sender_pid > INT_MAX)
 	{
-		write(1, "ERROR\n", 6);
+		write(2, "Invalid PID\n", 12);
 		exit(EXIT_FAILURE);
 	}
 	send_len(sender_pid, argv[2]);
