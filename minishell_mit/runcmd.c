@@ -28,7 +28,6 @@ void	nullify(t_cmd *cmd)
 		execcmd = (t_execcmd *)cmd;
 		while (execcmd->eargv[i])
 		{
-
 			printf("%p (%c) - %p (%c) \n", execcmd->argv[i], *execcmd->argv[i], execcmd->eargv[i], *execcmd->eargv[i]);
 			*execcmd->eargv[i] = 0;
 			i++;
@@ -169,10 +168,10 @@ t_cmd	*parseredirects(t_cmd *cmd, char **str, char *end_str)
 		if (token == '<') // <
 			cmd = redir(cmd, ptr, ptr_end, O_RDONLY, 0);
 		else if (token == '>') // >
-			cmd = redir(cmd, ptr, ptr_end, O_APPEND | O_CREAT, 1);
-		else if (token == 'u') // >>
+			cmd = redir(cmd, ptr, ptr_end, O_WRONLY | O_TRUNC | O_CREAT, 1);
+		else if (token == '+') // >>
 			cmd = redir(cmd, ptr, ptr_end, O_WRONLY | O_CREAT, 1);
-		else if (token == 'r') // <<
+		else if (token == '-') // <<
 			cmd = redir(cmd, ptr, ptr_end, O_WRONLY | O_CREAT, 0);
 	}
 	return (cmd);
@@ -186,10 +185,7 @@ t_cmd	*parsestr(char **str, char *end_str)
 	int			token;
 	char		*ptr;
 	char		*end_ptr;
-	/*
-	if (strchr(str, "(") parseblock();
-	todo prioritize () first
-	*/
+
 	argc = 0;
 	exec_cmd = init_t_execcmd();
 	ret = (t_cmd *) exec_cmd; 
@@ -198,13 +194,14 @@ t_cmd	*parsestr(char **str, char *end_str)
 	{
 		token = get_token(str, end_str, &ptr, &end_ptr);
 		int i = 0;
-		/*while (ptr + i < end_ptr)
+		/*while (ptr + i < end_ptr) Prints each command
 		{
 			write(1, ptr + i, 1);
 			i++;
 		}*/
 		if (!token)
 			break ;
+		// TODO - > Linked List instead of. 
 		exec_cmd->argv[argc] = ptr; 
 		exec_cmd->eargv[argc] = end_ptr; 
 		argc++;
@@ -326,3 +323,12 @@ void	run_cmd(char *str)
 
 	show_cmd_tree(cmd);
 }
+
+/*
+
+
+	
+
+
+
+*/

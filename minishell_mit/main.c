@@ -6,22 +6,25 @@
 /*   By: zali <zali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 20:40:28 by zali              #+#    #+#             */
-/*   Updated: 2025/07/16 23:13:35 by zali             ###   ########.fr       */
+/*   Updated: 2025/07/17 14:42:38 by zali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	main(void)
+
+int	main(int argc, char *argv[], char *envp[])
 {
-	//run_cmd(strdup("< asd ls | cat"));
-
 	char		*ptr;
+	char 		**cpy_env;
+	int			i;
+	char		*user;
 
-	while (ptr = readline("zali> "))
+	i = 0;
+	cpy_env = copy_env(envp);
+	user = getenv("USER"); // username ' need to strjoin with a > or : for prompt'
+	while (ptr = readline(user))
 	{
-		// bultin_commands(ptr); - custom built commands
-		//printf("%s\n", ptr);
 		if (safe_fork() == 0)
 			run_cmd(ptr);
 		wait(0);
