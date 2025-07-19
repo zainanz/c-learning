@@ -6,7 +6,7 @@
 /*   By: zali <zali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 20:40:28 by zali              #+#    #+#             */
-/*   Updated: 2025/07/17 15:09:42 by zali             ###   ########.fr       */
+/*   Updated: 2025/07/19 18:08:12 by zali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,20 +16,26 @@
 int	main(int argc, char *argv[], char *envp[])
 {
 	char		*ptr;
-	char 		**cpy_env;
-	int			i;
+	char		*user_prompt;
+	char		buffer[1000];
 	char		*user;
 
-	i = 0;
-	cpy_env = copy_env(envp);
-	user = getenv("USER"); // username ' need to strjoin with a > or : for prompt'
-	while (ptr = readline(user))
+	user = getenv("USER");
+	if (user)
+		user_prompt = ft_strjoin(getenv("USER"), "> ");
+	else
+		user_prompt = ft_strjoin(getcwd(buffer, 1000), ": ");
+	while (ptr = readline(user_prompt))
 	{
+		if (!strcmp(ptr, "exit"))
+			break ;
 		if (safe_fork() == 0)
-			run_cmd(ptr);
+			run_cmd(ptr, envp);
 		wait(0);
 		add_history(ptr);
 		free(ptr);
 		ptr = NULL;
 	}
+	rl_clear_history(); 
+	free(user_prompt);
 }

@@ -6,12 +6,11 @@
 /*   By: zali <zali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/12 13:30:06 by zali              #+#    #+#             */
-/*   Updated: 2025/07/16 23:13:05 by zali             ###   ########.fr       */
+/*   Updated: 2025/07/19 18:05:51 by zali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-// Helper string man
 
 void	nullify(t_cmd *cmd)
 {
@@ -27,11 +26,7 @@ void	nullify(t_cmd *cmd)
 	{
 		execcmd = (t_execcmd *)cmd;
 		while (execcmd->eargv[i])
-		{
-			printf("%p (%c) - %p (%c) \n", execcmd->argv[i], *execcmd->argv[i], execcmd->eargv[i], *execcmd->eargv[i]);
-			*execcmd->eargv[i] = 0;
-			i++;
-		}
+			*execcmd->eargv[i++] = 0;
 		return ;
 	}
 	if (cmd->type == PIPE)
@@ -75,9 +70,9 @@ static char	update_and_get_token(char **str, char *end_str)
 	if (char_presence(**str, "<>|()&\0"))
 	{
 		if (*(*str + 1) == '>' && **str == '>')
-			ret = 'u';
+			ret = '+';
 		else if (*(*str + 1) == '<' && **str == '<')
-			ret = 'r';
+			ret = '-';
 		else if (*(*str + 1) == '|' && **str == '|')
 			ret = 'o';
 		else if (*(*str + 1) == '&' && **str == '&')
@@ -116,7 +111,6 @@ int	ft_exists_wskip(char **str, char *end_str, char *set)
 	return (char_presence(**str, set));
 }
 
-// ----------------
 
 t_execcmd	*init_t_execcmd(void)
 {
@@ -128,7 +122,6 @@ t_execcmd	*init_t_execcmd(void)
 	return (execcmd);
 }
 
-// -----------------------------------
 
 t_cmd	*redir(t_cmd *cmd, char *sfile, char *efile, int mode, int fd)
 {
@@ -194,14 +187,9 @@ t_cmd	*parsestr(char **str, char *end_str)
 	{
 		token = get_token(str, end_str, &ptr, &end_ptr);
 		int i = 0;
-		/*while (ptr + i < end_ptr) Prints each command
-		{
-			write(1, ptr + i, 1);
-			i++;
-		}*/
+		
 		if (!token)
 			break ;
-		// TODO - > Linked List instead of. 
 		exec_cmd->argv[argc] = ptr; 
 		exec_cmd->eargv[argc] = end_ptr; 
 		argc++;
@@ -240,40 +228,17 @@ t_cmd	*parsepipe(char **str, char *end_str)
 	return (cmd);
 }
 
-/*
-	1. Passes string to parsepipe. 
-	2. Nullify(cmd)
-		reason we do it in the end is lets say we have something ls -l|cat -e which isnt properly spaced.. 
-		when it reaches -l it goes to | and if we convert it to \0. we never treat the pipe as it was changed. but if we do it in the end
-		we already created the struct and have everythjing we need so loossing | or anything else wont hurt.
-*/
 t_cmd	*parsecmd(char *str, char *end_str)
 {
 	t_cmd	*cmd;
 
 	cmd = parsepipe(&str, end_str);
-	//ft_exists_wskip(&str, end_str, "");
-	//if (str != end_str)
-	//	exit(EXIT_FAILURE); //It didnt finiush fully.
 	nullify(cmd);
 	return (cmd);
 }
 
 void	show_cmd_tree(t_cmd *cmd)
 {
-	/*
-	t_execcmd *execcmd;
-	t_pipecmd *pipecmd;
-	t_redircmd *redircmd;
-
-	printf("TYPE: %i \n", cmd->type);
-	pipecmd = (t_pipecmd *)cmd;
-	redircmd = (t_redircmd *) pipecmd->left;
-	execcmd =	(t_execcmd *) redircmd->link;
-	printf("PIPE LEFT (REDIR LINK - CMD): %s", execcmd->argv[0]);
-	execcmd = (t_execcmd *) pipecmd->right;
-	printf("PIPE RIGHT (EXECCMD): %s\n", execcmd->argv[0]);
-	*/
 	int	i;
 	i = 0;
 
@@ -303,32 +268,99 @@ void	show_cmd_tree(t_cmd *cmd)
 	}
 }
 
-/* Recives 
-	"ls -la | wc -l > hi"
-	1. Start and End Address
-	2. Send it to parse - gets back cmd.
-*/
+void pipe_recursive(t_cmd *cmd, char **envp);
 
-void	run_cmd(char *str)
+void	exec_tree(t_cmd *cmd, char **envp)
+{
+	t_redircmd	*redircmd;
+	t_execcmd	*execcmd;
+	char		*cmd_path;
+	
+	if (cmd->type == EXEC)
+	{
+		execcmd = (t_execcmd *)cmd;
+		cmd_path = ft_strjoin("/bin/", execcmd->argv[0]); 	
+		execve(cmd_path, execcmd->argv, envp);
+		free(cmd_path);
+		printf("exeve failed.\n");
+		return ;
+	}
+	if (cmd->type == PIPE)
+	{
+		pipe_recursive(cmd, envp);
+		return ;
+	}
+	if (cmd->type == REDIR)
+	{
+		redircmd = (t_redircmd *)cmd;
+		close(redircmd->fd);
+		if (open(redircmd->file, redircmd->mode) < 0)
+			exit(EXIT_FAILURE);
+		exec_tree(((t_redircmd *)cmd)->link, envp);
+		return ;
+	} 
+}
+
+void pipe_recursive(t_cmd *cmd, char **envp)
+{
+	int	pipe_fd[2];
+
+	if (pipe(pipe_fd) < 0)
+		exit(EXIT_FAILURE);
+	if (safe_fork() == 0)
+	{
+		dup2(pipe_fd[1], STDOUT_FILENO);
+		close(pipe_fd[1]);
+		close(pipe_fd[0]);
+		exec_tree(((t_pipecmd *)cmd)->left, envp);
+	}
+	if (safe_fork() == 0)
+	{
+		dup2(pipe_fd[0], STDIN_FILENO);
+		close(pipe_fd[0]);
+		close(pipe_fd[1]);
+		exec_tree(((t_pipecmd *)cmd)->right, envp);
+	}
+	close(pipe_fd[0]);
+	close(pipe_fd[1]);
+	wait(0);
+	wait(0);
+}
+
+void	free_trees(t_cmd *cmd)
+{
+	if (cmd->type == EXEC)
+	{
+		printf("cleans up exec.\n");
+		free(cmd);
+		cmd = NULL;
+		return ;
+	}
+	if (cmd->type == REDIR)
+	{
+		free_trees(((t_redircmd *)cmd)->link);
+		free(cmd);
+		cmd = NULL;
+		return ;
+	}
+	if (cmd->type == PIPE)
+	{
+		free_trees(((t_pipecmd *)cmd)->left);
+		free_trees(((t_pipecmd *)cmd)->right);
+		free(cmd);
+		cmd = NULL;
+		return ;
+	}
+}
+
+void	run_cmd(char *str, char **envp)
 {
 	t_cmd	*cmd;	
 	char	*end_str;
 
-	printf("'%s'\n", str);	
-	printf("Start STR: %p\n\n", str);
 	end_str = str + ft_strlen(str);
 	cmd = parsecmd(str, end_str);
-	printf("\n\nEND STR: %p\n", end_str);
-	printf("\n\n\n\n\n");
-
-	show_cmd_tree(cmd);
+	exec_tree(cmd, envp);
+	free_trees(cmd);
+	//show_cmd_tree(cmd);
 }
-
-/*
-
-
-	
-
-
-
-*/

@@ -6,7 +6,7 @@
 /*   By: zali <zali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 20:41:51 by zali              #+#    #+#             */
-/*   Updated: 2025/07/17 14:38:19 by zali             ###   ########.fr       */
+/*   Updated: 2025/07/19 17:30:12 by zali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,14 +61,11 @@ typedef struct redircmd
 }	t_redircmd;
 
 int		ft_putstr_fd(int fd, char *str);
+char    *ft_strjoin(char const *s1, char const *s2);
 size_t	ft_strlen(char *str);
 int		safe_fork(void);
-void	run_cmd(char *str);
+void	run_cmd(char *str, char **envp);
 char	*ft_strcpy(char *dest, char *src);
 void	*safe_malloc(int size);
-
-// copy env
-char	**copy_env(char **env);
-void	free_env(char **env);
 
 #endif

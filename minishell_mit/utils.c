@@ -6,11 +6,30 @@
 /*   By: zali <zali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/12 13:25:51 by zali              #+#    #+#             */
-/*   Updated: 2025/07/14 15:49:44 by zali             ###   ########.fr       */
+/*   Updated: 2025/07/19 14:25:52 by zali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+char    *ft_strjoin(char const *s1, char const *s2)
+{
+	char	*ptr;
+	int		i;
+
+	i = 0;
+	ptr = malloc(ft_strlen((char *)s1) + ft_strlen((char *)s2) + 1);
+	if (!ptr || !s1 || !s2)
+		return (NULL);
+	if (s1)
+		while (*s1)
+			ptr[i++] = *s1++;
+	if (s2)
+		while (*s2)
+			ptr[i++] = *s2++;
+	ptr[i] = '\0';
+	return (ptr);
+}	
 
 char	*ft_strcpy(char *dest, char *src)
 {
