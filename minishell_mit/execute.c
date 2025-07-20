@@ -6,7 +6,7 @@
 /*   By: zali <zali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/20 14:38:28 by zali              #+#    #+#             */
-/*   Updated: 2025/07/20 16:24:11 by zali             ###   ########.fr       */
+/*   Updated: 2025/07/20 17:33:05 by zali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,21 @@ void	exec_tree(t_cmd *cmd, char **envp)
 static void exec_recursive(t_cmd *cmd, char **envp)
 {
 	t_execcmd	*execcmd;
-	char		*cmd_path;
+	char		*str_ptr;
 
 	execcmd = (t_execcmd *)cmd;
-	cmd_path = ft_strjoin("/bin/", execcmd->argv[0]); 	
-	execve(cmd_path, execcmd->argv, envp);
-	free(cmd_path);
-	perror("exeve failed");
+	str_ptr = ft_strjoin("/bin/", execcmd->argv[0]); 	
+	execve(str_ptr, execcmd->argv, envp);
+	free(str_ptr);
+	execve(execcmd->argv[0], execcmd->argv, envp);
+	if (execcmd->argv[0][0] == '.' && execcmd->argv[0][1] == '/')
+		perror(execcmd->argv[0]);
+	else
+	{
+		str_ptr = ft_strjoin(execcmd->argv[0], ": command not found\n"); 
+		write(STDERR_FILENO, str_ptr, ft_strlen(str_ptr));
+		free(str_ptr);
+	}
 	exit(EXIT_FAILURE);
 }
 
@@ -53,7 +61,7 @@ static void	handle_heredoc(t_cmd *cmd)
 	while (1)
 	{
 		ptr = readline("heredoc>");
-		if (strcmp(ptr, redircmd->file) == 0)
+		if (strcmp(ptr, redircmd->file) == 0) // ft_strcmp implement
 			break ;
 		write(hd_pipe[1], ptr, ft_strlen(ptr));
 		write(hd_pipe[1], "\n", 1);

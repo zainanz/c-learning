@@ -6,7 +6,7 @@
 /*   By: zali <zali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 20:41:51 by zali              #+#    #+#             */
-/*   Updated: 2025/07/20 15:44:15 by zali             ###   ########.fr       */
+/*   Updated: 2025/07/20 17:21:42 by zali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,18 @@ typedef struct redircmd
 	char	redir_type;
 }	t_redircmd;
 
+// Structs inits
+t_cmd	*init_t_redircmd(t_cmd *cmd, char *sfile, char *efile, int mode, int fd);
+t_cmd	*init_t_pipecmd(t_cmd *left, t_cmd *right);
+t_cmd	*init_t_execcmd(void);
+
+// Parse
+t_cmd	*parsecmd(char *str, char *end_str);
+
 // Execution
 void	exec_tree(t_cmd *cmd, char **envp);
+
+
 
 int		ft_putstr_fd(int fd, char *str);
 char    *ft_strjoin(char const *s1, char const *s2);
