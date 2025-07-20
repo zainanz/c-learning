@@ -6,7 +6,7 @@
 /*   By: zali <zali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/20 14:38:28 by zali              #+#    #+#             */
-/*   Updated: 2025/07/20 17:33:05 by zali             ###   ########.fr       */
+/*   Updated: 2025/07/20 17:50:42 by zali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static void exec_recursive(t_cmd *cmd, char **envp)
 	else
 	{
 		str_ptr = ft_strjoin(execcmd->argv[0], ": command not found\n"); 
-		write(STDERR_FILENO, str_ptr, ft_strlen(str_ptr));
+		ft_putstr_fd(STDERR_FILENO, str_ptr);
 		free(str_ptr);
 	}
 	exit(EXIT_FAILURE);

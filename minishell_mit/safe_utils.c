@@ -1,33 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   display_utils.c                                    :+:      :+:    :+:   */
+/*   safe_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: zali <zali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 20:47:04 by zali              #+#    #+#             */
-/*   Updated: 2025/07/20 14:49:33 by zali             ###   ########.fr       */
+/*   Updated: 2025/07/20 17:52:54 by zali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-size_t	ft_strlen(char *str)
+int	safe_fork(void)
 {
-	size_t	i;
+	int	pid;
 
-	i = 0;
-	while (str[i])
-		i++;
-	return (i);
+	pid = fork();
+	if (pid == -1)
+	{
+		perror("fork");
+		exit(EXIT_FAILURE);
+	}
+	return (pid);
 }
 
-int	ft_putstr_fd(int fd, char *str)
+void	*safe_malloc(int size)
 {
-	size_t	i;
+	char	*ptr;
 
-	i = ft_strlen(str);
-	write(fd, str, i);
-	write(fd, "\n", 1);
-	return ((int) i);
+	ptr = malloc(size);
+	if (!ptr)
+	{
+		perror("malloc");
+		exit(EXIT_FAILURE);
+	}
+	return ((void *)ptr);
 }

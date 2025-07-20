@@ -6,13 +6,43 @@
 /*   By: zali <zali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/20 16:36:13 by zali              #+#    #+#             */
-/*   Updated: 2025/07/20 17:19:28 by zali             ###   ########.fr       */
+/*   Updated: 2025/07/20 17:49:18 by zali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_cmd	*parseredirects(t_cmd *cmd, char **str, char *end_str)
+static void	nullify(t_cmd *cmd)
+{
+	int	i;
+	t_redircmd *redircmd;
+	t_pipecmd *pipecmd;
+	t_execcmd *execcmd;
+
+	i = 0;
+	if (cmd == NULL)
+		return ;
+	if (cmd->type == EXEC)
+	{
+		execcmd = (t_execcmd *)cmd;
+		while (execcmd->eargv[i])
+			*execcmd->eargv[i++] = 0;
+	}
+	else if (cmd->type == PIPE)
+	{
+		pipecmd = (t_pipecmd *)cmd;
+		nullify(pipecmd->left);
+		nullify(pipecmd->right);
+	}
+	else if (cmd->type == REDIR)
+	{
+		redircmd = (t_redircmd *)cmd;
+		nullify(redircmd->link);
+		*redircmd->end_file = '\0';
+	}
+}
+
+static t_cmd	*parseredirects(t_cmd *cmd, char **str, char *end_str)
 {
 	char	token;
 	char	*ptr;
@@ -40,7 +70,7 @@ t_cmd	*parseredirects(t_cmd *cmd, char **str, char *end_str)
 	return (cmd);
 }
 
-t_cmd	*parsestr(char **str, char *end_str)
+static t_cmd	*parsestr(char **str, char *end_str)
 {
 	int			argc;
 	t_execcmd	*exec_cmd;
@@ -72,7 +102,7 @@ t_cmd	*parsestr(char **str, char *end_str)
 	return (ret);
 }
 
-t_cmd	*parsepipe(char **str, char *end_str)
+static t_cmd	*parsepipe(char **str, char *end_str)
 {
 	char	*s;
 	t_cmd	*cmd;

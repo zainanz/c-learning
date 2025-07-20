@@ -6,7 +6,7 @@
 /*   By: zali <zali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 20:41:51 by zali              #+#    #+#             */
-/*   Updated: 2025/07/20 17:21:42 by zali             ###   ########.fr       */
+/*   Updated: 2025/07/20 17:51:08 by zali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,14 +71,22 @@ t_cmd	*parsecmd(char *str, char *end_str);
 // Execution
 void	exec_tree(t_cmd *cmd, char **envp);
 
+// Run Command && Utils
+void	run_cmd(char *str, char **envp);
+void	skip_whitespace(char **start, char *end);
+int		char_presence(char c, char *str);
+char	get_token(char **str, char *end_str, char **ptr, char **end_ptr);
+int		ft_exists_wskip(char **str, char *end_str, char *set);
 
 
+// String utils
 int		ft_putstr_fd(int fd, char *str);
 char    *ft_strjoin(char const *s1, char const *s2);
 size_t	ft_strlen(char *str);
-int		safe_fork(void);
-void	run_cmd(char *str, char **envp);
 char	*ft_strcpy(char *dest, char *src);
+
+// Protected Calls
+int		safe_fork(void);
 void	*safe_malloc(int size);
 
 

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   string_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: zali <zali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/12 13:25:51 by zali              #+#    #+#             */
-/*   Updated: 2025/07/19 14:25:52 by zali             ###   ########.fr       */
+/*   Updated: 2025/07/20 17:52:36 by zali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,28 +42,22 @@ char	*ft_strcpy(char *dest, char *src)
 	return (dest_start);
 }
 
-int	safe_fork(void)
+size_t	ft_strlen(char *str)
 {
-	int	pid;
+	size_t	i;
 
-	pid = fork();
-	if (pid == -1)
-	{
-		perror("fork");
-		exit(EXIT_FAILURE);
-	}
-	return (pid);
+	i = 0;
+	while (str[i])
+		i++;
+	return (i);
 }
 
-void	*safe_malloc(int size)
+int	ft_putstr_fd(int fd, char *str)
 {
-	char	*ptr;
+	size_t	i;
 
-	ptr = malloc(size);
-	if (!ptr)
-	{
-		perror("malloc");
-		exit(EXIT_FAILURE);
-	}
-	return ((void *)ptr);
+	i = ft_strlen(str);
+	write(fd, str, i);
+	write(fd, "\n", 1);
+	return ((int) i);
 }
