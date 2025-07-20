@@ -6,7 +6,7 @@
 /*   By: zali <zali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/12 13:25:51 by zali              #+#    #+#             */
-/*   Updated: 2025/07/20 17:52:36 by zali             ###   ########.fr       */
+/*   Updated: 2025/07/20 17:59:53 by zali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,4 +60,17 @@ int	ft_putstr_fd(int fd, char *str)
 	write(fd, str, i);
 	write(fd, "\n", 1);
 	return ((int) i);
+}
+int	ft_strcmp(char *s1, char *s2)
+{
+	int	i;
+
+	i = 0;
+	while (s1[i] || s2[i])
+	{
+		if (s1[i] != s2[i])
+			return (s1[i] - s2[i]);
+		i++;
+	}
+	return (0);
 }

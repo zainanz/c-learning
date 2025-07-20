@@ -6,7 +6,7 @@
 /*   By: zali <zali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/20 14:38:28 by zali              #+#    #+#             */
-/*   Updated: 2025/07/20 17:50:42 by zali             ###   ########.fr       */
+/*   Updated: 2025/07/20 18:07:44 by zali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ static void	handle_heredoc(t_cmd *cmd)
 	while (1)
 	{
 		ptr = readline("heredoc>");
-		if (strcmp(ptr, redircmd->file) == 0) // ft_strcmp implement
+		if (ft_strcmp(ptr, redircmd->file) == 0) // ft_strcmp implement
 			break ;
 		write(hd_pipe[1], ptr, ft_strlen(ptr));
 		write(hd_pipe[1], "\n", 1);
@@ -102,6 +102,7 @@ static void pipe_recursive(t_cmd *cmd, char **envp)
 		close(pipe_fd[1]);
 		close(pipe_fd[0]);
 		exec_tree(((t_pipecmd *)cmd)->left, envp);
+		exit(EXIT_FAILURE);
 	}
 	if (safe_fork() == 0)
 	{
@@ -109,6 +110,7 @@ static void pipe_recursive(t_cmd *cmd, char **envp)
 		close(pipe_fd[0]);
 		close(pipe_fd[1]);
 		exec_tree(((t_pipecmd *)cmd)->right, envp);
+		exit(EXIT_FAILURE);
 	}
 	close(pipe_fd[0]);
 	close(pipe_fd[1]);

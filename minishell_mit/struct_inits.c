@@ -6,7 +6,7 @@
 /*   By: zali <zali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/20 16:39:05 by zali              #+#    #+#             */
-/*   Updated: 2025/07/20 17:41:28 by zali             ###   ########.fr       */
+/*   Updated: 2025/07/20 18:01:50 by zali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ t_cmd	*init_t_execcmd(void)
 	t_execcmd	*execcmd;
 
 	execcmd = malloc(sizeof(*execcmd));
-	memset(execcmd, 0, sizeof(*execcmd)); // implement ft_memset
 	execcmd->type = EXEC;
 	return ((t_cmd *)execcmd);
 }

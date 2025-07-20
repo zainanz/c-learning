@@ -6,7 +6,7 @@
 /*   By: zali <zali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 20:41:51 by zali              #+#    #+#             */
-/*   Updated: 2025/07/20 17:51:08 by zali             ###   ########.fr       */
+/*   Updated: 2025/07/20 18:03:48 by zali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ int		ft_putstr_fd(int fd, char *str);
 char    *ft_strjoin(char const *s1, char const *s2);
 size_t	ft_strlen(char *str);
 char	*ft_strcpy(char *dest, char *src);
+int		ft_strcmp(char *s1, char *s2);
 
 // Protected Calls
 int		safe_fork(void);
