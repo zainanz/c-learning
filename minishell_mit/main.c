@@ -6,7 +6,7 @@
 /*   By: zali <zali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 20:40:28 by zali              #+#    #+#             */
-/*   Updated: 2025/07/19 18:08:12 by zali             ###   ########.fr       */
+/*   Updated: 2025/07/20 15:44:14 by zali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	main(int argc, char *argv[], char *envp[])
 		user_prompt = ft_strjoin(getcwd(buffer, 1000), ": ");
 	while (ptr = readline(user_prompt))
 	{
-		if (!strcmp(ptr, "exit"))
+		if (!strcmp(ptr, "exit")) // implement ft_strcmp
 			break ;
 		if (safe_fork() == 0)
 			run_cmd(ptr, envp);

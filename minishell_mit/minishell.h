@@ -6,7 +6,7 @@
 /*   By: zali <zali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 20:41:51 by zali              #+#    #+#             */
-/*   Updated: 2025/07/19 17:30:12 by zali             ###   ########.fr       */
+/*   Updated: 2025/07/20 15:44:15 by zali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,11 @@ typedef struct redircmd
 	char	*end_file;
 	int		mode;
 	int		fd;
-	char	c;
+	char	redir_type;
 }	t_redircmd;
+
+// Execution
+void	exec_tree(t_cmd *cmd, char **envp);
 
 int		ft_putstr_fd(int fd, char *str);
 char    *ft_strjoin(char const *s1, char const *s2);
@@ -67,5 +70,6 @@ int		safe_fork(void);
 void	run_cmd(char *str, char **envp);
 char	*ft_strcpy(char *dest, char *src);
 void	*safe_malloc(int size);
+
 
 #endif

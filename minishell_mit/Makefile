@@ -6,14 +6,14 @@
 #    By: zali <zali@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/19 14:15:51 by zali              #+#    #+#              #
-#    Updated: 2025/07/19 14:25:54 by zali             ###   ########.fr        #
+#    Updated: 2025/07/20 14:49:26 by zali             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC= cc
 CFLAGS = 
 NAME = ./a.out
-SRC = runcmd.c main.c utils.c display_utils.c
+SRC = runcmd.c main.c utils.c display_utils.c execute.c
 OBJ = ${SRC:.c=.o}
 HEADER = minishell.h
 all: ${NAME}

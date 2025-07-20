@@ -6,7 +6,7 @@
 /*   By: zali <zali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/12 13:30:06 by zali              #+#    #+#             */
-/*   Updated: 2025/07/19 18:05:51 by zali             ###   ########.fr       */
+/*   Updated: 2025/07/20 16:00:45 by zali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,7 +139,6 @@ t_cmd	*redir(t_cmd *cmd, char *sfile, char *efile, int mode, int fd)
 	redircmd->end_file = efile;
 	redircmd->mode = mode;
 	redircmd->fd = fd;
-	
 	return ((t_cmd *)redircmd);
 }
 
@@ -157,15 +156,16 @@ t_cmd	*parseredirects(t_cmd *cmd, char **str, char *end_str)
 		
 		token = get_token(str, end_str, 0, 0);
 		if (get_token(str, end_str, &ptr, &ptr_end) != 'w')
-			exit(EXIT_FAILURE); //prev token = < or > now looking for '> FILENAME' - if !word after skipping space filename missing
+			exit(EXIT_FAILURE); //prev token = < or > now looking for '> FILENAME' - if !word after skipping space filename missing 
 		if (token == '<') // <
+			cmd = redir(cmd, ptr, ptr_end, O_RDONLY, 0);
+		else if (token == '-') // <<
 			cmd = redir(cmd, ptr, ptr_end, O_RDONLY, 0);
 		else if (token == '>') // >
 			cmd = redir(cmd, ptr, ptr_end, O_WRONLY | O_TRUNC | O_CREAT, 1);
 		else if (token == '+') // >>
 			cmd = redir(cmd, ptr, ptr_end, O_WRONLY | O_CREAT, 1);
-		else if (token == '-') // <<
-			cmd = redir(cmd, ptr, ptr_end, O_WRONLY | O_CREAT, 0);
+		((t_redircmd *)cmd)->redir_type = token;
 	}
 	return (cmd);
 }
@@ -236,7 +236,9 @@ t_cmd	*parsecmd(char *str, char *end_str)
 	nullify(cmd);
 	return (cmd);
 }
-
+/*
+	Testing function  
+*/
 void	show_cmd_tree(t_cmd *cmd)
 {
 	int	i;
@@ -268,70 +270,10 @@ void	show_cmd_tree(t_cmd *cmd)
 	}
 }
 
-void pipe_recursive(t_cmd *cmd, char **envp);
-
-void	exec_tree(t_cmd *cmd, char **envp)
-{
-	t_redircmd	*redircmd;
-	t_execcmd	*execcmd;
-	char		*cmd_path;
-	
-	if (cmd->type == EXEC)
-	{
-		execcmd = (t_execcmd *)cmd;
-		cmd_path = ft_strjoin("/bin/", execcmd->argv[0]); 	
-		execve(cmd_path, execcmd->argv, envp);
-		free(cmd_path);
-		printf("exeve failed.\n");
-		return ;
-	}
-	if (cmd->type == PIPE)
-	{
-		pipe_recursive(cmd, envp);
-		return ;
-	}
-	if (cmd->type == REDIR)
-	{
-		redircmd = (t_redircmd *)cmd;
-		close(redircmd->fd);
-		if (open(redircmd->file, redircmd->mode) < 0)
-			exit(EXIT_FAILURE);
-		exec_tree(((t_redircmd *)cmd)->link, envp);
-		return ;
-	} 
-}
-
-void pipe_recursive(t_cmd *cmd, char **envp)
-{
-	int	pipe_fd[2];
-
-	if (pipe(pipe_fd) < 0)
-		exit(EXIT_FAILURE);
-	if (safe_fork() == 0)
-	{
-		dup2(pipe_fd[1], STDOUT_FILENO);
-		close(pipe_fd[1]);
-		close(pipe_fd[0]);
-		exec_tree(((t_pipecmd *)cmd)->left, envp);
-	}
-	if (safe_fork() == 0)
-	{
-		dup2(pipe_fd[0], STDIN_FILENO);
-		close(pipe_fd[0]);
-		close(pipe_fd[1]);
-		exec_tree(((t_pipecmd *)cmd)->right, envp);
-	}
-	close(pipe_fd[0]);
-	close(pipe_fd[1]);
-	wait(0);
-	wait(0);
-}
-
 void	free_trees(t_cmd *cmd)
 {
 	if (cmd->type == EXEC)
 	{
-		printf("cleans up exec.\n");
 		free(cmd);
 		cmd = NULL;
 		return ;
