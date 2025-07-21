@@ -6,7 +6,7 @@
 /*   By: zali <zali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/20 16:36:13 by zali              #+#    #+#             */
-/*   Updated: 2025/07/20 17:49:18 by zali             ###   ########.fr       */
+/*   Updated: 2025/07/21 11:41:14 by zali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,8 +86,6 @@ static t_cmd	*parsestr(char **str, char *end_str)
 	while (!ft_exists_wskip(str, end_str, "<>|()&") && *str < end_str)
 	{
 		token = get_token(str, end_str, &ptr, &end_ptr);
-		int i = 0;
-		
 		if (!token)
 			break ;
 		exec_cmd->argv[argc] = ptr; 

@@ -6,7 +6,7 @@
 /*   By: zali <zali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/20 14:38:28 by zali              #+#    #+#             */
-/*   Updated: 2025/07/20 18:07:44 by zali             ###   ########.fr       */
+/*   Updated: 2025/07/21 17:39:18 by zali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 static void pipe_recursive(t_cmd *cmd, char **envp);
 static void exec_recursive(t_cmd *cmd, char **envp);
 static void redir_recursive(t_cmd *cmd, char **envp);
+static void	process_heredocs(t_cmd *cmd);
 
 void	exec_tree(t_cmd *cmd, char **envp)
 {
@@ -22,9 +23,15 @@ void	exec_tree(t_cmd *cmd, char **envp)
 	if (cmd->type == EXEC)
 		exec_recursive(cmd, envp);
 	else if (cmd->type == PIPE)
+	{
+		process_heredocs(cmd);
 		pipe_recursive(cmd, envp);
+	}
 	else if (cmd->type == REDIR)
+	{
+		process_heredocs(cmd);
 		redir_recursive(cmd, envp);
+	}
 }
 
 static void exec_recursive(t_cmd *cmd, char **envp)
@@ -60,8 +67,8 @@ static void	handle_heredoc(t_cmd *cmd)
 	redircmd = (t_redircmd *) cmd;
 	while (1)
 	{
-		ptr = readline("heredoc>");
-		if (ft_strcmp(ptr, redircmd->file) == 0) // ft_strcmp implement
+		ptr = readline(">");
+		if (ft_strcmp(ptr, redircmd->file) == 0)
 			break ;
 		write(hd_pipe[1], ptr, ft_strlen(ptr));
 		write(hd_pipe[1], "\n", 1);
@@ -72,21 +79,43 @@ static void	handle_heredoc(t_cmd *cmd)
 	close(hd_pipe[0]);
 }
 
+static void	process_heredocs(t_cmd *cmd)
+{
+	t_redircmd	*redircmd;
+	t_pipecmd	*pipecmd;
+
+	if (!cmd)
+		return ;
+	if (cmd->type == REDIR)
+	{
+		redircmd = (t_redircmd *) cmd;
+		if (redircmd->redir_type == '-')
+			handle_heredoc(cmd);
+		process_heredocs(redircmd->link);
+	}
+	/*
+	else if (cmd->type == PIPE)
+	{
+		pipecmd = (t_pipecmd *)cmd;
+		process_heredocs(pipecmd->left);
+		process_heredocs(pipecmd->right);
+	}
+	*/
+}
+
 static void redir_recursive(t_cmd *cmd, char **envp)
 {
 	t_redircmd	*redircmd;
 	
 	redircmd = (t_redircmd *)cmd;
-	if (redircmd->redir_type == '-')
-	{
-		handle_heredoc(cmd);
-	}
-	else
+	if (redircmd->redir_type != '-')
 	{
 		close(redircmd->fd);
-		if (open(redircmd->file, redircmd->mode) < 0)
-		exit(EXIT_FAILURE);
+		if (open(redircmd->file, redircmd->mode, 0644) < 0)
+			exit(EXIT_FAILURE);
 	}
+	if (redircmd->link->type == REDIR)
+		redir_recursive(redircmd->link, envp);
 	exec_tree(((t_redircmd *)cmd)->link, envp);
 }
 
