@@ -15,7 +15,7 @@
 static void pipe_recursive(t_cmd *cmd, char **envp);
 static void exec_recursive(t_cmd *cmd, char **envp);
 static void redir_recursive(t_cmd *cmd, char **envp);
-static void	process_heredocs(t_cmd *cmd);
+static int	process_heredocs(t_cmd *cmd);
 
 void	exec_tree(t_cmd *cmd, char **envp)
 {
@@ -23,10 +23,7 @@ void	exec_tree(t_cmd *cmd, char **envp)
 	if (cmd->type == EXEC)
 		exec_recursive(cmd, envp);
 	else if (cmd->type == PIPE)
-	{
-		process_heredocs(cmd);
 		pipe_recursive(cmd, envp);
-	}
 	else if (cmd->type == REDIR)
 	{
 		process_heredocs(cmd);
@@ -79,28 +76,26 @@ static void	handle_heredoc(t_cmd *cmd)
 	close(hd_pipe[0]);
 }
 
-static void	process_heredocs(t_cmd *cmd)
+static int	process_heredocs(t_cmd *cmd)
 {
 	t_redircmd	*redircmd;
 	t_pipecmd	*pipecmd;
+	int			ret;
 
+	ret = 0;
 	if (!cmd)
-		return ;
+		return (0);
 	if (cmd->type == REDIR)
 	{
 		redircmd = (t_redircmd *) cmd;
 		if (redircmd->redir_type == '-')
+		{
 			handle_heredoc(cmd);
+			ret = 1;
+		}
 		process_heredocs(redircmd->link);
 	}
-	/*
-	else if (cmd->type == PIPE)
-	{
-		pipecmd = (t_pipecmd *)cmd;
-		process_heredocs(pipecmd->left);
-		process_heredocs(pipecmd->right);
-	}
-	*/
+	return (ret);
 }
 
 static void redir_recursive(t_cmd *cmd, char **envp)
@@ -127,22 +122,29 @@ static void pipe_recursive(t_cmd *cmd, char **envp)
 		exit(EXIT_FAILURE);
 	if (safe_fork() == 0)
 	{
+		process_heredocs(((t_pipecmd *)cmd)->left);
+		close(STDOUT_FILENO);
 		dup2(pipe_fd[1], STDOUT_FILENO);
 		close(pipe_fd[1]);
 		close(pipe_fd[0]);
+		close(STDIN_FILENO);
 		exec_tree(((t_pipecmd *)cmd)->left, envp);
+		printf("first failed.\n");
 		exit(EXIT_FAILURE);
 	}
+	wait(0);
 	if (safe_fork() == 0)
 	{
-		dup2(pipe_fd[0], STDIN_FILENO);
+		close(STDIN_FILENO);
+		if (!process_heredocs(((t_pipecmd *)cmd)->right))
+			dup2(pipe_fd[0], STDIN_FILENO);
 		close(pipe_fd[0]);
 		close(pipe_fd[1]);
 		exec_tree(((t_pipecmd *)cmd)->right, envp);
+		printf("second failed.\n");
 		exit(EXIT_FAILURE);
 	}
 	close(pipe_fd[0]);
 	close(pipe_fd[1]);
-	wait(0);
 	wait(0);
 }
