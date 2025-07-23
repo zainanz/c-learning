@@ -6,7 +6,7 @@
 /*   By: zali <zali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/20 16:36:13 by zali              #+#    #+#             */
-/*   Updated: 2025/07/21 11:41:14 by zali             ###   ########.fr       */
+/*   Updated: 2025/07/23 14:44:34 by zali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static void	nullify(t_cmd *cmd)
 	{
 		execcmd = (t_execcmd *)cmd;
 		while (execcmd->eargv[i])
-			*execcmd->eargv[i++] = 0;
+			*(execcmd->eargv[i++]) = 0;
 	}
 	else if (cmd->type == PIPE)
 	{

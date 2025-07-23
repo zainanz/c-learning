@@ -6,7 +6,7 @@
 /*   By: zali <zali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/12 13:30:06 by zali              #+#    #+#             */
-/*   Updated: 2025/07/21 13:31:28 by zali             ###   ########.fr       */
+/*   Updated: 2025/07/23 14:44:45 by zali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,9 @@ void	run_cmd(char *str, char **envp)
 
 	end_str = str + ft_strlen(str);
 	cmd = parsecmd(str, end_str);
+//	printf("PTR in fork: %s\n", str);
 	//show_cmd_tree(cmd);
-	exec_tree(cmd, envp);
+	exec_tree(cmd, envp, 0);
 	free_trees(cmd);
+	exit(EXIT_SUCCESS);
 }

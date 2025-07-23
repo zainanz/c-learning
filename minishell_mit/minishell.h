@@ -6,7 +6,7 @@
 /*   By: zali <zali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 20:41:51 by zali              #+#    #+#             */
-/*   Updated: 2025/07/20 18:03:48 by zali             ###   ########.fr       */
+/*   Updated: 2025/07/23 13:55:24 by zali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ t_cmd	*init_t_execcmd(void);
 t_cmd	*parsecmd(char *str, char *end_str);
 
 // Execution
-void	exec_tree(t_cmd *cmd, char **envp);
+void	exec_tree(t_cmd *cmd, char **envp, int piped);
 
 // Run Command && Utils
 void	run_cmd(char *str, char **envp);

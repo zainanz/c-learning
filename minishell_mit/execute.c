@@ -6,7 +6,7 @@
 /*   By: zali <zali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/20 14:38:28 by zali              #+#    #+#             */
-/*   Updated: 2025/07/21 17:39:18 by zali             ###   ########.fr       */
+/*   Updated: 2025/07/23 14:54:36 by zali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,20 @@ static void exec_recursive(t_cmd *cmd, char **envp);
 static void redir_recursive(t_cmd *cmd, char **envp);
 static int	process_heredocs(t_cmd *cmd);
 
-void	exec_tree(t_cmd *cmd, char **envp)
+void	exec_tree(t_cmd *cmd, char **envp, int piped)
 {
 	
 	if (cmd->type == EXEC)
 		exec_recursive(cmd, envp);
 	else if (cmd->type == PIPE)
+	{
+		printf("Pipe.\n");
 		pipe_recursive(cmd, envp);
+	}
 	else if (cmd->type == REDIR)
 	{
-		process_heredocs(cmd);
+		if (!piped)
+			process_heredocs(cmd);
 		redir_recursive(cmd, envp);
 	}
 }
@@ -52,7 +56,7 @@ static void exec_recursive(t_cmd *cmd, char **envp)
 	exit(EXIT_FAILURE);
 }
 
-static void	handle_heredoc(t_cmd *cmd)
+static int	handle_heredoc(t_cmd *cmd)
 {
 	char		*ptr;
 	int			hd_pipe[2];
@@ -72,7 +76,7 @@ static void	handle_heredoc(t_cmd *cmd)
 		free(ptr);
 	}
 	close(hd_pipe[1]);
-	dup2(hd_pipe[0], 0);
+	dup2(hd_pipe[0], STDIN_FILENO);
 	close(hd_pipe[0]);
 }
 
@@ -93,7 +97,10 @@ static int	process_heredocs(t_cmd *cmd)
 			handle_heredoc(cmd);
 			ret = 1;
 		}
-		process_heredocs(redircmd->link);
+		if (ret != 1)
+			ret = process_heredocs(redircmd->link);
+		else
+			process_heredocs(redircmd->link);
 	}
 	return (ret);
 }
@@ -111,40 +118,47 @@ static void redir_recursive(t_cmd *cmd, char **envp)
 	}
 	if (redircmd->link->type == REDIR)
 		redir_recursive(redircmd->link, envp);
-	exec_tree(((t_redircmd *)cmd)->link, envp);
+	exec_tree(((t_redircmd *)cmd)->link, envp, 0);
 }
 
 static void pipe_recursive(t_cmd *cmd, char **envp)
 {
 	int	pipe_fd[2];
+	int	wait_val;
+	int	left_pid;
+	int	right_pid;
 
 	if (pipe(pipe_fd) < 0)
 		exit(EXIT_FAILURE);
 	if (safe_fork() == 0)
 	{
+		close(pipe_fd[0]);
 		process_heredocs(((t_pipecmd *)cmd)->left);
-		close(STDOUT_FILENO);
 		dup2(pipe_fd[1], STDOUT_FILENO);
 		close(pipe_fd[1]);
-		close(pipe_fd[0]);
-		close(STDIN_FILENO);
-		exec_tree(((t_pipecmd *)cmd)->left, envp);
+		exec_tree(((t_pipecmd *)cmd)->left, envp, 1);
 		printf("first failed.\n");
 		exit(EXIT_FAILURE);
 	}
-	wait(0);
+	waitpid(left_pid, &wait_val, 0);
 	if (safe_fork() == 0)
 	{
-		close(STDIN_FILENO);
-		if (!process_heredocs(((t_pipecmd *)cmd)->right))
-			dup2(pipe_fd[0], STDIN_FILENO);
-		close(pipe_fd[0]);
 		close(pipe_fd[1]);
-		exec_tree(((t_pipecmd *)cmd)->right, envp);
+		if (((t_pipecmd *)cmd)->right->type == PIPE)
+			exec_tree(((t_pipecmd *)cmd)->right, envp, 1);
+		else
+		{
+			if (!process_heredocs(((t_pipecmd *)cmd)->right))
+				dup2(pipe_fd[0], STDIN_FILENO);
+			close(pipe_fd[0]);
+			exec_tree(((t_pipecmd *)cmd)->right, envp, 1);
+		}
 		printf("second failed.\n");
 		exit(EXIT_FAILURE);
 	}
 	close(pipe_fd[0]);
 	close(pipe_fd[1]);
-	wait(0);
+	waitpid(right_pid, &wait_val, 0);
+	printf("exit val: %i\n", wait_val);
+	exit(wait_val);
 }
