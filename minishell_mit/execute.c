@@ -6,7 +6,7 @@
 /*   By: zali <zali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/20 14:38:28 by zali              #+#    #+#             */
-/*   Updated: 2025/07/23 14:54:36 by zali             ###   ########.fr       */
+/*   Updated: 2025/07/23 14:58:51 by zali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,7 +137,6 @@ static void pipe_recursive(t_cmd *cmd, char **envp)
 		dup2(pipe_fd[1], STDOUT_FILENO);
 		close(pipe_fd[1]);
 		exec_tree(((t_pipecmd *)cmd)->left, envp, 1);
-		printf("first failed.\n");
 		exit(EXIT_FAILURE);
 	}
 	waitpid(left_pid, &wait_val, 0);
@@ -153,12 +152,10 @@ static void pipe_recursive(t_cmd *cmd, char **envp)
 			close(pipe_fd[0]);
 			exec_tree(((t_pipecmd *)cmd)->right, envp, 1);
 		}
-		printf("second failed.\n");
 		exit(EXIT_FAILURE);
 	}
 	close(pipe_fd[0]);
 	close(pipe_fd[1]);
 	waitpid(right_pid, &wait_val, 0);
-	printf("exit val: %i\n", wait_val);
 	exit(wait_val);
 }
