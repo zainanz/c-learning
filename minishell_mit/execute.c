@@ -6,7 +6,7 @@
 /*   By: zali <zali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/20 14:38:28 by zali              #+#    #+#             */
-/*   Updated: 2025/07/23 14:58:51 by zali             ###   ########.fr       */
+/*   Updated: 2025/07/23 18:16:40 by zali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,33 +76,44 @@ static int	handle_heredoc(t_cmd *cmd)
 		free(ptr);
 	}
 	close(hd_pipe[1]);
-	dup2(hd_pipe[0], STDIN_FILENO);
-	close(hd_pipe[0]);
+	//dup2(hd_pipe[0], STDIN_FILENO);
+	//close(hd_pipe[0]);
+	return (hd_pipe[0]);
 }
 
-static int	process_heredocs(t_cmd *cmd)
+static int	*process_heredocs2(t_cmd *cmd, int *fd)
 {
 	t_redircmd	*redircmd;
 	t_pipecmd	*pipecmd;
 	int			ret;
 
-	ret = 0;
+	ret = -1;
 	if (!cmd)
 		return (0);
 	if (cmd->type == REDIR)
 	{
 		redircmd = (t_redircmd *) cmd;
+		process_heredocs2(redircmd->link, fd);
 		if (redircmd->redir_type == '-')
-		{
-			handle_heredoc(cmd);
-			ret = 1;
-		}
-		if (ret != 1)
-			ret = process_heredocs(redircmd->link);
-		else
-			process_heredocs(redircmd->link);
+			*fd = handle_heredoc(cmd);
 	}
-	return (ret);
+	return (fd);
+}
+
+static int process_heredocs(t_cmd *cmd)
+{
+	int	fd;
+
+	fd = -1;
+	process_heredocs2(cmd, &fd);
+	if (fd != -1)
+	{
+		dup2(fd, STDIN_FILENO);
+		close(fd);
+		return (1);
+	}
+	else
+		return (0);
 }
 
 static void redir_recursive(t_cmd *cmd, char **envp)
