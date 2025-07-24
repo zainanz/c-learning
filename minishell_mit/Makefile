@@ -16,6 +16,7 @@ NAME = ./a.out
 SRC = runcmd.c main.c string_utils.c safe_utils.c execute.c parse.c struct_inits.c runcmd_utils.c
 OBJ = ${SRC:.c=.o}
 HEADER = minishell.h
+SUP_FILE = .readline.supp
 all: ${NAME}
 
 ${NAME}: ${OBJ} ${HEADER}
@@ -26,6 +27,13 @@ ${NAME}: ${OBJ} ${HEADER}
 
 clean:
 	rm -f ${OBJ}
+
+valrun: ${NAME}
+	valgrind --leak-check=full \
+         --show-leak-kinds=all \
+         --track-origins=yes \
+         --suppressions=${SUP_FILE} \
+         ./${NAME}
 
 fclean: clean
 	rm -f ${NAME}

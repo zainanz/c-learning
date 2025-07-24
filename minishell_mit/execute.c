@@ -6,7 +6,7 @@
 /*   By: zali <zali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/20 14:38:28 by zali              #+#    #+#             */
-/*   Updated: 2025/07/23 18:16:40 by zali             ###   ########.fr       */
+/*   Updated: 2025/07/24 16:36:42 by zali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,7 @@ void	exec_tree(t_cmd *cmd, char **envp, int piped)
 	if (cmd->type == EXEC)
 		exec_recursive(cmd, envp);
 	else if (cmd->type == PIPE)
-	{
-		printf("Pipe.\n");
 		pipe_recursive(cmd, envp);
-	}
 	else if (cmd->type == REDIR)
 	{
 		if (!piped)
@@ -76,8 +73,6 @@ static int	handle_heredoc(t_cmd *cmd)
 		free(ptr);
 	}
 	close(hd_pipe[1]);
-	//dup2(hd_pipe[0], STDIN_FILENO);
-	//close(hd_pipe[0]);
 	return (hd_pipe[0]);
 }
 
@@ -85,9 +80,7 @@ static int	*process_heredocs2(t_cmd *cmd, int *fd)
 {
 	t_redircmd	*redircmd;
 	t_pipecmd	*pipecmd;
-	int			ret;
 
-	ret = -1;
 	if (!cmd)
 		return (0);
 	if (cmd->type == REDIR)
@@ -95,7 +88,11 @@ static int	*process_heredocs2(t_cmd *cmd, int *fd)
 		redircmd = (t_redircmd *) cmd;
 		process_heredocs2(redircmd->link, fd);
 		if (redircmd->redir_type == '-')
+		{
+			if (*fd != -1)
+				close(*fd);
 			*fd = handle_heredoc(cmd);
+		}
 	}
 	return (fd);
 }
@@ -141,7 +138,8 @@ static void pipe_recursive(t_cmd *cmd, char **envp)
 
 	if (pipe(pipe_fd) < 0)
 		exit(EXIT_FAILURE);
-	if (safe_fork() == 0)
+	left_pid = safe_fork();
+	if (left_pid == 0)
 	{
 		close(pipe_fd[0]);
 		process_heredocs(((t_pipecmd *)cmd)->left);
@@ -151,9 +149,10 @@ static void pipe_recursive(t_cmd *cmd, char **envp)
 		exit(EXIT_FAILURE);
 	}
 	waitpid(left_pid, &wait_val, 0);
-	if (safe_fork() == 0)
+	right_pid = safe_fork();
+	if (right_pid == 0)
 	{
-		close(pipe_fd[1]);
+	
 		if (((t_pipecmd *)cmd)->right->type == PIPE)
 			exec_tree(((t_pipecmd *)cmd)->right, envp, 1);
 		else
@@ -161,6 +160,7 @@ static void pipe_recursive(t_cmd *cmd, char **envp)
 			if (!process_heredocs(((t_pipecmd *)cmd)->right))
 				dup2(pipe_fd[0], STDIN_FILENO);
 			close(pipe_fd[0]);
+			close(pipe_fd[1]);
 			exec_tree(((t_pipecmd *)cmd)->right, envp, 1);
 		}
 		exit(EXIT_FAILURE);
