@@ -1,45 +1,27 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: zali <zali@student.42lisboa.com>           +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/21 14:40:32 by zali              #+#    #+#             */
-/*   Updated: 2025/06/21 17:08:33 by zali             ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
+#include "philo.h"
 
-#include "philosophers.h"
+int	display_status(t_philo *philo, char *str)
+{
+	pthread_mutex_lock(&philo->data->mutex_stop);
+	if (philo->data->stop)
+	{
+		pthread_mutex_unlock(&philo->data->mutex_stop);
+		return (1);
+	}
+	printf("%ld %i %s", get_current_time() - philo->data->start_time, philo->id, str);
+	pthread_mutex_unlock(&philo->data->mutex_stop);
+	return (0);
+}
 
-void	ft_putstr_fd(int fd, char *str)
+void	clean_up(t_data *data)
 {
 	int	i;
 
 	i = 0;
-	while (str[i])
-		i++;
-	write(fd, str, i);
-}
-
-size_t	get_current_time(void)
-{
-	struct timeval	time;
-
-	if (gettimeofday(&time, NULL) == -1)
+	pthread_mutex_destroy(&data->mutex_stop);
+	while (i < data->n_philos)
 	{
-		ft_putstr_fd(2, "Time Error.\n");
-		exit(EXIT_FAILURE);
+		pthread_mutex_destroy(&data->philos[i].eat_mutex);
+		i++;
 	}
-	return (time.tv_sec * 1000 + time.tv_usec / 1000);
-}
-
-int	ft_sleep(size_t milliseconds)
-{
-	size_t	start;
-
-	start = get_current_time();
-	while ((get_current_time() - start) < milliseconds)
-		usleep(500);
-	return (0);
 }

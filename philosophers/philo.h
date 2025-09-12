@@ -1,0 +1,71 @@
+#ifndef PHILO_H
+# define PHILO_H
+
+# include <stdio.h>
+# include <unistd.h>
+# include <stdlib.h>
+# include <pthread.h>
+# include <sys/time.h>
+
+enum {
+	EATING,
+	SLEEPING,
+	THINKING,
+	DEAD
+};
+
+typedef struct s_data t_data;
+
+typedef struct s_philo
+{
+	int				id;
+	int				state;
+	int				n_eats;
+	size_t			last_eaten;
+	t_data			*data;
+	pthread_mutex_t	*l_fork;
+	pthread_mutex_t	eat_mutex;
+	pthread_mutex_t	*r_fork;
+	pthread_t		thread;
+}	t_philo;
+
+typedef struct s_data
+{
+	int				n_philos;
+	int				n_eats;
+	size_t			die_time;
+	int				stop;
+	size_t			start_time;
+	size_t			sleep_time;
+	size_t			eat_time;
+	t_philo			*philos;
+	pthread_mutex_t	*forks;
+	pthread_mutex_t	mutex_stop;
+}	t_data;
+
+// Str Utils
+void	ft_putstr_fd(char *str, int fd);
+int		ft_strlen(char *str);
+int		ft_atoi(char *str);
+size_t	get_current_time(void);
+void	ft_usleep(size_t mls);
+
+// Utils
+int		display_status(t_philo *philo, char *str);
+void	clean_up(t_data *data);
+
+// Inits
+void	init_data(char **argv, t_data *data, pthread_mutex_t *forks, t_philo *philos);
+void	init_philos(t_data *data);
+void	routine(void *ptr);
+
+
+// Begin Dinner
+void	initiate(t_data *data);
+
+// Safe Calls
+void	*safe_malloc(int size);
+void	safe_create_thread(pthread_t *addr, void *routine, void *ptr, t_data *data);
+void	safe_mutex_init(pthread_mutex_t	*mutex, t_data *data);
+
+#endif
