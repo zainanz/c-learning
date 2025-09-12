@@ -1,5 +1,6 @@
 #ifndef PHILO_H
 # define PHILO_H
+# define MAX_LIMIT 350
 
 # include <stdio.h>
 # include <unistd.h>
@@ -7,19 +8,11 @@
 # include <pthread.h>
 # include <sys/time.h>
 
-enum {
-	EATING,
-	SLEEPING,
-	THINKING,
-	DEAD
-};
-
 typedef struct s_data t_data;
 
 typedef struct s_philo
 {
 	int				id;
-	int				state;
 	int				n_eats;
 	size_t			last_eaten;
 	t_data			*data;
@@ -48,11 +41,12 @@ void	ft_putstr_fd(char *str, int fd);
 int		ft_strlen(char *str);
 int		ft_atoi(char *str);
 size_t	get_current_time(void);
-void	ft_usleep(size_t mls);
+int		ft_isdigit(char c);
 
 // Utils
 int		display_status(t_philo *philo, char *str);
 void	clean_up(t_data *data);
+void	ft_usleep(size_t ms);
 
 // Inits
 void	init_data(char **argv, t_data *data, pthread_mutex_t *forks, t_philo *philos);

@@ -13,7 +13,8 @@ int	philo_dead(t_philo *philo)
 {
 	if ((get_current_time() - philo->last_eaten) > philo->data->die_time)
 	{
-		printf("%ld %i died\n", get_current_time() - philo->data->start_time, philo->id);
+		pthread_mutex_lock(&philo->data->mutex_stop);
+		printf("\33[31m%ld\t%i\t died\33[0m\n", get_current_time() - philo->data->start_time, philo->id);
 		return (1);
 	}
 	return (0);
@@ -23,10 +24,8 @@ int should_stop(t_data *data)
 {
 	int	i;
 	int	full;
-	int	ret;
 	
 	i = 0;
-	ret = 0;
 	full = 0;
 	while(i < data->n_philos)
 	{
@@ -34,16 +33,18 @@ int should_stop(t_data *data)
 		if (philo_dead(&data->philos[i]))
 		{
 			pthread_mutex_unlock(&data->philos[i].eat_mutex);
-			ret = 1;
-			break ;
+			return (1);
 		}
 		full += philo_full(&data->philos[i]);
 		pthread_mutex_unlock(&data->philos[i].eat_mutex);
 		i++;
 	}
 	if (data->n_eats != -1 && full >= data->n_philos)
-		ret = 1;
-	return (ret);
+	{
+		pthread_mutex_lock(&data->mutex_stop);
+		return (1);
+	}
+	return (0);
 }
 
 void	monitor_philos(void *ptr)
@@ -55,7 +56,6 @@ void	monitor_philos(void *ptr)
 	{
 		if (should_stop(data))
 		{
-			pthread_mutex_lock(&data->mutex_stop);
 			data->stop = 1;
 			pthread_mutex_unlock(&data->mutex_stop);
 			break ;

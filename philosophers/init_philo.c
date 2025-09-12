@@ -9,10 +9,6 @@ void eat(t_philo *philo)
 		return ;
 	}
 	pthread_mutex_lock(philo->r_fork);
-	pthread_mutex_lock(&philo->eat_mutex);
-	philo->n_eats++;
-	philo->last_eaten = get_current_time();
-	pthread_mutex_unlock(&philo->eat_mutex);
 	if (display_status(philo, " has taken a fork\n")
 		|| display_status(philo, " is eating\n"))
 	{
@@ -20,6 +16,10 @@ void eat(t_philo *philo)
 		pthread_mutex_unlock(philo->r_fork);
 		return ;
 	}
+	pthread_mutex_lock(&philo->eat_mutex);
+	philo->n_eats++;
+	philo->last_eaten = get_current_time();
+	pthread_mutex_unlock(&philo->eat_mutex);
 	ft_usleep(philo->data->eat_time);
 	pthread_mutex_unlock(philo->l_fork);
 	pthread_mutex_unlock(philo->r_fork);
@@ -30,7 +30,7 @@ void	routine(void *ptr)
 	t_philo	*philo;
 
 	philo = (t_philo *)ptr;
-	if (philo->id % 2 == 1)
+	if (philo->id % 2 == 0)
 	{
 		display_status(philo, " is thinking\n");
 		ft_usleep(1);

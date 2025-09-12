@@ -2,8 +2,8 @@
 
 int	main(int argc, char *argv[])
 {
-	pthread_mutex_t	forks[200];
-	t_philo			philos[200];
+	pthread_mutex_t	forks[MAX_LIMIT];
+	t_philo			philos[MAX_LIMIT];
 	t_data			data;
 
 	if (argc != 5 && argc != 6)

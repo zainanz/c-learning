@@ -1,12 +1,8 @@
 #include "philo.h"
 
-void	ft_usleep(size_t mls)
+int	ft_isdigit(char c)
 {
-	size_t	start;
-
-	start = get_current_time();
-	while (get_current_time() - start < mls)
-		usleep(500);
+	return (c >= '0' && c <= '9');
 }
 
 size_t	get_current_time(void)
