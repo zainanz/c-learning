@@ -21,6 +21,7 @@ void	clean_up(t_data *data)
 	pthread_mutex_destroy(&data->mutex_stop);
 	while (i < data->n_philos)
 	{
+		pthread_mutex_destroy(&data->forks[i]);
 		pthread_mutex_destroy(&data->philos[i].eat_mutex);
 		i++;
 	}

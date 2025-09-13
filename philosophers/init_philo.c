@@ -25,7 +25,7 @@ void eat(t_philo *philo)
 	pthread_mutex_unlock(philo->r_fork);
 }
 
-void	routine(void *ptr)
+void	philo_routine(void *ptr)
 {
 	t_philo	*philo;
 

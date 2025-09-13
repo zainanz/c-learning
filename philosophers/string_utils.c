@@ -13,23 +13,30 @@ size_t	get_current_time(void)
 	return (tv.tv_sec * 1000 + tv.tv_usec / 1000);
 }
 
-int	ft_atoi(char *str)
+int	get_valid_num(char *str)
 {
-	int	total;
-	int	sign;
+	size_t	total;
 
-	sign = 1;
+	if (!str)
+		return (0);
 	total = 0;
-	if (*str == '-' || *str == '+')
-		if (*str++ == '-')
-			sign = -1;
 	while (*str)
 	{
+		if (!ft_isdigit(*str))
+		{
+			ft_putstr_fd("\033[31m[ERROR]\033[0m only positive int range is accepted.\n", 2);
+			exit(EXIT_FAILURE);
+		}
 		total *= 10;
 		total += *str - '0'; 
+		if (total > INT_MAX)
+		{
+			ft_putstr_fd("\033[31m[ERROR]\033[0m only positive int range is accepted.\n", 2);
+			exit(EXIT_FAILURE);
+		}
 		str++;
 	}
-	return (total * sign);
+	return (total);
 }
 
 int		ft_strlen(char *str)

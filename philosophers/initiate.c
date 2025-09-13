@@ -11,7 +11,7 @@ static int	philo_full(t_philo *philo)
 
 int	philo_dead(t_philo *philo)
 {
-	if ((get_current_time() - philo->last_eaten) > philo->data->die_time)
+	if ((get_current_time() - philo->last_eaten) > (size_t)philo->data->die_time)
 	{
 		pthread_mutex_lock(&philo->data->mutex_stop);
 		printf("\33[31m%ld\t%i\t died\33[0m\n", get_current_time() - philo->data->start_time, philo->id);
@@ -70,7 +70,7 @@ void	initiate(t_data *data)
 
 	i = -1;
 	while (++i < data->n_philos)
-		safe_create_thread(&data->philos[i].thread, routine, (void *)&data->philos[i], data);
+		safe_create_thread(&data->philos[i].thread, philo_routine, (void *)&data->philos[i], data);
 	safe_create_thread(&monitor, monitor_philos, (void *)data, data);
 	pthread_join(monitor, NULL);
 	i = -1;
