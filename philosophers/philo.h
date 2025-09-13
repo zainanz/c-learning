@@ -1,6 +1,8 @@
 #ifndef PHILO_H
 # define PHILO_H
-# define MAX_LIMIT 350
+# ifndef MAX_LIMIT
+#  define MAX_LIMIT 350
+# endif
 
 # include <stdio.h>
 # include <unistd.h>

@@ -49,7 +49,6 @@ void	routine(void *ptr)
 void	init_philos(t_data *data)
 {
 	int	i;
-	pthread_mutex_t **addr;
 
 	i = 0;
 	while (i < data->n_philos)

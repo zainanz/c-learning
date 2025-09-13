@@ -42,6 +42,14 @@ void	init_data(char **argv, t_data *data, pthread_mutex_t *forks, t_philo *philo
 {
 	validate_argv(argv);
 	data->n_philos = ft_atoi(argv[1]);
+	if (data->n_philos > MAX_LIMIT)
+	{
+		ft_putstr_fd("\033[31m[ERROR]\033[0m 200 is the max num of philos test range.\n", 2);
+		ft_putstr_fd("\033[33m[INFO]\033[0m \"make max limit=", 2);
+		ft_putstr_fd(argv[1], 2);
+		ft_putstr_fd("\" to test your value.\n", 2);
+		exit(EXIT_FAILURE);
+	}
 	if (data->n_philos == 0)
 		exit(EXIT_SUCCESS);
 	data->start_time = get_current_time();
