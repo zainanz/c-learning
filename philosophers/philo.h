@@ -11,7 +11,7 @@
 # include <pthread.h>
 # include <sys/time.h>
 
-typedef struct s_data t_data;
+typedef struct s_data	t_data;
 
 typedef struct s_philo
 {
@@ -52,7 +52,8 @@ void			clean_up(t_data *data);
 void			ft_usleep(size_t ms);
 
 // Inits
-void			init_data(char **argv, t_data *data, pthread_mutex_t *forks, t_philo *philos);
+void			init_data(char **argv, t_data *data,
+					pthread_mutex_t *forks, t_philo *philos);
 void			init_philos(t_data *data);
 void			philo_routine(void *ptr);
 
@@ -60,6 +61,7 @@ void			philo_routine(void *ptr);
 void			initiate(t_data *data);
 
 // Safe Calls
-void			safe_create_thread(pthread_t *addr, void *routine, void *ptr, t_data *data);
+void			safe_create_thread(pthread_t *addr,
+					void *routine, void *ptr, t_data *data);
 void			safe_mutex_init(pthread_mutex_t	*mutex, t_data *data);
 #endif

@@ -8,7 +8,8 @@ int	display_status(t_philo *philo, char *str)
 		pthread_mutex_unlock(&philo->data->mutex_stop);
 		return (1);
 	}
-	printf("%ld\t%i\t%s", get_current_time() - philo->data->start_time, philo->id + 1, str);
+	printf("%ld\t%i\t%s", get_current_time() - philo->data->start_time,
+		philo->id + 1, str);
 	pthread_mutex_unlock(&philo->data->mutex_stop);
 	return (0);
 }

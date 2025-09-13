@@ -10,7 +10,8 @@ void	safe_mutex_init(pthread_mutex_t	*mutex, t_data *data)
 	}
 }
 
-void	safe_create_thread(pthread_t *addr, void *routine, void *ptr, t_data *data)
+void	safe_create_thread(pthread_t *addr,
+			void *routine, void *ptr, t_data *data)
 {
 	if (pthread_create(addr, NULL, routine, ptr) != 0)
 	{

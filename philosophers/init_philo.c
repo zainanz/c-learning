@@ -1,9 +1,10 @@
 #include "philo.h"
 
-void eat(t_philo *philo)
+void	eat(t_philo *philo)
 {
 	pthread_mutex_lock(philo->l_fork);
-	if (display_status(philo, " has taken a fork\n") || philo->data->n_philos == 1)
+	if (display_status(philo, " has taken a fork\n")
+		|| philo->data->n_philos == 1)
 	{
 		pthread_mutex_unlock(philo->l_fork);
 		return ;
@@ -38,10 +39,12 @@ void	philo_routine(void *ptr)
 	while (1)
 	{
 		eat(philo);
-		if (philo->data->n_philos == 1 || display_status(philo, " is sleeping\n"))
+		if (philo->data->n_philos == 1
+			|| display_status(philo, " is sleeping\n"))
 			break ;
 		ft_usleep(philo->data->sleep_time);
-		if (philo->data->n_philos == 1 || display_status(philo, " is thinking\n"))
+		if (philo->data->n_philos == 1
+			|| display_status(philo, " is thinking\n"))
 			break ;
 	}
 }
