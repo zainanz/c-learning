@@ -6,19 +6,19 @@
 #    By: zali <zali@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/23 13:33:50 by zali              #+#    #+#              #
-#    Updated: 2025/09/23 13:47:25 by zali             ###   ########.fr        #
+#    Updated: 2025/09/26 17:26:27 by zali             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = c++
-SRC = megaphone.cpp
+SRC = Main.cpp Contact.cpp PhoneBook.cpp
 OBJ = ${SRC:.cpp=.o}
-NAME = megaphone
+NAME = phonebook 
 
 
 ${NAME}: ${OBJ}
 	${CC} ${OBJ} -o ${NAME}
-	@echo -e "\033[32m$./${NAME} complied.\033[0m"
+	@echo "\033[32m./${NAME} complied.\033[0m"
 
 %.o: %.cpp
 	${CC} -c $< -o $@

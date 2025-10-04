@@ -6,14 +6,12 @@
 /*   By: zali <zali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 14:26:03 by zali              #+#    #+#             */
-/*   Updated: 2025/09/24 17:00:00 by zali             ###   ########.fr       */
+/*   Updated: 2025/09/26 17:15:50 by zali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Contact.hpp"
-#include "Contact.cpp"
 #include "PhoneBook.hpp"
-#include "PhoneBook.cpp"
 
 int	reset_invalid(Contact &c)
 {
@@ -122,8 +120,5 @@ int	main(void)
 		std::cout << "\x1B[2J\x1B[H" << std::flush;
 		std::cout << "CMD: \"ADD\", \"SEARCH\" and \"EXIT\"\n";
 	}
-	// Contact c("zainan", "ali", "zali", "920433306", "eats alot");
-	// Contact d();
-	// c.show();
 	return (0);
 }
