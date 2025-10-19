@@ -1,28 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Cat.hpp                                            :+:      :+:    :+:   */
+/*   Dog.hpp                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: zali <zali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 01:12:32 by zali              #+#    #+#             */
-/*   Updated: 2025/10/19 16:01:25 by zali             ###   ########.fr       */
+/*   Updated: 2025/10/19 16:00:42 by zali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CAT_HPP
-# define CAT_HPP
+#ifndef DOG_HPP
+# define DOG_HPP
 
 # include "Animal.hpp"
+# include "Brain.hpp"
 
-class Cat : public Animal
+class Dog : public Animal
 {
 	public:
-		Cat();
-		~Cat();
-		Cat(Cat const &copy);
-		void	operator=(Cat const &copy);
+		Dog();
+		~Dog();
+		Dog(Dog const &copy);
+		void	operator=(Dog const &copy);
+		Brain	&getBrain();
 		void	makeSound();
+	private:
+		Brain	*_brain;
 };
 
 #endif

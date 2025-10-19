@@ -1,28 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Cat.hpp                                            :+:      :+:    :+:   */
+/*   Ice.cpp                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: zali <zali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/16 01:12:32 by zali              #+#    #+#             */
-/*   Updated: 2025/10/19 16:01:25 by zali             ###   ########.fr       */
+/*   Created: 2025/10/18 22:53:57 by zali              #+#    #+#             */
+/*   Updated: 2025/10/19 14:04:17 by zali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CAT_HPP
-# define CAT_HPP
+#include "Ice.hpp"
 
-# include "Animal.hpp"
+Ice::Ice() : AMateria("ice")
+{	
+}
 
-class Cat : public Animal
+Ice::~Ice()
 {
-	public:
-		Cat();
-		~Cat();
-		Cat(Cat const &copy);
-		void	operator=(Cat const &copy);
-		void	makeSound();
-};
 
-#endif
+}
+
+AMateria	*Ice::clone() const
+{
+	return (new Ice());
+}
+
+void		Ice::use(ICharacter &target)
+{
+	std::cout << "* shoots an ice bolt at " << target.getName() << " *\n";
+}
+
+std::string	Ice::getType() const
+{
+	return (this->_type);
+}

@@ -1,28 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Cat.hpp                                            :+:      :+:    :+:   */
+/*   ICharacter.cpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: zali <zali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/16 01:12:32 by zali              #+#    #+#             */
-/*   Updated: 2025/10/19 16:01:25 by zali             ###   ########.fr       */
+/*   Created: 2025/10/19 14:08:36 by zali              #+#    #+#             */
+/*   Updated: 2025/10/19 14:09:03 by zali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CAT_HPP
-# define CAT_HPP
+#include "ICharacter.hpp"
 
-# include "Animal.hpp"
-
-class Cat : public Animal
+ICharacter::~ICharacter()
 {
-	public:
-		Cat();
-		~Cat();
-		Cat(Cat const &copy);
-		void	operator=(Cat const &copy);
-		void	makeSound();
 };
-
-#endif

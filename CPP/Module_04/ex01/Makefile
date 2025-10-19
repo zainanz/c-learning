@@ -6,14 +6,14 @@
 #    By: zali <zali@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/13 10:18:54 by zali              #+#    #+#              #
-#    Updated: 2025/10/19 16:01:34 by zali             ###   ########.fr        #
+#    Updated: 2025/10/19 16:01:00 by zali             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = c++
 C_FLAGS = -Wall -Werror -Wextra -std=c++98
-SRC = Dog.cpp Cat.cpp Animal.cpp Wrong.cpp main.cpp
-HEADER = Dog.hpp Cat.hpp Animal.hpp Wrong.hpp main.hpp
+SRC = Dog.cpp Cat.cpp Animal.cpp Brain.cpp Wrong.cpp main.cpp
+HEADER = Dog.hpp Cat.hpp Animal.hpp Brain.hpp Wrong.hpp main.hpp
 OBJ = ${SRC:.cpp=.o}
 NAME = animal 
 

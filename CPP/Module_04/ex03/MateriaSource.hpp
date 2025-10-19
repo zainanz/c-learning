@@ -1,28 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Cat.hpp                                            :+:      :+:    :+:   */
+/*   MateriaSource.hpp                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: zali <zali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/16 01:12:32 by zali              #+#    #+#             */
-/*   Updated: 2025/10/19 16:01:25 by zali             ###   ########.fr       */
+/*   Created: 2025/10/18 22:43:02 by zali              #+#    #+#             */
+/*   Updated: 2025/10/19 13:52:07 by zali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CAT_HPP
-# define CAT_HPP
+#ifndef MATERIASOURCE_HPP
 
-# include "Animal.hpp"
+# define MATERIASOURCE_HPP
+# define MAX_LEARN 4
 
-class Cat : public Animal
+# include "IMateriaSource.hpp"
+
+class MateriaSource : public IMateriaSource
 {
 	public:
-		Cat();
-		~Cat();
-		Cat(Cat const &copy);
-		void	operator=(Cat const &copy);
-		void	makeSound();
-};
+		MateriaSource();
+		~MateriaSource();
+		MateriaSource(MateriaSource const &copy);
+		MateriaSource	&operator=(MateriaSource const &copy);
+		AMateria	*learned[MAX_LEARN];
+		void		learnMateria(AMateria *materia);
+		AMateria	*createMateria(std::string const &type);
 
+};
 #endif

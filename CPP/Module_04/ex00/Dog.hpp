@@ -6,7 +6,7 @@
 /*   By: zali <zali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 01:12:32 by zali              #+#    #+#             */
-/*   Updated: 2025/10/16 02:47:44 by zali             ###   ########.fr       */
+/*   Updated: 2025/10/19 16:01:21 by zali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ class Dog : public Animal
 		~Dog();
 		Dog(Dog const &copy);
 		void	operator=(Dog const &copy);
-		void	makeSound() override;
+		void	makeSound();
 };
 
 #endif

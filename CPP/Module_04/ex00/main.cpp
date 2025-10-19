@@ -6,7 +6,7 @@
 /*   By: zali <zali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 01:49:25 by zali              #+#    #+#             */
-/*   Updated: 2025/10/16 03:03:08 by zali             ###   ########.fr       */
+/*   Updated: 2025/10/18 18:36:43 by zali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,10 @@
 #include "Dog.hpp"
 #include "Cat.hpp"
 #include "Wrong.hpp"
+
+/* 
+	Virtual and Override
+*/
 
 int	main(void)
 {

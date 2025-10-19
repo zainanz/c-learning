@@ -6,7 +6,7 @@
 /*   By: zali <zali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 01:45:42 by zali              #+#    #+#             */
-/*   Updated: 2025/10/16 02:47:56 by zali             ###   ########.fr       */
+/*   Updated: 2025/10/18 21:08:06 by zali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,11 @@ Animal	&Animal::operator=(Animal const &copy)
 	this->_type = copy._type;
 	std::cout << "This animal was groomed indentically to the other one.\n";
 	return (*this);
+}
+
+std::string	&Animal::getType()
+{
+	return (this->_type);
 }
 
 void Animal::makeSound()
