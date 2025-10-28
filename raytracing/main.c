@@ -6,7 +6,7 @@
 /*   By: zali <zali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/24 13:05:41 by zali              #+#    #+#             */
-/*   Updated: 2025/10/27 07:33:11 by zali             ###   ########.fr       */
+/*   Updated: 2025/10/28 05:43:14 by zali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@
 #include "math.h"
 
 
-#define WIDTH 300
-#define HEIGHT 720
+#define WIDTH 600
+#define HEIGHT 600
 
 // #define WIDTH 1920
 // #define HEIGHT 1080
@@ -59,17 +59,36 @@ typedef struct s_vec3
 // 	return (0xff000000);
 // }
 
-int raytrace_color(t_vec3 vec)
+int raytrace_sphere(t_vec3 vec)
 {
 	float radius = .5;
 	t_vec3 origin = {0, 0, 2.0};
 	float a = vec.x * vec.x + vec.y * vec.y + vec.z * vec.z;
 	float b = 2.0 * (origin.x * vec.x + origin.y * vec.y + origin.z * vec.z);
 	float c = origin.x * origin.x + origin.y * origin.y + origin.z * origin.z - radius * radius;
-	if (b*b-(4.0*a*c) > 0)
+	if (b*b-(4.0*a*c) >= 0)
 		return (0xffff00ff);
-	return (0xff000000);
+	return (0);
 }
+
+int raytrace_cylinder(t_vec3 vec)
+{
+	/*
+		infinite cylinder x*x + z * z = r * r
+
+		(2)t^2 + (2az + 2ax)t + (ax^2 + az^2 - r^2) = 0
+
+	*/
+	float radius = 0.5;
+	t_vec3 origin = {0, 0, 2.0};
+	float a = (vec.x * vec.x) + (vec.z * vec.z);
+	float b = (2 * origin.x * vec.x) + (2 * origin.z * vec.z);
+	float c = (origin.x * origin.x) + (origin.z * origin.z) - (radius * radius);
+	if (b*b-(4.0*a*c) >= 0)
+		return (0xffff0000);
+	return (0);
+}
+
 int main(void)
 {
 	int x;
@@ -126,7 +145,9 @@ int main(void)
 			else
 				scaled_y *= aspect;
 			t_vec3 vec = { scaled_x, scaled_y, -1.0f};
-			int color = raytrace_color(vec); 
+			int color = raytrace_cylinder(vec); 
+			my_mlx_pixel_put(&img, x, y, color);
+			color = raytrace_sphere(vec); 
 			my_mlx_pixel_put(&img, x, y, color);
 			x++;
 	    }
