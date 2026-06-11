@@ -6,7 +6,7 @@
 /*   By: zali <zali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/29 13:43:59 by zali              #+#    #+#             */
-/*   Updated: 2025/09/29 16:38:47 by zali             ###   ########.fr       */
+/*   Updated: 2026/06/11 12:03:26 by zali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,18 +27,18 @@ int main(void)
 	// std::cout << "1GET: AK_TYPE: " << ak_type << ", ADDR: " << &ak_type << std::endl;
 	// std::cout << "2GET: AK_TYPE: " << ak_type << ", ADDR: " << &ak_type << std::endl;
 	{
-	Weapon club = Weapon("crude spiked club");
-	HumanA bob("Bob", club);
-	bob.attack();
-	club.setType("some other type of club");
-	bob.attack();
+		Weapon club = Weapon("crude spiked club");
+		HumanA bob("Bob", club);
+		bob.attack();
+		club.setType("some other type of club");
+		bob.attack();
 	}
 	{
-	Weapon club = Weapon("crude spiked club");
-	HumanB jim("Jim");
-	jim.setWeapon(club);
-	jim.attack();
-	club.setType("some other type of club");
-	jim.attack();
+		Weapon club = Weapon("crude spiked club");
+		HumanB jim("Jim");
+		jim.setWeapon(club);
+		jim.attack();
+		club.setType("some other type of club");
+		jim.attack();
 	}
 }
