@@ -18,22 +18,27 @@ Fixed::Fixed(void) : _value(0)
 {
 	// std::cout << "Default constructor called\n";
 }
+static int roundfti(const float &num, const int &val){
+    float tmp;
+    if (num >= 0)
+        tmp = std::floor(num * (1 << val) + 0.5f);
+    else
+        tmp = std::ceil(num * (1 << val) - 0.5f);
+    return tmp;
+}
 
-Fixed::Fixed(const float &num) : _value(num * (1 << this->_frac))
+Fixed::Fixed(const float &num) : _value(roundfti(num, this->_frac))
 {
-	// Uncomment to show implicit conversion
 	// std::cout << "Float constructor called\n";
 }
 
 Fixed::Fixed(const int &num) : _value(num * (1 << this->_frac))
 {
-	// Uncomment to show implicit conversion
 	// std::cout << "Int constructor called\n";
 }
 
 Fixed::~Fixed(void)
 {
-	// Uncomment to show implicit conversion
 	// std::cout << "Destructor called\n";
 }
 
@@ -56,7 +61,7 @@ void	Fixed::setRawBits(int const	val)
 Fixed	&Fixed::operator=(const Fixed &copy)
 {
 	// std::cout << "Assignment operator called\n";
-	this->_value = copy.getRawBits();	
+    if (this != &copy) this->_value = copy.getRawBits();	
 	return (*this); 
 }
 
@@ -64,101 +69,101 @@ Fixed	&Fixed::operator=(const Fixed &copy)
 // Comparison Operators ------------------------------------------
 
 // == Overloading
-int		Fixed::operator==(Fixed const &obj)
+bool Fixed::operator==(Fixed const &obj)
 {
-	return (this->toFloat() == obj.toFloat());
+	return (bool)(this->toFloat() == obj.toFloat());
 }
 
-int		Fixed::operator==(float n)
+bool		Fixed::operator==(float n)
 {
-	return (this->toFloat() == n);
+	return (bool)(this->toFloat() == n);
 }
 
-int	operator==(float n, Fixed const &ob)
+bool	operator==(float n, Fixed const &ob)
 {
-	return (ob.toFloat() == n);
+	return (bool)(ob.toFloat() == n);
 }
 
 
 // > Overloading
-int		Fixed::operator>(Fixed const &obj)
+bool Fixed::operator>(Fixed const &obj)
 {
-	return (this->toFloat() > obj.toFloat());
+	return (bool)(this->toFloat() > obj.toFloat());
 }
 
-int		Fixed::operator>(float n)
+bool    Fixed::operator>(float n)
 {
-	return (this->toFloat() > n);
+	return (bool)(this->toFloat() > n);
 }
 
-int		operator>(float n, Fixed const &obj)
+bool operator>(float n, Fixed const &obj)
 {
-	return (n > obj.toFloat());
+	return (bool)(n > obj.toFloat());
 }
 
 // >= Overloading
-int		Fixed::operator>=(Fixed const &obj)
+bool    Fixed::operator>=(Fixed const &obj)
 {
-	return (this->toFloat() >= obj.toFloat());
+	return (bool)(this->toFloat() >= obj.toFloat());
 }
 
-int		Fixed::operator>=(float n)
+bool Fixed::operator>=(float n)
 {
-	return (this->toFloat() >= n);
+	return (bool)(this->toFloat() >= n);
 }
 
-int		operator>=(float n, Fixed const &obj)
+bool		operator>=(float n, Fixed const &obj)
 {
-	return (n >= obj.toFloat());
+	return (bool)(n >= obj.toFloat());
 }
 
 // != Overloading
-int		Fixed::operator!=(Fixed const &obj)
+bool		Fixed::operator!=(Fixed const &obj)
 {
-	return (this->toFloat() != obj.toFloat());
+	return (bool)(this->toFloat() != obj.toFloat());
 }
 
-int		Fixed::operator!=(float n)
+bool		Fixed::operator!=(float n)
 {
-	return (this->toFloat() != n);
+	return (bool)(this->toFloat() != n);
 }
 
-int		operator!=(float n, Fixed const &obj)
+bool operator!=(float n, Fixed const &obj)
 {
-	return (n != obj.toFloat());
+	return (bool)(n != obj.toFloat());
 }
 
 // < Overloading
-int		Fixed::operator<(Fixed const &obj)
+bool		Fixed::operator<(Fixed const &obj)
 {
-	return (this->toFloat() < obj.toFloat());
+	return (bool)(this->toFloat() < obj.toFloat());
 }
 
-int		Fixed::operator<(float n)
+bool		Fixed::operator<(float n)
 {
-	return (this->toFloat() < n);
+	return (bool)(this->toFloat() < n);
 }
 
-int		operator<(float n, Fixed const &obj)
+bool operator<(float n, Fixed const &obj)
 {
-	return (n < obj.toFloat());
+	return (bool)(n < obj.toFloat());
 }
 
 
 // <= Overloading
-int		Fixed::operator<=(Fixed const &obj)
+bool Fixed::operator<=(Fixed const &obj)
 {
-	return (this->toFloat() <= obj.toFloat());
+	return (bool)(this->toFloat() <= obj.toFloat());
 }
 
-int		Fixed::operator<=(float n)
+bool Fixed::operator<=(float n)
 {
-	return (this->toFloat() <= n);
+	return (bool)(this->toFloat() <= n);
 }
 
-int		operator<=(float n, Fixed const &obj)
+bool operator<=(float n, Fixed const &obj)
 {
-	return (n <= obj.toFloat());
+	return (bool)(n <= obj.toFloat());
 }
 
 

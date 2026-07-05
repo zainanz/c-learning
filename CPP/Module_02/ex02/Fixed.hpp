@@ -14,6 +14,7 @@
 # define FIXED_HPP
 
 # include <iostream>
+#include <math.h>
 
 class Fixed {
 	public:
@@ -31,18 +32,18 @@ class Fixed {
 		float			operator-(Fixed const &sec);
 		float			operator*(Fixed const &sec);
 		float			operator/(Fixed const &sec);
-		int				operator==(Fixed const &obj);
-		int				operator==(float n);
-		int				operator>(Fixed const &obj);
-		int				operator>(float n);
-		int				operator>=(Fixed const &obj);
-		int				operator>=(float n);
-		int				operator<(Fixed const &obj);
-		int				operator<(float n);
-		int				operator<=(Fixed const &obj);
-		int				operator<=(float n);
-		int				operator!=(Fixed const &obj);
-		int				operator!=(float n);
+		bool			operator==(Fixed const &obj);
+		bool			operator==(float n);
+		bool			operator>(Fixed const &obj);
+		bool			operator>(float n);
+		bool			operator>=(Fixed const &obj);
+		bool			operator>=(float n);
+		bool			operator<(Fixed const &obj);
+		bool			operator<(float n);
+		bool			operator<=(Fixed const &obj);
+		bool			operator<=(float n);
+		bool			operator!=(Fixed const &obj);
+		bool			operator!=(float n);
 		Fixed			&operator++(void);
 		Fixed			operator++(int dummyVal);
 		Fixed			&operator--(void);
@@ -60,10 +61,10 @@ float	 		operator+(float n, Fixed const &ob);
 float	 		operator-(float n, Fixed const &ob);
 float	 		operator*(float n, Fixed const &ob);
 float	 		operator/(float n, Fixed const &ob);
-int		 		operator==(float n, Fixed const &ob);
-int				operator>(float n, Fixed const &ob);
-int				operator>=(float n, Fixed const &ob);
-int				operator<(float n, Fixed const &ob);
-int				operator<=(float n, Fixed const &ob);
-int				operator!=(float n, Fixed const &ob);
+bool	 		operator==(float n, Fixed const &ob);
+bool			operator>(float n, Fixed const &ob);
+bool			operator>=(float n, Fixed const &ob);
+bool			operator<(float n, Fixed const &ob);
+bool	    	operator<=(float n, Fixed const &ob);
+bool			operator!=(float n, Fixed const &ob);
 #endif

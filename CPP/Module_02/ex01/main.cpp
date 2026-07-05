@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "Fixed.hpp"
+#include <cstdio>
 
 int	main(void)
 {
@@ -28,5 +29,10 @@ int	main(void)
 	std::cout << "b is " << b.toInt() << " as integer" << std::endl;
 	std::cout << "c is " << c.toInt() << " as integer" << std::endl;
 	std::cout << "d is " << d.toInt() << " as integer" << std::endl;
+
+    Fixed pi(-3.14f);
+    printf("getRawBits: %d\n", pi.getRawBits());
+	std::cout << "pi is " << pi.toInt() << " as integer" << std::endl;
+	std::cout << "pi is " << pi.toFloat() << " as float" << std::endl;
 	return (0);
 }

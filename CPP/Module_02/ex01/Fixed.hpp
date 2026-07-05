@@ -14,6 +14,7 @@
 # define FIXED_HPP
 
 # include <iostream>
+# include <math.h>
 
 class Fixed {
 	public:
@@ -33,5 +34,5 @@ class Fixed {
 		static const int	_frac;
 };
 
-std::ostream 	&operator<<(std::ostream &output, Fixed const &ob);
+std::ostream 	&operator<<(std::ostream &output, const Fixed &ob);
 #endif

@@ -19,7 +19,16 @@ Fixed::Fixed(void) : _value(0)
 	std::cout << "Default constructor called\n";
 }
 
-Fixed::Fixed(const float &num) : _value(num * (1 << this->_frac))
+static int roundfti(const float &num, const int &val){
+    float tmp;
+    if (num >= 0)
+        tmp = std::floor(num * (1 << val) + 0.5f);
+    else
+        tmp = std::ceil(num * (1 << val) - 0.5f);
+    return tmp;
+}
+
+Fixed::Fixed(const float &num) : _value(roundfti(num, this->_frac))
 {
 	std::cout << "Float constructor called\n";
 }
@@ -53,11 +62,11 @@ void	Fixed::setRawBits(int const	val)
 Fixed	&Fixed::operator=(const Fixed &copy)
 {
 	std::cout << "Assignment operator called\n";
-	this->_value = copy.getRawBits();	
+    if (this != &copy) this->_value = copy.getRawBits();	
 	return (*this); 
 }
 
-std::ostream	&operator<<(std::ostream &output, Fixed const &ob)
+std::ostream	&operator<<(std::ostream &output, const Fixed &ob)
 {
 	output << ob.toFloat();
 	return (output);
