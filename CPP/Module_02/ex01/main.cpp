@@ -5,21 +5,18 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: zali <zali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/08 19:03:56 by zali              #+#    #+#             */
-/*   Updated: 2025/10/11 01:08:49 by zali             ###   ########.fr       */
+/*   Created: 2026/08/01 00:47:26 by zali              #+#    #+#             */
+/*   Updated: 2026/08/01 01:43:39 by zali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
+#include <iostream>
 #include "Fixed.hpp"
-#include <cstdio>
 
-int	main(void)
-{
+int main( void ) {
 	Fixed a;
 	Fixed const b( 10 );
 	Fixed const c( 42.42f );
 	Fixed const d( b );
-
 	a = Fixed( 1234.4321f );
 	std::cout << "a is " << a << std::endl;
 	std::cout << "b is " << b << std::endl;
@@ -30,9 +27,9 @@ int	main(void)
 	std::cout << "c is " << c.toInt() << " as integer" << std::endl;
 	std::cout << "d is " << d.toInt() << " as integer" << std::endl;
 
-    Fixed pi(-3.14f);
-    printf("getRawBits: %d\n", pi.getRawBits());
-	std::cout << "pi is " << pi.toInt() << " as integer" << std::endl;
-	std::cout << "pi is " << pi.toFloat() << " as float" << std::endl;
-	return (0);
+	Fixed pi(-3.14f);
+	std::cout << "3.14's Raw Value: " << pi.getRawBits() << std::endl;
+	std::cout << "pi.toInt() = " << pi.toInt() << std::endl;
+	std::cout << "pi.toFloat() = " << pi.toFloat() << std::endl;
+	return 0;
 }

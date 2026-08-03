@@ -5,34 +5,31 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: zali <zali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/08 18:35:31 by zali              #+#    #+#             */
-/*   Updated: 2025/10/11 01:37:13 by zali             ###   ########.fr       */
+/*   Created: 2026/07/31 23:59:27 by zali              #+#    #+#             */
+/*   Updated: 2026/08/01 00:47:15 by zali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FIXED_HPP
-# define FIXED_HPP
-
-# include <iostream>
-# include <math.h>
+#pragma once
+#include <iostream>
+#include <cmath>
 
 class Fixed {
-	public:
-		Fixed(void);
-		Fixed(const float &num);
-		Fixed(const int &num);
-		Fixed(const Fixed &copy);
-		~Fixed(void);
-		int				getRawBits(void) const;
-		void			setRawBits(int const val);
-		float			toFloat(void) const;
-		int				toInt(void)	const;
-		Fixed			&operator=(const Fixed &cpy);
+    public:
+        Fixed(void);
+        Fixed(const Fixed& copy);
+		Fixed(const float val);
+		Fixed(const int val);
+        ~Fixed();
 
-	private:
-		int	_value;
-		static const int	_frac;
+        Fixed&	operator=(const Fixed& copy);
+		int		getRawBits(void) const;
+		void	setRawBits(const int val);
+		float	toFloat(void) const;
+		int		toInt(void) const;
+
+    private:
+        static const int	frac;
+        int					raw_val;
 };
-
-std::ostream 	&operator<<(std::ostream &output, const Fixed &ob);
-#endif
+std::ostream&	operator<<(std::ostream& os, const Fixed& f);

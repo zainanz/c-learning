@@ -5,59 +5,95 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: zali <zali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/13 14:03:39 by zali              #+#    #+#             */
-/*   Updated: 2025/10/16 00:39:59 by zali             ###   ########.fr       */
+/*   Created: 2026/08/02 04:06:28 by zali              #+#    #+#             */
+/*   Updated: 2026/08/02 04:06:30 by zali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ScavTrap.hpp"
 
 // Constructors
-ScavTrap::ScavTrap(void) : ClapTrap("unnamed")
+
+ScavTrap::ScavTrap(void) : ClapTrap()
 {
-	this->setDamage(20);
-	this->setEnergy(50);
+	std::cout << "A ScavTrap is created." << std::endl;
+	this->setName("ScavTrap_unnamed");
 	this->setHitpoint(100);
-	std::cout << "[SCAVTRAP] A ScavTrap was created.\n";
-}
-
-ScavTrap::ScavTrap(std::string const &name) : ClapTrap(name)
-{
-	this->setDamage(20);
 	this->setEnergy(50);
+	this->setDamage(20);
+}
+
+ScavTrap::ScavTrap(const ScavTrap& other): ClapTrap(other){
+	std::cout << "ScavTrap Copy Constructor called" << std::endl;
+	*this = other;
+}
+
+ScavTrap::ScavTrap(const std::string& name) : ClapTrap(name) 
+{
+	std::cout << "ScavTrap " << name << " is created." << std::endl;
 	this->setHitpoint(100);
-	std::cout << "[SCAVTRAP] ScavTrap " << name << " is created.\n";
+	this->setEnergy(50);
+	this->setDamage(20);
 }
 
-ScavTrap::ScavTrap(ScavTrap const &copy) : ClapTrap(copy)
+ScavTrap::~ScavTrap(void)
 {
-	std::cout << "[SCAVTRAP] A copy of ScavTrap " << this->getName() << " was just created.\n";
+	std::cout << "Good bye, " << this->getName() << "." << std::endl;
 }
 
-ScavTrap	&ScavTrap::operator=(ScavTrap const &copy)
-
-{
-	if (this != &copy)
-	{
-		ClapTrap::operator=(copy);
-		std::cout << "[SCAVTRAP] A SCAVTRAP copied " << this->getName() << ".\n";
-	}
+// Operator
+ScavTrap&	ScavTrap::operator=(const ScavTrap& other){
+	std::cout << "ScavTrap Assignment Operator was used" << std::endl;
+	if (this == &other) return (*this);
+	this->setName(other.getName());
+	this->setHitpoint(100);
+	this->setEnergy(50);
+	this->setDamage(20);
 	return (*this);
 }
 
-// Destructor
-ScavTrap::~ScavTrap(void)
+
+// Public Member Functions
+void		ScavTrap::takeDamage(unsigned int amount)
 {
-	std::cout << "[SCAVTRAP] Rest in peace, ScavTrap.\n";
+	if (this->getHitpoint() <= 0){
+		std::cout << "[~] Dead ScavTrap " << this->getName() << " took " << amount << " damage. [DEAD]" << std::endl;
+		return ;
+	}
+	if (this->getHitpoint() - static_cast<int>(amount) <= 0){
+		std::cout << "[~] ScavTrap " << this->getName() << " took " << amount << " damage and died! [RIP]" << std::endl;
+		this->setHitpoint(0);
+	}
+	else{
+		this->setHitpoint(this->getHitpoint() - amount);
+		std::cout << "[~] ScavTrap " << this->getName() << " took " << amount << " damage. [" << this->getHitpoint() << "HP]" << std::endl;
+	}
+	return ;
 }
 
-// Class function
 void	ScavTrap::attack(std::string const &target)
 {
-	std::cout << "ScavTrap " << this->getName() << " *blasted* '" << target << "', causing " << this->getDamage() << " points of damage!\n";
-	
+	if (this->getEnergy() <= 0) {
+		std::cout << "[X] ScavTrap " << this->getName() << " does not have enough energy to attack!" << std::endl;
+		return ;
+	}
+	this->setEnergy(this->getEnergy() - 1);
+	std::cout << "[X] ScavTrap " << this->getName() << " attacked '" << target << "', causing " << this->getDamage() << " points of damage! [" << this->getEnergy() << " Energy Remaining]"  << std::endl;
+	// Trigger ScavTrap's Take Damage
+	return ;
 }
-void		ScavTrap::guardGate(void)
+
+void		ScavTrap::beRepaired(unsigned int amount)
 {
-	std::cout << "ScavTrap " << this->getName() << " has turned on gate keeper mode.\n";
+	if (this->getEnergy() <= 0) {
+		std::cout << "[O] ScavTrap " << this->getName() << " does not have enough energy to repair!" << std::endl;
+		return ;
+	}
+	this->setEnergy(this->getEnergy() - 1);
+	this->setHitpoint(this->getHitpoint() + amount);
+	std::cout << "[O] ScavTrap " << this->getName() << " has been repaired, gained " << amount << " hitpoints. [" << this->getHitpoint() << " HP + " << this->getEnergy() << " Energy Remaining]" << std::endl;
+}
+
+void	ScavTrap::guardGate(){
+	std::cout << "ScavTrap " << this->getName() << " turned on guard gate mode." << std::endl;
 }

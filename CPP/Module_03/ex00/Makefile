@@ -10,18 +10,27 @@
 #                                                                              #
 # **************************************************************************** #
 
-CC = c++
+CC 	= c++
 C_FLAGS = -Wall -Werror -Wextra -std=c++98
-SRC = ClapTrap.cpp main.cpp 
+SRC = ClapTrap.cpp main.cpp
 HEADER = ClapTrap.hpp
-OBJ = ${SRC:.cpp=.o}
-NAME = claptrap
+OBJ = $(SRC:.cpp=.o)
+NAME = claptrap 
+
+all: ${NAME}
 
 ${NAME}: ${OBJ}
-	${CC} ${OBJ} -o ${NAME}
+	${CC} ${C_FLAGS} ${OBJ} -o ${NAME}
+
 %.o: %.cpp ${HEADER}
-	${CC} ${C_FLAGS} -c -I. $< -o $@
+	${CC} ${C_FLAGS} -c $< -o $@
+
 clean:
 	rm -f ${OBJ}
+
 fclean: clean
 	rm -f ${NAME}
+
+re: fclean ${NAME}
+
+.PHONY: all re fclean clean

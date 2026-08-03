@@ -5,66 +5,57 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: zali <zali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/08 18:35:31 by zali              #+#    #+#             */
-/*   Updated: 2025/10/12 01:51:40 by zali             ###   ########.fr       */
+/*   Created: 2026/07/31 23:59:27 by zali              #+#    #+#             */
+/*   Updated: 2026/08/01 00:47:15 by zali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FIXED_HPP
-# define FIXED_HPP
-
-# include <iostream>
-#include <math.h>
+#pragma once
+#include <iostream>
+#include <cmath>
 
 class Fixed {
-	public:
-		Fixed(void);
-		Fixed(const float &num);
-		Fixed(const int &num);
-		Fixed(const Fixed &copy);
-		~Fixed(void);
-		int				getRawBits(void) const;
-		void			setRawBits(int const val);
-		float			toFloat(void) const;
-		int				toInt(void)	const;
-		Fixed			&operator=(Fixed const &cpy);
-		float			operator+(Fixed const &sec);
-		float			operator-(Fixed const &sec);
-		float			operator*(Fixed const &sec);
-		float			operator/(Fixed const &sec);
-		bool			operator==(Fixed const &obj);
-		bool			operator==(float n);
-		bool			operator>(Fixed const &obj);
-		bool			operator>(float n);
-		bool			operator>=(Fixed const &obj);
-		bool			operator>=(float n);
-		bool			operator<(Fixed const &obj);
-		bool			operator<(float n);
-		bool			operator<=(Fixed const &obj);
-		bool			operator<=(float n);
-		bool			operator!=(Fixed const &obj);
-		bool			operator!=(float n);
-		Fixed			&operator++(void);
-		Fixed			operator++(int dummyVal);
-		Fixed			&operator--(void);
-		Fixed			operator--(int dummyVal);
-		static Fixed const	&min(Fixed const &ob1, Fixed const &ob2);
-		static Fixed const	&max(Fixed const &ob1, Fixed const &ob2);
+    public:
+        Fixed(void);
+        Fixed(const Fixed& copy);
+		Fixed(const float val);
+		Fixed(const int val);
+        ~Fixed();
 
-	private:
-		int	_value;
-		static const int	_frac;
+        Fixed&	operator=(const Fixed& copy);
+
+		//Arithmetics
+		Fixed	operator+(const Fixed& other);
+		Fixed	operator-(const Fixed& other);
+		Fixed	operator/(const Fixed& other);
+		Fixed	operator*(const Fixed& other);
+
+		// Pre-Increment, Post-Increment, Pre-Decrement, Post-Decrement
+		Fixed	operator++(void);
+		Fixed	operator++(int);
+		Fixed	operator--(void);
+		Fixed	operator--(int);
+
+		// Comparison Operator
+		bool	operator!=(const Fixed& other);
+		bool	operator==(const Fixed& other);
+		bool	operator>=(const Fixed& other);
+		bool	operator<=(const Fixed& other);
+		bool	operator>(const Fixed& other);
+		bool	operator<(const Fixed& other);
+	
+		int		getRawBits(void) const;
+		void	setRawBits(const int val);
+		float	toFloat(void) const;
+		int		toInt(void) const;
+
+		const static Fixed&	min(const Fixed& f1, const Fixed& f2);
+		static Fixed&	min(Fixed& f1, Fixed& f2);
+		const static Fixed&	max(const Fixed& f1, const Fixed& f2);
+		static Fixed&	max(Fixed& f1, Fixed& f2);
+	
+    private:
+        static const int	frac;
+        int					raw_val;
 };
-
-std::ostream 	&operator<<(std::ostream &output, Fixed const &ob);
-float	 		operator+(float n, Fixed const &ob);
-float	 		operator-(float n, Fixed const &ob);
-float	 		operator*(float n, Fixed const &ob);
-float	 		operator/(float n, Fixed const &ob);
-bool	 		operator==(float n, Fixed const &ob);
-bool			operator>(float n, Fixed const &ob);
-bool			operator>=(float n, Fixed const &ob);
-bool			operator<(float n, Fixed const &ob);
-bool	    	operator<=(float n, Fixed const &ob);
-bool			operator!=(float n, Fixed const &ob);
-#endif
+std::ostream&	operator<<(std::ostream& os, const Fixed& f);

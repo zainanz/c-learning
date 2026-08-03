@@ -5,44 +5,40 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: zali <zali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/08 18:50:29 by zali              #+#    #+#             */
-/*   Updated: 2025/10/08 19:22:52 by zali             ###   ########.fr       */
+/*   Created: 2026/08/01 00:10:06 by zali              #+#    #+#             */
+/*   Updated: 2026/08/01 01:51:53 by zali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Fixed.hpp"
 
-const int	Fixed::_frac = 8;
+const int Fixed::frac = 8;
 
-Fixed::Fixed(void) : _value(0)
-{
-	std::cout << "Default constructor called\n";
-}
-Fixed::~Fixed(void)
-{
-	std::cout << "Destructor called\n";
-}
+Fixed::Fixed(void): raw_val(0){
+	std::cout << "Default constructor called" << std::endl;
+} 
 
-Fixed::Fixed(const Fixed &copy)
-{
-	std::cout << "Copy contructor called\n";
+Fixed::Fixed(const Fixed& copy){
+	std::cout << "Copy Constructor was called." << std::endl;
 	*this = copy;
 }
 
-int	Fixed::getRawBits(void) const
-{
-	std::cout << "getRawBits member function called\n";
-	return (this->_value);
+Fixed::~Fixed(void){
+	std::cout << "Destructor called!" << std::endl;
 }
 
-void	Fixed::setRawBits(const int	val)
-{
-	this->_value = val;
+int	Fixed::getRawBits(void) const{
+	std::cout << "getRawBits() member function was called!" << std::endl;
+	return (this->raw_val);
 }
 
-Fixed	&Fixed::operator=(const Fixed &copy)
-{
-	std::cout << "Assignment operator called\n";
-    if (this != &copy) this->_value = copy.getRawBits();	
-	return (*this); 
+void	Fixed::setRawBits(const int val){
+	std::cout << "setRawBits() member function was called!" << std::endl;
+	this->raw_val = val;
+}
+
+Fixed& Fixed::operator=(const Fixed& copy){
+	std::cout << "Assignment operator called" << std::endl;
+	if (this != &copy) this->raw_val = copy.getRawBits();
+	return *this;
 }

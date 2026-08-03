@@ -12,37 +12,36 @@
 
 #include "ClapTrap.hpp"
 
+static void ClapTrapAttackDamage(ClapTrap& c1, ClapTrap& c2){
+	c1.attack(c2.getName());
+	c2.takeDamage(c1.getDamage());
+}
 int	main(void)
 {
-	{
+	ClapTrap Carl("Carl");
+	Carl.setDamage(2);
 
-	ClapTrap one("oneila");
+	ClapTrap Carl2(Carl);
 
-	one.attack("two");
-	one.beRepaired(2);
-	one.takeDamage(5);
+	std::cout << "Carl2 stole Carl's personality. [Carl2's Name: " << Carl.getName() << "]" << std::endl; 
+	Carl2.setName("Fake Carl");
+	std::cout << "Fake Carl2 was detected and renamed to " << Carl2.getName() << std::endl;
+	Carl2 = Carl;
+	std::cout << "Fake Carl successfully stole Carl's identity again using assignment operator! [Fake Carl's Name: " << Carl2.getName() <<  "]" << std::endl;
 
-	std::cout << "\n\n\n";
-	// Setters and Getters
-	ClapTrap &clappington = one; 
-	clappington.setName("Claptrappington");
-	std::cout << "Claptrap " << clappington.getName() << " was upgraded -> " << clappington.getName() << ".\n";
-	clappington.setDamage(100);
-	clappington.setEnergy(100);
-	clappington.setHitpoint(500);
-	std::cout << clappington.getName() << ": damage(" << clappington.getDamage() << "), energy(" << clappington.getEnergy() << "), hitpoint(" << clappington.getHitpoint() << ")\n";
-	// Copy Constructors
-	std::cout << "\n\n\n";
-	ClapTrap copyiton;
-	copyiton = clappington;
-	copyiton.setName("Copyiton");
-	ClapTrap copyiton2(clappington);
-	copyiton2.setName("Copyiton2");
-	std::cout << &copyiton << " - " << copyiton.getName() << ": damage(" << copyiton.getDamage() << "), energy(" << copyiton.getEnergy() << "), hitpoint(" << copyiton.getHitpoint() << ")\n";
-	std::cout << &copyiton2 << " - " << copyiton2.getName() << ": damage(" << copyiton2.getDamage() << "), energy(" << copyiton2.getEnergy() << "), hitpoint(" << copyiton2.getHitpoint() << ")\n";
-	}
+	std::cout << "======== Carl battles Fake Carl ========" << std::endl; 
+	Carl2.setName("Fake Carl");
+	ClapTrapAttackDamage(Carl, Carl2);
 
-	std::cout << "\n\n\n";
-	std::cout << "\n\n\n";
+	Carl2.beRepaired(1);
+	Carl.setDamage(50);
+	ClapTrapAttackDamage(Carl2, Carl);
+	ClapTrapAttackDamage(Carl, Carl2);
+	ClapTrapAttackDamage(Carl, Carl2);
+	Carl.setEnergy(0);
+	Carl.attack(Carl2.getName());
+	Carl.attack(Carl2.getName());
+	Carl.attack(Carl2.getName());
+
 	return (0);
 }
