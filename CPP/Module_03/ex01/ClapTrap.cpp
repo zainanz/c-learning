@@ -20,7 +20,7 @@ ClapTrap::ClapTrap(void) : name_("unnamed"), hitpoint_(10), energy_(10), damage_
 }
 
 ClapTrap::ClapTrap(const ClapTrap& other){
-	std::cout << "Copy Constructor called" << std::endl;
+	std::cout << "[ClapTrap] Copy Constructor called" << std::endl;
 	*this = other;
 }
 
@@ -31,12 +31,12 @@ ClapTrap::ClapTrap(const std::string& name) : name_(name), hitpoint_(10), energy
 
 ClapTrap::~ClapTrap(void)
 {
-	std::cout << "Good bye, " << this->name_ << "." << std::endl;
+	std::cout << "[ClapTrap] Good bye, " << this->name_ << "." << std::endl;
 }
 
 // Operator
 ClapTrap&	ClapTrap::operator=(const ClapTrap& other){
-	std::cout << "Assignment Operator was used" << std::endl;
+	std::cout << "[ClapTrap] Assignment Operator was used" << std::endl;
 	if (this == &other) return (*this);
 	this->name_ = other.name_;
 	this->hitpoint_ = other.hitpoint_;
@@ -93,17 +93,17 @@ const std::string	&ClapTrap::getName(void) const
 	return (this->name_);
 }
 
-int			ClapTrap::getDamage(void)
+int			ClapTrap::getDamage(void) const
 {
 	return (this->damage_);
 }
 
-int			ClapTrap::getEnergy(void)
+int			ClapTrap::getEnergy(void) const
 {
 	return (this->energy_);
 }
 
-int			ClapTrap::getHitpoint(void)
+int			ClapTrap::getHitpoint(void) const
 {
 	return (this->hitpoint_);
 }

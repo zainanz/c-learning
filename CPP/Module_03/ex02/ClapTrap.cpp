@@ -6,7 +6,7 @@
 /*   By: zali <zali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/13 09:38:50 by zali              #+#    #+#             */
-/*   Updated: 2025/10/13 20:44:25 by zali             ###   ########.fr       */
+/*   Updated: 2026/08/03 02:17:49 by zali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ ClapTrap::ClapTrap(void) : name_("unnamed"), hitpoint_(10), energy_(10), damage_
 }
 
 ClapTrap::ClapTrap(const ClapTrap& other){
-	std::cout << "Copy Constructor called" << std::endl;
+	std::cout << "[ClapTrap] Copy Constructor called" << std::endl;
 	*this = other;
 }
 
@@ -31,12 +31,12 @@ ClapTrap::ClapTrap(const std::string& name) : name_(name), hitpoint_(10), energy
 
 ClapTrap::~ClapTrap(void)
 {
-	std::cout << "Good bye, " << this->name_ << "." << std::endl;
+	std::cout << "[ClapTrap] Good bye, " << this->name_ << "." << std::endl;
 }
 
 // Operator
 ClapTrap&	ClapTrap::operator=(const ClapTrap& other){
-	std::cout << "Assignment Operator was used" << std::endl;
+	std::cout << "[ClapTrap] Assignment Operator was used" << std::endl;
 	if (this == &other) return (*this);
 	this->name_ = other.name_;
 	this->hitpoint_ = other.hitpoint_;
@@ -109,7 +109,7 @@ int			ClapTrap::getHitpoint(void) const
 }
 
 // Setters
-void	ClapTrap::setName(std::string const &name)
+void	ClapTrap::setName(const std::string &name)
 {
 	this->name_ = name;
 }

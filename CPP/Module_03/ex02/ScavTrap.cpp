@@ -6,7 +6,7 @@
 /*   By: zali <zali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/02 04:06:28 by zali              #+#    #+#             */
-/*   Updated: 2026/08/02 04:06:30 by zali             ###   ########.fr       */
+/*   Updated: 2026/08/03 02:14:40 by zali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ ScavTrap::ScavTrap(void) : ClapTrap()
 
 ScavTrap::ScavTrap(const ScavTrap& other): ClapTrap(other){
 	std::cout << "ScavTrap Copy Constructor called" << std::endl;
-	//*this = other; Not Needed because ClapTrap does the same thing
+	//*this = other; -> Not needed since ClapTrap copies everything
 }
 
 ScavTrap::ScavTrap(const std::string& name) : ClapTrap(name) 
@@ -38,7 +38,7 @@ ScavTrap::ScavTrap(const std::string& name) : ClapTrap(name)
 
 ScavTrap::~ScavTrap(void)
 {
-	std::cout << "[ScavTrap] Good bye, " << this->getName() << "." << std::endl;
+	std::cout << "Good bye, " << this->getName() << "." << std::endl;
 }
 
 // Operator

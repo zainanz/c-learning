@@ -35,9 +35,9 @@ class ClapTrap
 		void				setDamage(int n);
 		// Getters
 		const std::string	&getName(void)	const;
-		int					getEnergy(void);
-		int					getHitpoint(void);
-		int					getDamage(void);
+		int					getEnergy(void) const;
+		int					getHitpoint(void) const;
+		int					getDamage(void) const;
 	private:
 		std::string name_;
 		int			hitpoint_;
