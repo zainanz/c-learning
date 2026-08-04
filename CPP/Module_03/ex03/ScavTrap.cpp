@@ -6,7 +6,7 @@
 /*   By: zali <zali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/02 04:06:28 by zali              #+#    #+#             */
-/*   Updated: 2026/08/04 03:06:41 by zali             ###   ########.fr       */
+/*   Updated: 2026/08/04 03:06:05 by zali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ ScavTrap::ScavTrap(const std::string& name) : ClapTrap(name)
 
 ScavTrap::~ScavTrap(void)
 {
-	std::cout << "[ScavTrap] Good bye, " << this->getName() << "." << std::endl;
+	std::cout << "[ScrapTrap] Good bye, " << this->getName() << "." << std::endl;
 }
 
 // Operator
