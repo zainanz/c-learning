@@ -5,34 +5,34 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: zali <zali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/16 01:52:30 by zali              #+#    #+#             */
-/*   Updated: 2025/10/16 02:49:40 by zali             ###   ########.fr       */
+/*   Created: 2026/08/06 05:22:28 by zali              #+#    #+#             */
+/*   Updated: 2026/08/06 06:08:04 by zali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Cat.hpp"
 
-Cat::Cat() : Animal("Cat")
-{
-	std::cout << "A Cat appeared..\n";
+Cat::Cat()	: Animal(){
+	this->type = "Cat";
+	std::cout << "A random stray cat appread." << std::endl;
 }
 
-Cat::~Cat()
-{
-	std::cout << "Cat disappeared..\n";
+Cat::~Cat(){
+	std::cout << "The stray cat ran away!" << std::endl;
 }
 
-Cat::Cat(Cat const &copy) : Animal(copy._type)
-{
-	std::cout << "A identically cat appeared..\n";
+Cat::Cat(const Cat& copy) : Animal(copy){
+	std::cout << "Another identical stray cat appeared out of the bush! [Copy Constructor]" << std::endl;
+	//*this = copy;
 }
 
-void	Cat::operator=(Cat const &copy)
-{
-	this->_type = copy._type; // even tho its the same
-	std::cout << "This cat was groomed indentically to the other one.\n";
+Cat&	Cat::operator=(const Cat& copy){
+	if (this == &copy) return (*this);
+	std::cout << "Another identical stray cat appeared! [Assignment Operator]" << std::endl;
+	this->type = copy.type;
+	return (*this);
 }
-void	Cat::makeSound()
-{
-	std::cout << "**Cat meows**\n";
+void	Cat::makeSound(void) const{
+	std::cout << "Cat meows!" << std::endl;
+
 }

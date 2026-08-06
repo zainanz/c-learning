@@ -5,24 +5,23 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: zali <zali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/16 01:11:08 by zali              #+#    #+#             */
-/*   Updated: 2025/10/18 23:05:45 by zali             ###   ########.fr       */
+/*   Created: 2026/08/06 05:09:31 by zali              #+#    #+#             */
+/*   Updated: 2026/08/06 06:07:49 by zali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ANIMAL_HPP
-# define ANIMAL_HPP
-# include <iostream>
-class Animal
-{
+#pragma once
+#include <iostream>
+
+class Animal {
 	public:
-		Animal(std::string const &type);
-		Animal(Animal const &copy);
 		Animal();
-		virtual ~Animal();
-		Animal	&operator=(Animal const &copy);
-		virtual void makeSound();
+		~Animal();
+		Animal(const Animal& copy);
+		Animal&	operator=(const Animal& copy);
+		const std::string&	getType(void) const;
+		void				setType(const std::string& type);
+		virtual void				makeSound(void) const;
 	protected:
-		std::string _type;
+		std::string	type;
 };
-#endif

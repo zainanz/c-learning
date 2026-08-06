@@ -5,23 +5,30 @@
 #                                                     +:+ +:+         +:+      #
 #    By: zali <zali@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2025/10/13 10:18:54 by zali              #+#    #+#              #
-#    Updated: 2025/10/19 16:01:34 by zali             ###   ########.fr        #
+#    Created: 2026/08/06 05:18:49 by zali              #+#    #+#              #
+#    Updated: 2026/08/06 05:21:28 by zali             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CC = c++
-C_FLAGS = -Wall -Werror -Wextra -std=c++98
-SRC = Dog.cpp Cat.cpp Animal.cpp Wrong.cpp main.cpp
-HEADER = Dog.hpp Cat.hpp Animal.hpp Wrong.hpp main.hpp
-OBJ = ${SRC:.cpp=.o}
-NAME = animal 
+
+CXX = c++
+CXXFLAGS = -Wall -Werror -Wextra -std=c++98
+SRC = Animal.cpp Cat.cpp Dog.cpp main.cpp
+HEADER = Animal.hpp Dog.hpp Cat.hpp
+OBJ = $(SRC:.cpp=.o)
+NAME = animal
+
+all: ${NAME}
 
 ${NAME}: ${OBJ}
-	${CC} ${C_FLAGS} ${OBJ} -o ${NAME}
-%.o: %.cpp ${HEADER}
-	${CC} ${C_FLAGS} -c -I. $< -o $@
+	${CXX} ${CXXFLAGS} ${OBJ} -o ${NAME}
+
 clean:
 	rm -f ${OBJ}
+
 fclean: clean
 	rm -f ${NAME}
+
+re: fclean ${NAME}
+
+.PHONY: all re fclean cleanz

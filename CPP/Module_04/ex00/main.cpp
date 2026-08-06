@@ -5,50 +5,24 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: zali <zali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/16 01:49:25 by zali              #+#    #+#             */
-/*   Updated: 2025/10/18 18:36:43 by zali             ###   ########.fr       */
+/*   Created: 2026/08/06 05:09:14 by zali              #+#    #+#             */
+/*   Updated: 2026/08/06 06:09:59 by zali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Animal.hpp"
-#include "Dog.hpp"
 #include "Cat.hpp"
-#include "Wrong.hpp"
+#include "Dog.hpp"
 
-/* 
-	Virtual and Override
-*/
-
-int	main(void)
+int main()
 {
-	// Testing makeSound
-	std::cout << "-- Without Virtual Override --\n\n";
-	WrongAnimal *wan;
-	wan = new WrongDog();
-	std::cout << "-----------------------\n";
-	wan->makeSound();
-	std::cout << "-----------------------\n";
-	delete wan;
-	wan = new WrongCat();
-	std::cout << "----------------------\n";
-	wan->makeSound();
-	std::cout << "----------------------\n";
-	delete wan;
-
-	std::cout << "\n\n\n";
-	std::cout << "-- With Virtual Override --\n\n";
-	Animal *an;
-	an = new Dog();
-	std::cout << "----------------------\n";
-	an->makeSound();
-	std::cout << "----------------------\n";
-	delete an;
-	an = new Cat();
-	std::cout << "----------------------\n";
-	an->makeSound();
-	std::cout << "----------------------\n";
-	delete an;
-	
-	// Note we make it on heap and not on stack - Object Slicing - EXPLAIN
-	return (0);
+	const Animal* meta = new Animal();
+	const Animal* j = new Dog();
+	const Animal* i = new Cat();
+	std::cout << j->getType() << " " << std::endl;
+	std::cout << i->getType() << " " << std::endl;
+	i->makeSound(); //will output the cat sound!
+	j->makeSound();
+	meta->makeSound();
+	return 0;
 }

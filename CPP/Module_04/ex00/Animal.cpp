@@ -1,45 +1,30 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   Animal.cpp                                         :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: zali <zali@student.42.fr>                  +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/16 01:45:42 by zali              #+#    #+#             */
-/*   Updated: 2025/10/16 02:47:56 by zali             ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "Animal.hpp"
 
-Animal::Animal(): _type("")
-{
-	std::cout << "An Animal was seen\n";
+Animal::Animal(): type("NO_TYPE"){
+	std::cout << "** [Animal] NO_TYPE's strange noise was heard. ** [Default Constructor]" << std::endl;
+}
+Animal::~Animal(){
+	std::cout << "[Animal] " << this->type << " disappeared. [Destructor]" << std::endl;
 }
 
-Animal::Animal(std::string const &type) : _type(type)
-{
-	std::cout << "Animal of type '" << this->_type << "' was seen.\n";
+Animal::Animal(const Animal& copy){
+	std::cout << "[Animal] " << copy.type << " was cloned. [Copy Constructor]" << std::endl;
+	*this = copy;
 }
 
-Animal::Animal(Animal const &copy) : Animal(copy._type) 
-{
-	std::cout << "An identical animal appeared.\n";
-};
-
-Animal::~Animal()
-{
-	std::cout << "Good bye, " << (this->_type.empty() ? "Animal" : this->_type) << "\n";
-}
-
-Animal	&Animal::operator=(Animal const &copy)
-{
-	this->_type = copy._type;
-	std::cout << "This animal was groomed indentically to the other one.\n";
+Animal&	Animal::operator=(const Animal& copy){
+	if (this == &copy) return (*this);
+	std::cout << "[Animal] " << copy.type << " was cloned. [Copy Constructor]" << std::endl;
+	this->type = copy.type;
 	return (*this);
 }
+void	Animal::setType(const std::string& type){
+	this->type = type;
+}
+const std::string&	Animal::getType(void) const{
+	return (this->type);
+}
 
-void Animal::makeSound()
-{
-	std::cout << "A strange sound is heared\n";
+void	Animal::makeSound(void) const{
+	std::cout << "Animal noises!" << std::endl;
 }
