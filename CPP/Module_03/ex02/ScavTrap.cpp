@@ -6,7 +6,7 @@
 /*   By: zali <zali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/02 04:06:28 by zali              #+#    #+#             */
-/*   Updated: 2026/08/04 03:06:41 by zali             ###   ########.fr       */
+/*   Updated: 2026/08/06 04:59:38 by zali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,23 +53,6 @@ ScavTrap&	ScavTrap::operator=(const ScavTrap& other){
 }
 
 
-// Public Member Functions
-void		ScavTrap::takeDamage(unsigned int amount)
-{
-	if (this->getHitpoint() <= 0){
-		std::cout << "[~] Dead ScavTrap " << this->getName() << " took " << amount << " damage. [DEAD]" << std::endl;
-		return ;
-	}
-	if (this->getHitpoint() - static_cast<int>(amount) <= 0){
-		std::cout << "[~] ScavTrap " << this->getName() << " took " << amount << " damage and died! [RIP]" << std::endl;
-		this->setHitpoint(0);
-	}
-	else{
-		this->setHitpoint(this->getHitpoint() - amount);
-		std::cout << "[~] ScavTrap " << this->getName() << " took " << amount << " damage. [" << this->getHitpoint() << "HP]" << std::endl;
-	}
-	return ;
-}
 
 void	ScavTrap::attack(std::string const &target)
 {
@@ -83,16 +66,6 @@ void	ScavTrap::attack(std::string const &target)
 	return ;
 }
 
-void		ScavTrap::beRepaired(unsigned int amount)
-{
-	if (this->getEnergy() <= 0) {
-		std::cout << "[O] ScavTrap " << this->getName() << " does not have enough energy to repair!" << std::endl;
-		return ;
-	}
-	this->setEnergy(this->getEnergy() - 1);
-	this->setHitpoint(this->getHitpoint() + amount);
-	std::cout << "[O] ScavTrap " << this->getName() << " has been repaired, gained " << amount << " hitpoints. [" << this->getHitpoint() << " HP + " << this->getEnergy() << " Energy Remaining]" << std::endl;
-}
 
 void	ScavTrap::guardGate(){
 	std::cout << "ScavTrap " << this->getName() << " turned on guard gate mode." << std::endl;

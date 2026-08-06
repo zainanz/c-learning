@@ -6,7 +6,7 @@
 /*   By: zali <zali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/02 03:02:07 by zali              #+#    #+#             */
-/*   Updated: 2026/08/02 03:09:55 by zali             ###   ########.fr       */
+/*   Updated: 2026/08/06 05:00:13 by zali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,5 @@ class ScavTrap : public ClapTrap {
 
 		void		guardGate(void);
 		void		attack(std::string const &target);
-		void		takeDamage(unsigned int amount);
-		void		beRepaired(unsigned int amount);
+
 };
