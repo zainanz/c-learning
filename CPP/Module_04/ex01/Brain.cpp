@@ -5,38 +5,37 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: zali <zali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/17 20:09:15 by zali              #+#    #+#             */
-/*   Updated: 2025/10/18 22:04:22 by zali             ###   ########.fr       */
+/*   Created: 2026/08/06 07:20:54 by zali              #+#    #+#             */
+/*   Updated: 2026/08/06 08:56:18 by zali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Brain.hpp"
 
-Brain::Brain(){};
-
-Brain::Brain(Brain const &copy)
-{
-	std::cout << "An identical Brain was created.\n";
-	std::copy(copy._ideas, copy._ideas + 100, this->_ideas);
+Brain::Brain(){
+	this->ideaIDX = 0;
 }
 
-Brain	&Brain::operator=(Brain const &copy)
-{
-	std::cout << "Brain just copied ideas.\n";
-	std::copy(copy._ideas, copy._ideas + 100, this->_ideas);
+Brain::~Brain(){
+}
+
+Brain::Brain(const Brain& copy){
+	*this = copy;
+}
+
+void	Brain::addIdea(const std::string& idea){
+	if (this->ideaIDX >= MAX_IDEAS - 1) this->ideaIDX = 0;
+	this->ideas[this->ideaIDX] = idea;
+	std::cout << "[Added Idea] '" << this->ideas[this->ideaIDX] << "' [idx: " << this->ideaIDX << "] " << std::endl;
+	this->ideaIDX++;
+	return ;
+}
+
+Brain&	Brain::operator=(const Brain& copy){
+	if (this == &copy) return (*this);
+	for (int i = 0; i < MAX_IDEAS ; i++){
+		this->ideas[i] = copy.ideas[i];
+	}
+	this->ideaIDX = copy.ideaIDX;
 	return (*this);
-}
-Brain::~Brain()
-{
-	std::cout << "Brain is dead.\n"; 
-}
-	
-void	Brain::setIdea(std::string const &idea, int const index)
-{
-	this->_ideas[index] = idea;
-}
-
-std::string &Brain::getIdea(int const index)
-{
-	return (this->_ideas[index]);
 }

@@ -5,28 +5,24 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: zali <zali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/17 10:35:02 by zali              #+#    #+#             */
-/*   Updated: 2025/10/17 20:37:23 by zali             ###   ########.fr       */
+/*   Created: 2026/08/06 07:24:13 by zali              #+#    #+#             */
+/*   Updated: 2026/08/06 08:42:41 by zali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef BRAIN_HPP
-# define BRAIN_HPP
 
+
+#pragma once
 #include <iostream>
+#define MAX_IDEAS 100
 
-class Brain
-{
+class Brain{
 	public:
-	Brain();
-	~Brain();
-	Brain(Brain const &copy);
-	Brain	&operator=(Brain const &copy);
-	void	setIdea(std::string const &idea, int const index);
-	std::string &getIdea(int const index);
-	private:
-		std::string _ideas[100];
-	
+		Brain();
+		~Brain();
+		Brain(const Brain& copy);
+		Brain&	operator=(const Brain& copy);
+		void	addIdea(const std::string& idea);	
+		std::string ideas[MAX_IDEAS]; 
+		int			ideaIDX;
 };
-
-#endif

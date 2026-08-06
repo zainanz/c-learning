@@ -5,43 +5,55 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: zali <zali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/16 01:52:30 by zali              #+#    #+#             */
-/*   Updated: 2025/10/18 22:07:47 by zali             ###   ########.fr       */
+/*   Created: 2026/08/06 05:10:31 by zali              #+#    #+#             */
+/*   Updated: 2026/08/06 09:01:02 by zali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Dog.hpp"
 
-Dog::Dog() : Animal("Dog")
-{
-	std::cout << "A Dog appeared..\n";
-	this->_brain = new Brain();
+Dog::Dog()	: Animal(){
+	this->type = "Dog";
+	std::cout << "Dog entered the scene. [Default Constructor]" << std::endl;
+	this->brain_ = new Brain();
 }
 
-Dog::~Dog()
-{
-	std::cout << "Dog disappeared..\n";
-	delete this->_brain;
+Dog::~Dog(){
+	std::cout << "Dog was chased away. [Destructor]" << std::endl;
+	delete this->brain_;
 }
 
-Dog::Dog(Dog const &copy) : Animal(copy._type), _brain(new Brain(*copy._brain))
-{
-	std::cout << "A identically dog appeared..\n";
+Dog::Dog(const Dog& copy): Animal(copy){
+	std::cout << "An identical dog entered. [Copy Constructor]" << std::endl;
+	this->brain_ = new Brain();
+	*this = copy;
 }
 
-void	Dog::operator=(Dog const &copy)
-{
-	this->_type = copy._type; // even tho its the same
-	*this->_brain = *copy._brain;
-	std::cout << "This dog was groomed indentically to the other one.\n";
+Dog&	Dog::operator=(const Dog& copy){
+	if (this == &copy) return (*this);
+	std::cout << "An indentical dog entered. [Assignment Operator]" << std::endl;
+
+	*(this->brain_) = *(copy.brain_);
+	this->type = copy.type;
+	return (*this);
 }
 
-Brain	&Dog::getBrain()
-{
-	return (*(this->_brain));
+void	Dog::makeSound(void) const{
+	std::cout << "Dog: woof!" << std::endl;
 }
 
-void	Dog::makeSound()
-{
-	std::cout << "**Dog barks**\n";
+void Dog::setIdea(const std::string& idea, int index){
+	this->brain_->ideas[index] = idea;
+}
+
+void Dog::addIdea(const std::string& idea){
+	this->brain_->addIdea(idea);
+}
+
+const std::string& Dog::getIdea(int idx) const{
+	if (idx < 0 || idx >= MAX_IDEAS){
+		std::cout << "Dog::getIdea -> INVALID IDX: can only be 0-99 | returning DEFAULT IDX 0" << std::endl;
+		return this->brain_->ideas[0];
+	}
+	return this->brain_->ideas[idx];
 }
