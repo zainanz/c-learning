@@ -6,7 +6,7 @@
 /*   By: zali <zali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/06 07:20:54 by zali              #+#    #+#             */
-/*   Updated: 2026/08/06 08:56:18 by zali             ###   ########.fr       */
+/*   Updated: 2026/08/06 10:05:17 by zali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,7 @@ void	Brain::addIdea(const std::string& idea){
 
 Brain&	Brain::operator=(const Brain& copy){
 	if (this == &copy) return (*this);
-	for (int i = 0; i < MAX_IDEAS ; i++){
-		this->ideas[i] = copy.ideas[i];
-	}
+	std::copy(copy.ideas, copy.ideas + MAX_IDEAS, this->ideas);
 	this->ideaIDX = copy.ideaIDX;
 	return (*this);
 }

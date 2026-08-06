@@ -6,7 +6,7 @@
 /*   By: zali <zali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/06 05:09:14 by zali              #+#    #+#             */
-/*   Updated: 2026/08/06 09:08:40 by zali             ###   ########.fr       */
+/*   Updated: 2026/08/06 10:05:25 by zali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,29 @@ int main(void)
 	std::cout << k.getIdea(1) << std::endl;
 	std::cout << "======== GET IDEAS END : K ===========" << std::endl;
 	std::cout << std::endl << std::endl;
+	std::cout << std::endl << std::endl;
+	{
+		Dog tmp = k;
+	}
+	std::cout << k.getIdea(0) << std::endl;
+	std::cout << std::endl << std::endl;
+
+	// Main thing asked in Subject.pdf
+	#define MAX_ANIMALS 100
+	const Animal*	aptr[MAX_ANIMALS];
+	for (int i = 0; i < MAX_ANIMALS; i++)
+	{
+		if (i % 2)
+			aptr[i] = new Dog();
+		else
+			aptr[i] = new Cat();
+
+	}
+	for (int i = 0; i < MAX_ANIMALS; i++){
+		delete aptr[i];
+	}
+	#undef MAX_ANIMALS
+
 	
 	return 0;
 }
