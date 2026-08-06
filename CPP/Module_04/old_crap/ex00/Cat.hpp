@@ -1,25 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Dog.hpp                                            :+:      :+:    :+:   */
+/*   Cat.hpp                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: zali <zali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/08/06 05:10:39 by zali              #+#    #+#             */
-/*   Updated: 2026/08/06 07:35:35 by zali             ###   ########.fr       */
+/*   Created: 2025/10/16 01:12:32 by zali              #+#    #+#             */
+/*   Updated: 2025/10/19 16:01:25 by zali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#pragma once
+#ifndef CAT_HPP
+# define CAT_HPP
 
-#include <iostream>
-#include "Animal.hpp"
+# include "Animal.hpp"
 
-class Dog: public Animal{
+class Cat : public Animal
+{
 	public:
-		Dog();
-		~Dog();
-		Dog(const Dog& copy);
-		Dog&	operator=(const Dog& copy);
-		void	makeSound(void) const;
+		Cat();
+		~Cat();
+		Cat(Cat const &copy);
+		void	operator=(Cat const &copy);
+		void	makeSound();
 };
+
+#endif

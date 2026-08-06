@@ -14,7 +14,7 @@ Animal::Animal(const Animal& copy){
 
 Animal&	Animal::operator=(const Animal& copy){
 	if (this == &copy) return (*this);
-	std::cout << "[Animal] " << copy.type << " was cloned. [Copy Constructor]" << std::endl;
+	std::cout << "[Animal] " << copy.type << " was cloned. [Assignment Operator]" << std::endl;
 	this->type = copy.type;
 	return (*this);
 }

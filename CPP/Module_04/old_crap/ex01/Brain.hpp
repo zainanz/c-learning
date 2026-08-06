@@ -1,25 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Dog.hpp                                            :+:      :+:    :+:   */
+/*   Brain.hpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: zali <zali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/08/06 05:10:39 by zali              #+#    #+#             */
-/*   Updated: 2026/08/06 07:35:35 by zali             ###   ########.fr       */
+/*   Created: 2025/10/17 10:35:02 by zali              #+#    #+#             */
+/*   Updated: 2025/10/17 20:37:23 by zali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#pragma once
+#ifndef BRAIN_HPP
+# define BRAIN_HPP
 
 #include <iostream>
-#include "Animal.hpp"
 
-class Dog: public Animal{
+class Brain
+{
 	public:
-		Dog();
-		~Dog();
-		Dog(const Dog& copy);
-		Dog&	operator=(const Dog& copy);
-		void	makeSound(void) const;
+	Brain();
+	~Brain();
+	Brain(Brain const &copy);
+	Brain	&operator=(Brain const &copy);
+	void	setIdea(std::string const &idea, int const index);
+	std::string &getIdea(int const index);
+	private:
+		std::string _ideas[100];
+	
 };
+
+#endif

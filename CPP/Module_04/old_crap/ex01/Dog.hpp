@@ -5,21 +5,28 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: zali <zali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/08/06 05:10:39 by zali              #+#    #+#             */
-/*   Updated: 2026/08/06 07:35:35 by zali             ###   ########.fr       */
+/*   Created: 2025/10/16 01:12:32 by zali              #+#    #+#             */
+/*   Updated: 2025/10/19 16:00:42 by zali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#pragma once
+#ifndef DOG_HPP
+# define DOG_HPP
 
-#include <iostream>
-#include "Animal.hpp"
+# include "Animal.hpp"
+# include "Brain.hpp"
 
-class Dog: public Animal{
+class Dog : public Animal
+{
 	public:
 		Dog();
 		~Dog();
-		Dog(const Dog& copy);
-		Dog&	operator=(const Dog& copy);
-		void	makeSound(void) const;
+		Dog(Dog const &copy);
+		void	operator=(Dog const &copy);
+		Brain	&getBrain();
+		void	makeSound();
+	private:
+		Brain	*_brain;
 };
+
+#endif
