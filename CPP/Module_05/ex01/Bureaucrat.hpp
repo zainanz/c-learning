@@ -1,5 +1,8 @@
 #pragma once
-#include <ostream>
+#include <iostream>
+#include "Form.hpp"
+
+class Form;
 
 class Bureaucrat {
 	public:
@@ -15,6 +18,7 @@ class Bureaucrat {
 			virtual const char* what() const _GLIBCXX_NOTHROW;
 		};
 
+		void				signForm(Form& f);
 		void				gradeUp(void);
 		void				gradeDown(void);
 		Bureaucrat&			operator=(const Bureaucrat& copy);

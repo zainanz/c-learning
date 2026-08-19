@@ -45,13 +45,28 @@ void	Bureaucrat::gradeDown(){
 Bureaucrat::Bureaucrat(const Bureaucrat& copy){
 	*this = copy;
 }
+
 Bureaucrat&	Bureaucrat::operator=(const Bureaucrat& copy){
 	if (this == &copy) return (*this);
 	this->name_ = copy.name_;
 	this->grade_ = copy.grade_;
 	return (*this);
 }
+
 std::ostream&	operator<<(std::ostream& os, Bureaucrat& b){
 	os << b.getName() << ", bureaucrat grade " << b.getGrade();
 	return (os);
+}
+
+void	Bureaucrat::signForm(Form& f){
+	try{
+		f.beSigned(*this);
+		std::cout << this->name_ << " signed " << f.getName() << std::endl;
+	}
+	catch (std::exception& e)
+	{
+		std::cerr << this->name_ << " couldn't sign " << f.getName() << " because " << e.what() << "." << std::endl;
+		return ;
+	}
+	return ;
 }
