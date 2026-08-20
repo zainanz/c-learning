@@ -23,6 +23,10 @@ AForm::AForm(const std::string& name, const int gradesig, const int gradeexec): 
 AForm::~AForm(){
 }
 
+const char* AForm::FormNotSignedException::what() const _GLIBCXX_NOTHROW{
+	return "FormNotSignedException: Form is not signed.";
+}
+
 const char*	AForm::GradeTooHighException::what() const _GLIBCXX_NOTHROW{
 	return "GradeTooLowException: Grade is too high.";
 }
@@ -56,4 +60,10 @@ std::ostream&	operator<<(std::ostream& os, const AForm& other){
 	os << "AForm Details: {name_: " << other.getName() << ", signed_: " << other.getSigned() << ", gradeSign_: " << other.getGradeSign() << 
 	", gradeExec_: " << other.getGradeExec() << "}";
 	return os;
+}
+
+void		AForm::execute(Bureaucrat const & executor) const{
+	if (executor.getGrade() > this->getGradeExec()) throw GradeTooLowException();
+	if (!this->getSigned()) throw FormNotSignedException();
+	return ;
 }
