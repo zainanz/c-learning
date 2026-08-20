@@ -1,6 +1,6 @@
 CXX = c++
 CXXFLAGS = -Wall -Werror -Wextra -std=c++98
-SRC = Bureaucrat.cpp main.cpp
+SRC = Bureaucrat.cpp main.cpp AForm.cpp ShrubberyCreationForm.cpp
 O = obj/
 OBJ = ${SRC:%.cpp=${O}%.o}
 DEP = ${OBJ:.o=.d}
