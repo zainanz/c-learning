@@ -3,8 +3,8 @@
 #include <ostream>
 #include <fstream>
 
-#define GRAD_REQ_SIG 145
-#define GRAD_REQ_EXEC 137
+#define S_GRAD_REQ_SIG 145
+#define S_GRAD_REQ_EXEC 137
 
 class ShrubberyCreationForm: public AForm{
 	public:

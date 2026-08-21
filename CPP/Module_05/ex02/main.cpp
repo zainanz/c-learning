@@ -3,6 +3,7 @@
 #include "ShrubberyCreationForm.hpp"
 #include <exception>
 #include <iostream>
+#include "RobotomyRequestForm.hpp"
 
 int main(void)
 {
@@ -36,7 +37,7 @@ int main(void)
 	std::cout << std::endl;
 	std::cout << std::endl;
 	
-	ShrubberyCreationForm unsignedform("mytree");
+	ShrubberyCreationForm unsignedform;
 
 	std::cout << "UnsignedForm has been created!" << std::endl;
 	std::cout << unsignedform << std::endl;
@@ -49,54 +50,86 @@ int main(void)
 		std::cerr << "[Error] " << e.what() << std::endl;
 	}
 
-	unsignedform.beSigned(b);
-	std::cout << unsignedform.getName() << " has been signed by " << b.getName() << std::endl;
-	std::cout << std::endl;
 	
 
-	ShrubberyCreationForm signedform(unsignedform);
-	std::cout << signedform.getName() << "'s copy has been printed!" << std::endl;
-
-	std::cout << signedform << std::endl;
-
-	for (int i = 0; i < MAX_GRAD ; i++) {
-		try {
-			b.gradeDown();
-		}
-		catch (...) {
-			break ;
-		}
-	}
-	std::cout << "B's grade set to 150!" << std::endl;
-	std::cout << b << std::endl;
-
-	std::cout << std::endl;
-	std::cout << "B attempted to perform execute" << std::endl;
-
-	try {
-		signedform.execute(b);
-	}
-	catch (std::exception& e)
 	{
-		std::cerr << "[Error] " << e.what() << std::endl;
-	}
-	for (int i = 0 ; i < MAX_GRAD; i++) {
-		try
-		{
-			b.gradeUp();
-		}
-		catch(...)
-		{
-			break;
-		}
-	}
-	std::cout << "b's grade was set to 1!" << std::endl;
-	std::cout << b << std::endl;
+		unsignedform.beSigned(b);
+		std::cout << unsignedform.getName() << " has been signed by " << b.getName() << std::endl;
+		std::cout << std::endl;
 
-	try {
-		signedform.execute(b);
+		ShrubberyCreationForm signedform(unsignedform);
+		std::cout << signedform.getName() << "'s copy has been printed!" << std::endl;
+
+		std::cout << signedform << std::endl;
+
+		for (int i = 0; i < MAX_GRAD ; i++) {
+			try {
+				b.gradeDown();
+			}
+			catch (...) {
+				break ;
+			}
+		}
+		std::cout << "B's grade set to 150!" << std::endl;
+		std::cout << b << std::endl;
+
+		std::cout << std::endl;
+		std::cout << "B attempted to perform execute" << std::endl;
+
+		try {
+			signedform.execute(b);
+		}
+		catch (std::exception& e)
+		{
+			std::cerr << "[Error] " << e.what() << std::endl;
+		}
+		for (int i = 0 ; i < MAX_GRAD; i++) {
+			try
+			{
+				b.gradeUp();
+			}
+			catch(...)
+			{
+				break;
+			}
+		}
+		std::cout << "b's grade was set to 1!" << std::endl;
+		std::cout << b << std::endl;
+
+		try {
+			signedform.execute(b);
+		}
+		catch (std::exception& e){
+			std::cerr << "[Error] " << e.what() << std::endl;
+		}
 	}
-	catch (std::exception& e){
-		std::cerr << "[Error] " << e.what() << std::endl;
+
+	Bureaucrat zali("Zainan");
+	ShrubberyCreationForm newform("pact");
+	zali.signForm(newform);
+	zali.executeForm(newform);
+
+	{
+		std::cout << " ======================= RobotomyRequestForm ===================== " << std::endl;
+		RobotomyRequestForm rf("pacman");
+		Bureaucrat			zali("Zainan");
+		try {
+			zali.executeForm(rf);
+		}
+		catch(std::exception& e) {
+			std::cerr << "[Error] " << e.what() << std::endl;
+		}
+		// const int maxexec = rf.getGradeExec();
+		const int maxsign = rf.getGradeSign();
+		for (int i = 0; i < 150 - maxsign; i++) zali.gradeUp();
+		std::cout << zali << std::endl;
+		try {
+			zali.signForm(rf);
+			rf.beSigned(zali);
+			zali.executeForm(rf);
+		}
+		catch(std::exception& e) {
+			std::cerr << "[Error] " << e.what() << std::endl;
+		}
 	}
 }

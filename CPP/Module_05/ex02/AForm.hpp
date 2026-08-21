@@ -1,6 +1,6 @@
 #pragma once
 
-#include <ostream>
+#include <iostream>
 #include "Bureaucrat.hpp"
 
 class Bureaucrat;

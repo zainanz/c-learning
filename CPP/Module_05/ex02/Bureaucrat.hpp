@@ -19,6 +19,8 @@ class Bureaucrat {
 		};
 
 		void				signForm(AForm& f);
+		void				executeForm(AForm const & form) const;
+
 		void				gradeUp(void);
 		void				gradeDown(void);
 		Bureaucrat&			operator=(const Bureaucrat& copy);
