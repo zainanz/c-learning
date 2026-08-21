@@ -1,12 +1,15 @@
 #include "Bureaucrat.hpp"
 #include "AForm.hpp"
-#include "ShrubberyCreationForm.hpp"
 #include <exception>
 #include <iostream>
 #include "RobotomyRequestForm.hpp"
+#include "ShrubberyCreationForm.hpp"
+#include "PresidentialPardonForm.hpp"
 
 int main(void)
 {
+
+	std::srand(time(NULL));
 	ShrubberyCreationForm a;
 	Bureaucrat b;
 	std::cout << a << std::endl;
@@ -111,7 +114,7 @@ int main(void)
 
 	{
 		std::cout << " ======================= RobotomyRequestForm ===================== " << std::endl;
-		RobotomyRequestForm rf("pacman");
+		RobotomyRequestForm rf;
 		Bureaucrat			zali("Zainan");
 		try {
 			zali.executeForm(rf);
@@ -119,7 +122,7 @@ int main(void)
 		catch(std::exception& e) {
 			std::cerr << "[Error] " << e.what() << std::endl;
 		}
-		// const int maxexec = rf.getGradeExec();
+		const int maxexec = rf.getGradeExec();
 		const int maxsign = rf.getGradeSign();
 		for (int i = 0; i < 150 - maxsign; i++) zali.gradeUp();
 		std::cout << zali << std::endl;
@@ -131,5 +134,32 @@ int main(void)
 		catch(std::exception& e) {
 			std::cerr << "[Error] " << e.what() << std::endl;
 		}
+		for (int i = 0; i < (150 - maxsign) - maxexec; i++) zali.gradeUp();
+		try {
+			std::cout << "~~~~~~~~// Trying to Execute Form again!" << std::endl;
+			zali.executeForm(rf);
+		}
+		catch(std::exception& e) {
+			std::cerr << "[Error] " << e.what() << std::endl;
+		}
+		Bureaucrat za("Zainan2", 44);
+		za.executeForm(rf);
+	}
+	{
+		std::cout << " ======================= Presidential Pardon Form ===================== " << std::endl;
+		Bureaucrat pd("Bigman", 26);
+		PresidentialPardonForm pf("Jack Sparrow Pardon Form");
+		pd.signForm(pf);
+		try {
+			pf.beSigned(pd);
+		}
+		catch (std::exception& e){
+			std::cout << "[Exception] " << e.what() << std::endl;
+		}
+		pd.gradeUp();
+		pd.signForm(pf);
+		pd.executeForm(pf);
+		Bureaucrat pdd("Biggerman", 5);
+		pdd.executeForm(pf);
 	}
 }

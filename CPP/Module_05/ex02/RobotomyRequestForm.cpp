@@ -19,9 +19,10 @@ RobotomyRequestForm& RobotomyRequestForm::operator=(const RobotomyRequestForm& o
 	this->target_ = other.target_;
 	return (*this);
 }
+
 void	RobotomyRequestForm::execute(Bureaucrat const & executor) const{
 	this->AForm::execute(executor);
-	if (std::rand() % 2 == 0)
+	if (std::rand() % 2)
 	{
 		std::cout << "**Drilling noises** " << this->target_ << " has been robotomized." << std::endl;
 	} else {

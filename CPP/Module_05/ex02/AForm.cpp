@@ -32,7 +32,7 @@ const char*	AForm::GradeTooHighException::what() const _GLIBCXX_NOTHROW{
 }
 
 const char*	AForm::GradeTooLowException::what() const _GLIBCXX_NOTHROW{
-	return "GradeTooHigherException: Grade is too low.";
+	return "GradeTooHighException: Grade is too low.";
 }
 
 bool	AForm::getSigned() const {
