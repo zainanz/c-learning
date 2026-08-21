@@ -154,7 +154,7 @@ int main(void)
 			pf.beSigned(pd);
 		}
 		catch (std::exception& e){
-			std::cout << "[Exception] " << e.what() << std::endl;
+			std::cerr << "[Exception] " << e.what() << std::endl;
 		}
 		pd.gradeUp();
 		pd.signForm(pf);
