@@ -1,5 +1,12 @@
 #include "bigint.hpp"
 
+bigint::bigint(): strnum_("0"){
+}
+
+bigint::~bigint(){
+
+}
+
 bigint::bigint(unsigned int val){ 
 	strnum_ = "";
 	if (val == 0){
@@ -93,6 +100,113 @@ bigint	bigint::operator>>=(int x){
 	bigint::perform_rs(*this, x);
 	return (*this);
 }
+
+bigint	bigint::operator<<(const bigint& bint){
+	int	bint_size = bint.strnum_.size();
+	int val = 0;
+	bigint btemp(*this); 
+	for (int i = 0; i < bint_size; i++){
+		val = (bint.strnum_[i] - '0') * std::pow(10, i);
+		perform_ls(btemp, val);
+	}
+	return (btemp);
+}
+
+bigint	bigint::operator<<=(const bigint& bint){
+	int	bint_size = bint.strnum_.size();
+	int val = 0;
+	for (int i = 0; i < bint_size; i++){
+		val = (bint.strnum_[i] - '0') * std::pow(10, i);
+		perform_ls(*this, val);
+	}
+	return (*this);
+}
+bigint	bigint::operator+(bigint& bint){
+	int	bint_size = bint.strnum_.size();
+	int val = 0;
+	bigint btemp(*this);
+	for (int i = 0; i < bint_size; i++){
+		val = (bint.strnum_[i] - '0') * std::pow(10, i);
+		bigint::bigIntAddInt(btemp, val);
+	}
+	return (btemp);
+}
+
+bigint	bigint::operator++(){
+	bigint temp;
+	temp.strnum_ = "guess what?! i cant continue to make this anymore.. its so boring!";
+	return temp;
+
+}
+bigint	bigint::operator++(int){
+	bigint temp;
+	temp.strnum_ = "guess what?! i cant continue to make this anymore.. its so boring!";
+	return temp;
+}
+
+bigint	bigint::operator+(bigint& bint) const{
+	int	bint_size = bint.strnum_.size();
+	int val = 0;
+	bigint btemp(*this);
+	for (int i = 0; i < bint_size; i++){
+		val = (bint.strnum_[i] - '0') * std::pow(10, i);
+		bigint::bigIntAddInt(btemp, val);
+	}
+	return (btemp);
+}
+
+bigint	bigint::operator+=(bigint& bint){
+	int	bint_size = bint.strnum_.size();
+	int val = 0;
+	for (int i = 0; i < bint_size; i++){
+		val = (bint.strnum_[i] - '0') * std::pow(10, i);
+		bigint::bigIntAddInt(*this, val);
+	}
+	return (*this);
+}
+
+bigint	bigint::operator+(const bigint& bint){
+	int	bint_size = bint.strnum_.size();
+	int val = 0;
+	bigint btemp(*this);
+	for (int i = 0; i < bint_size; i++){
+		val = (bint.strnum_[i] - '0') * std::pow(10, i);
+		bigint::bigIntAddInt(btemp, val);
+	}
+	return (btemp);
+}
+
+bigint	bigint::operator+=(const bigint& bint){
+	int	bint_size = bint.strnum_.size();
+	int val = 0;
+	for (int i = 0; i < bint_size; i++){
+		val = (bint.strnum_[i] - '0') * std::pow(10, i);
+		bigint::bigIntAddInt(*this, val);
+	}
+	return (*this);
+}
+
+bigint	bigint::operator>>(const bigint& bint){
+	int	bint_size = bint.strnum_.size();
+	int val = 0;
+	bigint btemp(*this); 
+	for (int i = 0; i < bint_size; i++){
+		val = (bint.strnum_[i] - '0') * std::pow(10, i);
+		perform_rs(btemp, val);
+	}
+	return (btemp);
+}
+
+bigint	bigint::operator>>=(const bigint& bint){
+	int	bint_size = bint.strnum_.size();
+	int val = 0;
+	for (int i = 0; i < bint_size; i++){
+		val = (bint.strnum_[i] - '0') * std::pow(10, i);
+		perform_rs(*this, val);
+	}
+	return (*this);
+}
+
 
 void	bigint::bigIntAddInt(bigint& btemp, int x){
 	int last_val = 0;

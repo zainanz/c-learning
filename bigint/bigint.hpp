@@ -1,8 +1,11 @@
 #pragma once
 #include <iostream>
+#include <cmath>
 
 class bigint {
 	public:
+		bigint(); 
+		~bigint();
 		bigint(unsigned int);
 		bigint(const bigint& bint);
 		const std::string&	getBigIntStr() const;
@@ -14,6 +17,17 @@ class bigint {
 		bigint	operator>>(int x);
 		bigint	operator<<=(int x);
 		bigint	operator>>=(int x);
+		bigint	operator>>(const bigint& b);
+		bigint	operator>>=(const bigint& b);
+		bigint	operator<<(const bigint& bint);
+		bigint	operator<<=(const bigint& bint);
+		bigint	operator+=(const bigint& bint);
+		bigint	operator+(const bigint& bint);
+		bigint	operator+=(bigint& bint);
+		bigint	operator+(bigint& bint);
+		bigint	operator+(bigint& bint) const;
+		bigint	operator++();
+		bigint	operator++(int);
 
 	private:
 		std::string	strnum_;
