@@ -27,7 +27,7 @@ class Bureaucrat {
 		const std::string	&getName(void) const;
 		int					getGrade(void) const;
 	private:
-		std::string name_;
-		int			grade_;
+		const std::string	name_;
+		int					grade_;
 };
 std::ostream& operator<<(std::ostream& os, Bureaucrat& b);

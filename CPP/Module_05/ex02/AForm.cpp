@@ -28,11 +28,11 @@ const char* AForm::FormNotSignedException::what() const _GLIBCXX_NOTHROW{
 }
 
 const char*	AForm::GradeTooHighException::what() const _GLIBCXX_NOTHROW{
-	return "GradeTooLowException: Grade is too high.";
+	return "GradeTooHighException: Grade is too high.";
 }
 
 const char*	AForm::GradeTooLowException::what() const _GLIBCXX_NOTHROW{
-	return "GradeTooHighException: Grade is too low.";
+	return "GradeTooLowException: Grade is too low.";
 }
 
 bool	AForm::getSigned() const {

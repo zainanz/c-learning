@@ -42,13 +42,11 @@ void	Bureaucrat::gradeDown(){
 	this->grade_++;
 }
 
-Bureaucrat::Bureaucrat(const Bureaucrat& copy){
-	*this = copy;
+Bureaucrat::Bureaucrat(const Bureaucrat& copy): name_(copy.name_), grade_(copy.grade_){
 }
 
 Bureaucrat&	Bureaucrat::operator=(const Bureaucrat& copy){
 	if (this == &copy) return (*this);
-	this->name_ = copy.name_;
 	this->grade_ = copy.grade_;
 	return (*this);
 }

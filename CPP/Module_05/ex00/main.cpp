@@ -4,6 +4,9 @@ int main(void)
 {
 	Bureaucrat b("Zainan");
 	Bureaucrat a(b);
+	Bureaucrat zali;
+	zali = b;
+	std::cout << "Bureaucrat zali -> " << zali  << std::endl;
 
 	try
 	{
@@ -11,7 +14,7 @@ int main(void)
 	}
 	catch (std::exception & e)
 	{
-		std::cout << e.what() << std::endl;
+		std::cerr << e.what() << std::endl;
 	}
 	std::cout << std::endl << std::endl;
 	std::cout << std::endl << std::endl;
@@ -23,8 +26,8 @@ int main(void)
 	}
 	catch(std::exception& e)
 	{
-		std::cout << a << std::endl;
-		std::cout << e.what() << std::endl;
+		std::cerr << a << std::endl;
+		std::cerr << e.what() << std::endl;
 	}
 	std::cout << a << std::endl;
 

@@ -42,13 +42,11 @@ void	Bureaucrat::gradeDown(){
 	this->grade_++;
 }
 
-Bureaucrat::Bureaucrat(const Bureaucrat& copy){
-	*this = copy;
+Bureaucrat::Bureaucrat(const Bureaucrat& copy): name_(copy.name_), grade_(copy.grade_){
 }
 
 Bureaucrat&	Bureaucrat::operator=(const Bureaucrat& copy){
 	if (this == &copy) return (*this);
-	this->name_ = copy.name_;
 	this->grade_ = copy.grade_;
 	return (*this);
 }
@@ -60,8 +58,9 @@ std::ostream&	operator<<(std::ostream& os, Bureaucrat& b){
 
 void	Bureaucrat::signForm(AForm& f){
 	try{
-		f.beSigned(*this);
 		std::cout << this->name_ << " signed " << f.getName() << std::endl;
+		std::cout << "\t\t ~~~~~";
+		f.beSigned(*this);
 	}
 	catch (std::exception& e)
 	{
@@ -73,8 +72,9 @@ void	Bureaucrat::signForm(AForm& f){
 
 void	Bureaucrat::executeForm(AForm const & form) const{
 	try {
-		form.execute(*this);
 		std::cout << this->name_ << " executed " << form.getName() << std::endl;
+		std::cout << "\t\t ~~~~~";
+		form.execute(*this);
 	}
 	catch (std::exception& e){
 		std::cerr << "[ExecuteForm] " << e.what() << std::endl;	

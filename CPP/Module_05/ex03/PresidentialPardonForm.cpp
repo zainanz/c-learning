@@ -22,7 +22,7 @@ PresidentialPardonForm& PresidentialPardonForm::operator=(const PresidentialPard
 
 void	PresidentialPardonForm::execute(Bureaucrat const & executor) const{
 	this->AForm::execute(executor);
-	std::cout << this->target_ << " has been pardoned by Zaphod Beeblebrox" << std::endl;
+	std::cout << "[Pardon Exec] " << this->target_ << " has been pardoned by Zaphod Beeblebrox" << std::endl;
 }
 
 const char* PresidentialPardonForm::RobomotizeFailedException::what() const _GLIBCXX_NOTHROW{

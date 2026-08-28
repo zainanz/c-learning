@@ -23,11 +23,11 @@ Form::~Form(){
 }
 
 const char*	Form::GradeTooHighException::what() const _GLIBCXX_NOTHROW{
-	return "GradeTooLowException: Grade is too high.";
+	return "GradeTooHighException: Grade is too high.";
 }
 
 const char*	Form::GradeTooLowException::what() const _GLIBCXX_NOTHROW{
-	return "GradeTooHigherException: Grade is too low.";
+	return "GradeTooLowException: Grade is too low.";
 }
 
 bool	Form::getSigned() const {

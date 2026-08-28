@@ -28,11 +28,11 @@ const char* AForm::FormNotSignedException::what() const _GLIBCXX_NOTHROW{
 }
 
 const char*	AForm::GradeTooHighException::what() const _GLIBCXX_NOTHROW{
-	return "GradeTooLowException: Grade is too high.";
+	return "GradeTooHighException: Grade is too high.";
 }
 
 const char*	AForm::GradeTooLowException::what() const _GLIBCXX_NOTHROW{
-	return "GradeTooHighException: Grade is too low.";
+	return "GradeTooLowException: Grade is too low.";
 }
 
 bool	AForm::getSigned() const {
@@ -53,7 +53,10 @@ int AForm::getGradeSign() const {
 
 void AForm::beSigned(const Bureaucrat& b){
 	if (b.getGrade() > this->gradeSign_) throw AForm::GradeTooLowException();
-	if (this->signed_) std::cout << "(info) -> " << this->name_ << " was already signed" << std::endl;
+	if (this->signed_)
+		std::cout << "(info) -> " << this->name_ << " was already signed" << std::endl;
+	else
+		std::cout << "[Signed Form] " << this->name_ << " was signed by " << b.getName() << std::endl;
 	this->signed_ = true;
 }
 

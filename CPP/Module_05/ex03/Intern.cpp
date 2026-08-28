@@ -12,25 +12,25 @@ Intern&	Intern::operator=(const Intern& other){
 	return (*this);
 }
 
-static AForm* createForm(FORM_TYPE formtype, const std::string& tname){
-	switch (formtype)
-	{
-		case ROBOT: return (new RobotomyRequestForm(tname));
-		case SHRUBBERY: return (new ShrubberyCreationForm(tname));
-		case PRESIDENTIAL: return (new PresidentialPardonForm(tname));
-		default: NULL;
-	}
-	return (NULL);
+static AForm*	createRobotomy(const std::string& tname){
+	return (new RobotomyRequestForm(tname));
+}
+static AForm*	createShrubbery(const std::string& tname){
+	return (new ShrubberyCreationForm(tname));
+}
+static AForm*	createPresidential(const std::string& tname){
+	return (new PresidentialPardonForm(tname));
 }
 
 AForm*	Intern::makeForm(const std::string& fname, const std::string& tname){
 	const int MAX_FORMS = 3;
+	AForm * (*funcs[MAX_FORMS])(const std::string& ) = {createRobotomy, createShrubbery, createPresidential};
 	const std::string forms[MAX_FORMS] = {"robotomy request", "shrubbery creation", "presidential pardon"};
 
 	AForm*	aptr = NULL;
 	for (int i = 0; i < MAX_FORMS; i++){
 		if (forms[i] == fname){
-			aptr = createForm(static_cast<FORM_TYPE>(i), tname);
+			aptr = (funcs[i])(tname);
 			std::cout << "Intern creates " << forms[i]  << "."  << std::endl;
 			break ;
 		}

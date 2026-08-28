@@ -8,8 +8,6 @@
 
 int main(void)
 {
-
-	std::srand(time(NULL));
 	ShrubberyCreationForm a;
 	Bureaucrat b;
 	std::cout << a << std::endl;
@@ -91,7 +89,7 @@ int main(void)
 			{
 				b.gradeUp();
 			}
-			catch(...)
+			catch(...) // for all cases
 			{
 				break;
 			}
@@ -141,6 +139,12 @@ int main(void)
 		}
 		catch(std::exception& e) {
 			std::cerr << "[Error] " << e.what() << std::endl;
+		}
+		try {
+			rf.execute(zali);
+		}
+		catch (std::exception& e){
+			std::cerr << "[Exception] " << e.what() << std::endl;
 		}
 		Bureaucrat za("Zainan2", 44);
 		za.executeForm(rf);

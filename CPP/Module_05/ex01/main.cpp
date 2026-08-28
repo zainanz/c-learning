@@ -30,7 +30,7 @@ int main(void)
 			b.gradeDown();
 		}
 		catch (std::exception& e){
-			std::cout << "[Exception] Exception Caught Values:\ti='" << i << "' Grade='" << b.getGrade() << "'\n\t\t\t\t\te.what(): " << e.what() << std::endl;
+			std::cerr << "[Exception] Exception Caught Values:\ti='" << i << "' Grade='" << b.getGrade() << "'\n\t\t\t\t\te.what(): " << e.what() << std::endl;
 			break ;
 		}
 	}
@@ -48,14 +48,14 @@ int main(void)
 		Form ff("NAME", -1, 150);
 	}
 	catch (std::exception& e){
-		std::cout << "[Exception] " << e.what() << std::endl;
+		std::cerr << "[Exception] " << e.what() << std::endl;
 	}
 
 	try {
 		Form ff("NAME", 2, 170);
 	}
 	catch (std::exception& e){
-		std::cout << "[Exception] " << e.what() << std::endl;
+		std::cerr << "[Exception] " << e.what() << std::endl;
 	}
 
 	std::cout << std::endl << std::endl;
@@ -64,12 +64,23 @@ int main(void)
 	copy_b.signForm(f);
 	std::cout << f << std::endl;
 
+	Bureaucrat weak("J");
+	std::cout << weak << std::endl;
+	weak.signForm(f);
+
 	std::cout << std::endl << std::endl;
 
 	std::cout << "============= Form::beSigned =================" << std::endl;
 	for (;i > 0; i--) b.gradeUp();
 	f.beSigned(b);
 	std::cout << f << std::endl;
+	try {
+		std::cout << "WEAK AKA J tries to sign form (f -> " << f.getName() << ")" << std::endl;
+		f.beSigned(weak);
+	}
+	catch (std::exception& e){
+		std::cerr << e.what() << std::endl;
+	}
 
 
 	return 0;

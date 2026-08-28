@@ -29,7 +29,12 @@ int main(void)
 	std::cout << " ============= Robotomy ============" << std::endl;
 	AForm* form3 = zali.makeForm("robotomy request", "pres_priv");
 	form3->beSigned(z);
-	form3->execute(z);
+	try {
+		form3->execute(z);
+	}
+	catch (std::exception& e){
+		std::cerr << "[**Exception] " << e.what() << std::endl;
+	}
 	z.signForm(*form3);
 	z.executeForm(*form3);
 

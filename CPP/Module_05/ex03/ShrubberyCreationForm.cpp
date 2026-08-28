@@ -49,5 +49,5 @@ void	ShrubberyCreationForm::execute(Bureaucrat const & executor) const{
 	out << "          ~~~w/w~\"~~,\\` `:/,-(~\"~~~~~~~~\"~o~\\~/~w|/~" << std::endl;
 	out.close();
 
-	std::cout << this->getName() << " successfully executed the form. [" << this->target_ + "_shrubbery]" << std::endl;
+	std::cout << this->getName() << " was successfully executed. [" << this->target_ + "_shrubbery]" << std::endl;
 }
