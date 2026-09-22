@@ -6,10 +6,21 @@ ScalarConverter::ScalarConverter(){
 ScalarConverter::~ScalarConverter(){
 }
 
-static std::string  convertStrToChar(const std::string& str){
+static long int extractValLongInt(const std::string& str, char **endp){
+    if (str.size() == 1 && isascii(str[0]))
+        return (str[0]);
+    return (strtol(str.c_str(), endp, 10));
+}
+
+static double extractValDouble(const std::string& str, char **endp){
+    if (str.size() == 1 && isascii(str[0]))
+        return (str[0]);
+    return (strtod(str.c_str(), endp));
+}
+
+static std::string  convertStrToChar(const std::string& str, long int c){
     try {
         if (str == "nan") return "Impossible";
-        long int c = strtol(str.c_str(), NULL, 10);
         if (!isascii(static_cast<char>(c))){
             return "Impossible";
         }
@@ -24,10 +35,18 @@ static std::string  convertStrToChar(const std::string& str){
 
 }
 
-static std::string  convertStrToInt(const std::string& str){
+static bool IsNegativeInf(const std::string& str){
+    return (str == "-inff" || str == "-inf");
+}
+
+static bool IsPositiveInf(const std::string& str){
+    return (str == "+inff" || str == "+inf");
+}
+
+static std::string  convertStrToInt(const std::string& str, long int c){
     try {
         if (str == "nan") return "Impossible";
-        long int c = strtol(str.c_str(), NULL, 10);
+        if (IsPositiveInf(str) || IsNegativeInf(str)) return "Impossible";
         if (c > INT_MAX || c < INT_MIN) return "Impossible";
         std::ostringstream stri;
         stri << (static_cast<int>(c));
@@ -38,23 +57,15 @@ static std::string  convertStrToInt(const std::string& str){
     }
 }
 
-static bool IsNegativeInf(const std::string& str){
-    return (str == "-inff" || str == "-inf");
-}
 
-static bool IsPositiveInf(const std::string& str){
-    return (str == "+inff" || str == "+inf");
-}
-
-static std::string  convertStrToFloat(const std::string& str){
+static std::string  convertStrToFloat(const std::string& str, float c){
     try {
         if (str == "nan") return "nanf";
         if (IsNegativeInf(str)) return "-inff";
         if (IsPositiveInf(str)) return "+inff";
-        float c = strtof(str.c_str(), NULL);
         std::ostringstream stri;
         if (std::fmod(c, 1.0) == 0.0)
-            stri << std::fixed << std::setprecision(1) << c;
+            stri << std::fixed << std::setprecision(1) << c << "f";
         else 
             stri << std::setprecision(FLT_DIG) << c;
         return stri.str();
@@ -64,13 +75,11 @@ static std::string  convertStrToFloat(const std::string& str){
     }
 }
 
-static std::string  convertStrToDouble(const std::string& str){
+static std::string  convertStrToDouble(const std::string& str, double c){
     try {
-        double c;
         if (str == "nan") return "nan";
         if (IsNegativeInf(str)) return "-inf";
         if (IsPositiveInf(str)) return "+inf";
-        c = strtod(str.c_str(), NULL);
         std::ostringstream stri;
         if (std::fmod(c, 1.0) == 0.0)
             stri << std::fixed << std::setprecision(1) << c;
@@ -84,10 +93,21 @@ static std::string  convertStrToDouble(const std::string& str){
 }
 
 void    ScalarConverter::convert(const std::string& str){
-    std::cout << "char: " << convertStrToChar(str) << std::endl;
-    std::cout << "int: " << convertStrToInt(str) << std::endl;
-    std::cout << "float: " << convertStrToFloat(str) << std::endl;
-    std::cout << "double: " << convertStrToDouble(str) << std::endl;
+    char *endp = NULL;
+    double d = extractValDouble(str, &endp);
+    if (*endp != '\0' && *endp != 'f'){
+        std::cout << "err : d" << std::endl;
+        return ;
+    }
+    long int li = extractValLongInt(str, &endp);
+    if (*endp != '\0'){
+        std::cout << "err : li" << std::endl;
+        return ;
+    }
+    std::cout << "char: " << convertStrToChar(str, li) << std::endl;
+    std::cout << "int: " << convertStrToInt(str, li) << std::endl;
+    std::cout << "float: " << convertStrToFloat(str, d) << std::endl;
+    std::cout << "double: " << convertStrToDouble(str, d) << std::endl;
     return ;
 }
 

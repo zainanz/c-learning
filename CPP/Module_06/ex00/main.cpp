@@ -6,7 +6,7 @@ int main(int argc, char *argv[]){
         std::cerr << "Too many arguments." << std::endl;
         return 1;
     }
-    if (argc == 1){
+    if (argc == 1 || std::string(argv[1]) == "inf"){
         std::cout << "char: " << "Impossible" << std::endl;
         std::cout << "int: " << "Impossible" << std::endl;
         std::cout << "float: " << "Impossible" << std::endl;
