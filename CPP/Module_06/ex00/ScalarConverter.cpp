@@ -78,8 +78,8 @@ void    ScalarConverter::convert(const std::string& str){
     try {
         d = extractValDouble(str, &endp);
         if (*endp != '\0'){
-            if (*(endp + 1) != '\0') throw 0;
-            if (*endp != 'f') throw 0;
+            if (*(endp + 1) != '\0') throw true;
+            if (*endp != 'f') throw true;
         }
         li = extractValLongInt(str, &endp);
         std::cout << "char: " << convertStrToChar(str, li) << std::endl;
