@@ -34,7 +34,7 @@ static bool IsNegativeInf(const std::string& str){
 }
 
 static bool IsPositiveInf(const std::string& str){
-    return (str == "+inff" || str == "+inf");
+    return (str == "+inff" || str == "+inf" || str == "inf");
 }
 
 static std::string  convertStrToInt(const std::string& str, long int c){
