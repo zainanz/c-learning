@@ -82,6 +82,8 @@ void    ScalarConverter::convert(const std::string& str){
             if (*endp != 'f') throw true;
         }
         li = extractValLongInt(str, &endp);
+        if (*endp != '\0' && *endp == 'f') throw true;
+        // if (*endp != '\0') throw true;
         std::cout << "char: " << convertStrToChar(str, li) << std::endl;
         std::cout << "int: " << convertStrToInt(str, li) << std::endl;
         std::cout << "float: " << convertStrToFloat(str, d) << std::endl;
