@@ -1,11 +1,11 @@
 CXX = c++
 CXX_FLAGS = -Wall -Werror -Wextra -std=c++98
 CXXFLAGS = 
-SRC = Serializer.cpp main.cpp
+SRC = Base.cpp main.cpp
 O = obj/
 OBJ = ${SRC:%.cpp=${O}%.o}
 DEP = ${OBJ:.o=.d}
-NAME = serialize 
+NAME = base 
 
 all: ${NAME}
 

@@ -3,18 +3,18 @@ Base::~Base(){
 }
 
 Base    *generate(void){
-    switch(std::rand() % 3){
-        case 1: return new A();
-        case 2: return new B();
-        default: return new C();
+	// return static_cast<Base *>(new A());
+	switch(std::rand() % 3){
+        case 1: return static_cast<Base *>(new A());
+        case 2: return static_cast<Base *>(new B());
+        default: return static_cast<Base *>(new C());
     }
 }
 
 void    identify(Base* p){
-    Base *ptrs[] = {dynamic_cast<A*>(p), dynamic_cast<B*>(p), dynamic_cast<C*>(p)};
-    if (!ptrs[0]) std::cout << "Its A!"<< std::endl;
-    else if (!ptrs[1]) std::cout << "Its B!" << std::endl;
-    else if (!ptrs[2]) std::cout << "Its C!" << std::endl;
+    if (dynamic_cast<A*>(p)) std::cout << "Its A!"<< std::endl;
+    else if (dynamic_cast<B*>(p)) std::cout << "Its B!" << std::endl;
+    else if (dynamic_cast<C*>(p)) std::cout << "Its C!" << std::endl;
     else std::cout << "Its UNKNOWN!" << std::endl;
 }
 
