@@ -12,11 +12,23 @@ Base    *generate(void){
 }
 
 void    identify(Base* p){
-    if (dynamic_cast<A*>(p)) std::cout << "Its A!"<< std::endl;
-    else if (dynamic_cast<B*>(p)) std::cout << "Its B!" << std::endl;
-    else if (dynamic_cast<C*>(p)) std::cout << "Its C!" << std::endl;
+    if (dynamic_cast<A*>(p)) std::cout << ">>> Type: A *"<< std::endl;
+    else if (dynamic_cast<B*>(p)) std::cout << ">>> Type: B *" << std::endl;
+    else if (dynamic_cast<C*>(p)) std::cout << ">>> Type: C *" << std::endl;
     else std::cout << "Its UNKNOWN!" << std::endl;
 }
 
 void    identify(Base& p){
+    try {
+        Base& x = dynamic_cast<A&>(p);
+        std::cout << ">>> Type: A&"<< std::endl;
+    } catch (...){}
+    try {
+        Base& x = dynamic_cast<B&>(p);
+        std::cout << ">>> Type: B&"<< std::endl;
+    } catch (...){}
+    try {
+        Base& x = dynamic_cast<C&>(p);
+        std::cout << ">>> Type: C&"<< std::endl;
+    } catch (...){}
 }
