@@ -1,6 +1,5 @@
 CXX = c++
-CXX_FLAGS = -Wall -Werror -Wextra -std=c++98
-CXXFLAGS = 
+CXXFLAGS = -Wall -Werror -Wextra -std=c++98
 SRC = ScalarConverter.cpp main.cpp
 O = obj/
 OBJ = ${SRC:%.cpp=${O}%.o}

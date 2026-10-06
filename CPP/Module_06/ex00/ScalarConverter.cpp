@@ -7,13 +7,13 @@ ScalarConverter::~ScalarConverter(){
 }
 
 static long int extractValLongInt(const std::string& str, char **endp){
-    if (str.size() == 1 && isalpha(str[0]))
+    if (str.size() == 1 && isascii(str[0]) && !isdigit(str[0]))
         return (str[0]);
     return (strtol(str.c_str(), endp, 10));
 }
 
 static double extractValDouble(const std::string& str, char **endp){
-    if (str.size() == 1 && isalpha(str[0]))
+    if (str.size() == 1 && isascii(str[0]) && !isdigit(str[0]))
         return (str[0]);
     return (strtod(str.c_str(), endp));
 }
@@ -85,7 +85,7 @@ void    ScalarConverter::convert(const std::string& str){
         if (endp && *endp != '\0' && *endp == 'f') throw true;
         std::cout << "char: " << convertStrToChar(str, li) << std::endl;
         std::cout << "int: " << convertStrToInt(str, li) << std::endl;
-        std::cout << "float: " << convertStrToFloat(str, d) << std::endl;
+        std::cout << "float: " << convertStrToFloat(str, static_cast<float>(d)) << std::endl;
         std::cout << "double: " << convertStrToDouble(str, d) << std::endl;
     }
     catch (...){
