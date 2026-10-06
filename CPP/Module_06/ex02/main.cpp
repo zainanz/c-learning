@@ -11,5 +11,14 @@ int main(void){
 		identify(*x);
 		std::cout << std::endl;
 	}
+
+	/* --> Must uncommented in header too
+	// Testing D Temp
+	std::cout << "~~~~~ D dtemp; ~~~~~~" << std::endl;
+	D dtemp;
+	identify(&dtemp);
+	identify(dtemp);
+	identify(NULL);
+	*/
     return 0;
 }
