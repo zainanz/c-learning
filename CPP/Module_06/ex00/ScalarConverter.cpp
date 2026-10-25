@@ -5,22 +5,32 @@ ScalarConverter::ScalarConverter(){
 
 ScalarConverter::~ScalarConverter(){
 }
+static void str_lower(std::string& s){
+    for (size_t i = 0; i < s.size(); i++)
+        s[i] = std::tolower(static_cast<unsigned char>(s[i]));
+}
 
-static long int extractValLongInt(const std::string& str, char **endp){
+static long int extractValLongInt(std::string& str, char **endp){
     if (str.size() == 1 && isascii(str[0]) && !isdigit(str[0]))
         return (str[0]);
+    str_lower(str);
     return (strtol(str.c_str(), endp, 10));
 }
 
-static double extractValDouble(const std::string& str, char **endp){
+static double extractValDouble(std::string& str, char **endp){
     if (str.size() == 1 && isascii(str[0]) && !isdigit(str[0]))
         return (str[0]);
+    str_lower(str);
     return (strtod(str.c_str(), endp));
+}
+static int  isNaN(const std::string& str)
+{
+    return (str == "nan" || str == "nanf" );
 }
 
 static std::string  convertStrToChar(const std::string& str, long int c){
-    if (str == "nan") return "Impossible";
-    if (!isascii(static_cast<char>(c))){
+    if (isNaN(str)) return "Impossible";
+    if (c < 0 || c > 127){
         return "Impossible";
     }
     if (std::isprint(static_cast<char>(c))){
@@ -38,7 +48,7 @@ static bool IsPositiveInf(const std::string& str){
 }
 
 static std::string  convertStrToInt(const std::string& str, long int c){
-    if (str == "nan") return "Impossible";
+    if (isNaN(str)) return "Impossible";
     if (IsPositiveInf(str) || IsNegativeInf(str)) return "Impossible";
     if (c > INT_MAX || c < INT_MIN) return "Impossible";
     std::ostringstream stri;
@@ -48,7 +58,7 @@ static std::string  convertStrToInt(const std::string& str, long int c){
 
 
 static std::string  convertStrToFloat(const std::string& str, float c){
-    if (str == "nan") return "nanf";
+    if (isNaN(str)) return "nanf";
     if (IsNegativeInf(str)) return "-inff";
     if (IsPositiveInf(str)) return "+inff";
     std::ostringstream stri;
@@ -60,7 +70,7 @@ static std::string  convertStrToFloat(const std::string& str, float c){
 }
 
 static std::string  convertStrToDouble(const std::string& str, double c){
-    if (str == "nan") return "nan";
+    if (isNaN(str)) return "nan";
     if (IsNegativeInf(str)) return "-inf";
     if (IsPositiveInf(str)) return "+inf";
     std::ostringstream stri;
@@ -71,11 +81,13 @@ static std::string  convertStrToDouble(const std::string& str, double c){
     return stri.str();
 }
 
-void    ScalarConverter::convert(const std::string& str){
+void    ScalarConverter::convert(const std::string& _str){
     char *endp = NULL;
     double d;
     long int li;
+    std::string str = _str;
     try {
+        if (str.empty()) throw true;
         d = extractValDouble(str, &endp);
         if (endp && *endp != '\0'){
             if (*(endp + 1) != '\0') throw true;
