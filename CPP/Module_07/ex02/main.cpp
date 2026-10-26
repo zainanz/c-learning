@@ -1,20 +1,25 @@
 #include "Array.hpp"
 #include <iostream>
 
-
-int main( void ) {
-	Array<char> i(5);
-	char &x = i[2];
-	x = '5';
-	std::cout << x << std::endl;
-	std::cout << i[2] << std::endl;
+int main(int, char**)
+{
+	Array<char> char_arr(5);
+	for (unsigned int i = 0; i < char_arr.size(); i++)
+	{
+		char_arr[i] = i + '0';
+		std::cout << "char_arr[" << i << "] = " << i << std::endl;
+	}
+	char& x = char_arr[2];
 	x = 'x';
-	try {
-		std::cout << i[4] << std::endl;
+	std::cout << "'char& x = char_arr[2];'   -> x = 'x'; (char_arr[i] is " << char_arr[2] << ")" << std::endl;
+
+	Array<char> new_char(char_arr);
+
+	for (unsigned i = 0; i < new_char.size(); i++)
+	{
+		new_char[i] = i + 'a';
+		std::coit << "new_char[" << i << "] == char_arr
 	}
-	catch (std::exception& e){
-		std::cout << e.what() << std::endl;
-	}
-	std::cout << "Array Size: " << i.size() << std::endl;
-    return 0;
+
+	return (0);
 }
