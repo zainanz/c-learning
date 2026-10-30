@@ -1,10 +1,12 @@
 #include "Array.hpp"
 
-template <typename T>
-Array<T>::Array() : array(new T[1]){
-	array[0] = 0;
-	this->_size = 0;
+int escape_error(){
+    return 0;
 }
+
+template <typename T>
+Array<T>::Array() : array(new T[escape_error()]), _size(0){};
+
 
 template <typename T>
 Array<T>::Array(unsigned int n) : array(new T[n]){
@@ -32,15 +34,8 @@ T&	Array<T>::operator[](unsigned int n){
 }
 
 template <typename T>
-Array<T>::Array(const Array<T>& copy){
-	if (copy._size == 0){
-		this->array = new T[0];
-		return ;
-	}
-	this->array = new T[copy._size];
+Array<T>::Array(const Array<T>& copy): array(new T[copy._size]), _size(copy._size){
+    if (this == &copy || copy._size == 0) return ;
 	for (unsigned int i = 0; i < copy._size; i++)
-	{
-		this->array[i] = copy.array[i];
-	}
-	this->_size = copy._size;
+        this->array[i] = copy.array[i];
 }
