@@ -26,7 +26,16 @@ int main(int, char**)
     Array<char> empty_two(empty);
     Array<char> empty_three;
     std::cout << &empty<< std::endl;
+    if (empty.size() == 0) {
+        std::cout << "empty is an empty array" << std::endl;
+    }
     std::cout << &empty_two  << std::endl;
+    if (empty_two.size() == 0) {
+        std::cout << "empty_two is an empty array" << std::endl;
+    }
     std::cout << &empty_three << std::endl;
+    if (empty_three.size() == 0) {
+        std::cout << "empty_three is an empty array" << std::endl;
+    }
   	return (0);
 }

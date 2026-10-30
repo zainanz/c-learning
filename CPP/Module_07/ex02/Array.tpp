@@ -3,7 +3,6 @@
 int escape_error(){
     return 0;
 }
-
 template <typename T>
 Array<T>::Array() : array(new T[escape_error()]), _size(0){};
 
