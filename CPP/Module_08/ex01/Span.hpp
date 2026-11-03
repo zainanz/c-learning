@@ -7,10 +7,18 @@
 
 class Span {
     public:
+		void		addNumber(int n);
+		int			shortestSpan();
+		int			longestSpan();
+        void		addRandomRange(unsigned int size);
+		
+		int&    	operator[](unsigned int n);
+
+		// canonical
 		Span(unsigned int n);
-		void	addNumber(int n);
-		int		shortestSpan();
-		int		longestSpan();
+		~Span();
+		Span(const Span&);
+		const Span& operator=(const Span&);
     private:
 		unsigned int		_cap;
 		std::vector<int>	data;
