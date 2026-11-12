@@ -2,6 +2,16 @@
 #include <iostream>
 #include <fstream>
 #include <cstdlib>
+#include <cstring>
+#include <iomanip>
+#include <cmath>
+
+#define FLT_DIG 6
+
+typedef struct s_dateData {
+	float		val;
+	time_t		utime;
+}	dateData;
 
 enum INVALID_DATA {
 	INVALID_DATE,
@@ -19,16 +29,6 @@ bool	is_valid_date(std::string date)
 	return true;
 }
 
-/*
-INVALID_DATA is_valid_data(std::string& op)
-{
-	size_t idx = op.find(",");
-	if (idx == std::string::npos) return INCOMPLETE;
-	std::string date = op.substr(0, idx);
-	std::string value = op.substr(idx + 1, op.size());
-	return VALID_DATA;
-}
-*/
 void	remove_space(std::string& s)
 {
 	std::string newstr;
@@ -37,14 +37,14 @@ void	remove_space(std::string& s)
 	if (s.size() == 1) return ;
 	for (unsigned int i = 0; i < s.size();i++)
 	{
-		if (s[i] != ' '){
+		if (!isspace(s[i])){
 			sidx = i;
 			break ;
 		}
 	}
 	for (int i = static_cast<int>(s.size()) - 1; i > 0; i--)
 	{
-		if (s[i] != ' '){
+		if (!isspace(s[i])){
 			eidx = i;
 			break ;
 		}
@@ -62,7 +62,23 @@ size_t	extract_key_value(std::string output, std::string& key, std::string& valu
 	remove_space(value);
 	return idx;
 }
-int	load_data(std::map<std::string, float>& cmap)
+time_t	get_time_t(std::string timestr)
+{
+	std::string buff;
+	struct tm time_tm;
+	memset(&time_tm, 0, sizeof(tm));
+
+	buff = timestr.substr(0, 4);
+	time_tm.tm_year = strtol(buff.c_str(), NULL, 10);
+
+	buff = timestr.substr(5, 2);
+	time_tm.tm_mon = strtol(buff.c_str(), NULL, 10);
+
+	buff = timestr.substr(8, 2);
+	time_tm.tm_mday = strtol(buff.c_str(), NULL, 10);
+	return mktime(&time_tm);
+}
+int	load_data(std::map<std::string, dateData>& dd)
 {
 	std::ifstream file("data.csv", std::ifstream::in); 
 	if (!file.is_open()){
@@ -75,15 +91,18 @@ int	load_data(std::map<std::string, float>& cmap)
 	getline(file, output);
 	while (getline(file, output)){
 		if (extract_key_value(output, key, value, ",") == std::string::npos) continue ;
-		cmap[key] = strtod(value.c_str(), NULL);
+		dd[key].val = strtod(value.c_str(), NULL);
+		dd[key].utime = get_time_t(key);
 	}
 	file.close();
 	return 0;
 }
 enum BUFFER_ERRORS {
 	BAD_INPUT,
-	LARGE_VAL
+	LARGE_VAL,
+	NEGATIVE_VAL
 };
+
 void	print_buffer_error(BUFFER_ERRORS berror, std::string& output)
 {
 	switch (berror)
@@ -94,10 +113,32 @@ void	print_buffer_error(BUFFER_ERRORS berror, std::string& output)
 		}
 		case LARGE_VAL: {
 			std::cout << "Error: too large a number." << std::endl;
+			break ;
+		}
+		case NEGATIVE_VAL: {
+			std::cout << "Error: not a positive number." << std::endl;
+			break ;
 		}
 	}
 }
-void	process_file_data(std::string fname, std::map<std::string, float>& cmap)
+
+std::map<std::string, dateData>::iterator get_closest_lowest(std::string date, std::map<std::string, dateData>& dd){
+	std::map<std::string, dateData>::iterator it;
+	std::map<std::string, dateData>::iterator min_it = dd.begin();
+
+	time_t curtime = get_time_t(date);
+	time_t it_time;
+	for (it = dd.begin(); it != dd.end(); it++)
+	{
+		it_time = it->second.utime;
+		if (it_time < curtime && it_time > min_it->second.utime) {
+			min_it = it; 
+		}
+	}
+	return min_it;
+}
+
+void	process_file_data(std::string fname, std::map<std::string, dateData>& dd)
 {
 	std::ifstream file(fname.c_str(), std::ifstream::in);
 	if (!file.is_open()){
@@ -115,32 +156,39 @@ void	process_file_data(std::string fname, std::map<std::string, float>& cmap)
 			print_buffer_error(BAD_INPUT, buffer);
 			continue ;
 		}
-		std::map<std::string, float>::iterator it = cmap.find(date);
-		if (it == cmap.end()) {
-			// iterator to find the closest lower value.
-			std::cout << "NOT THERE!        => " << buffer << std::endl;
-			continue ;
-		}
+		std::map<std::string, dateData>::iterator it = dd.find(date);
+		if (it == dd.end()) it = get_closest_lowest(date, dd);
 		dval = strtod(value.c_str(), NULL);
-		if (dval < 0.0 || dval > 1000.0) {
+		if (dval > 1000.0) {
 			print_buffer_error(LARGE_VAL, buffer);
 			continue ;
 		}
-		std::cout << date << " => " << value <<  " = " << dval * (it->second) << std::endl;
+		if (dval < 0.0) {
+			print_buffer_error(NEGATIVE_VAL, buffer);
+			continue ;
+		}
+		dval *= it->second.val;
+	
+		std::cout << date << " => " << value <<  " = ";
+		if (std::fmod(dval, 1.0)  == 0.0 )
+			std::cout  << std::fixed <<  std::setprecision(0) << dval << std::endl;
+    	else
+        	std::cout << std::fixed << std::setprecision(2) << dval << std::endl;
 	}
 	return ;
 }
 
+
 int	main(int argc, char *argv[])
 {
-	std::map<std::string, float> curmap;
+	std::map<std::string, dateData> dd;
 
 	if (argc != 2) {
 		std::cerr << "invalid arguments. ./btc [filename]" << std::endl;
 		return 1;
 	}
 	
-	if (load_data(curmap)) return 1;
-	process_file_data(argv[1], curmap);
+	if (load_data(dd)) return 1;
+	process_file_data(argv[1], dd);
 	return 0;
 }
