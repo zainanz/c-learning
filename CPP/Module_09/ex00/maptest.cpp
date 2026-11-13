@@ -10,6 +10,7 @@
 
 typedef struct s_dateData {
 	float		val;
+	size_t		date_int;
 }	dateData;
 
 enum INVALID_DATA {
@@ -19,21 +20,55 @@ enum INVALID_DATA {
 	VALID_DATA
 };
 
-bool	is_valid_date(std::string date)
+bool isLeapYear(int year)
 {
-	// 1234-12-12
+	return (year % 400 == 0) || (year % 4 == 0 && year % 100 != 0);
+}
+
+bool is_valid_date(int day, int month, int year)
+{
+	if (year < 1 || year > 9999 || month < 1 || month > 12) return false;
+	int daysInMonth[] = {
+		31, 28, 31, 30, 31, 30,
+		31, 31, 30, 31, 30, 31
+	};
+	if (isLeapYear(year)) daysInMonth[1] = 29;
+	return (day >= 1 && day <= daysInMonth[month - 1]);
+}
+
+size_t	date_string_to_int(std::string date)
+{
+	int year = 0;
+	int month = 0;
+	int day = 0;
+	int dashes = 0;
 	for (size_t i = 0; i < date.size();i++)
 	{
+		if (date[i] == '-')
+		{
+			dashes++;
+			if (dashes > 2) throw 0;
+			continue ;
+		}
+		if (!isdigit(date[i])) throw 0;
+		if (dashes == 0)  year = (10 * year) + (date[i] - '0');
+		else if (dashes == 1) month = (10 * month) + (date[i] - '0');
+		else if (dashes == 2) day = (10 * day) + (date[i] - '0');
 	}
-	return true;
+	if (!is_valid_date(day, month, year)) throw 0;
+	return year * 10000 + month * 100 + day;
 }
 
 void	remove_space(std::string& s)
 {
 	std::string newstr;
-	int sidx;
+	int sidx = 0;
 	int eidx = s.size() - 1;
-	if (s.size() == 1) return ;
+	if (s.size() == 1 && s == " ")
+	{
+		s = "";
+		return ;
+	}
 	for (unsigned int i = 0; i < s.size();i++)
 	{
 		if (!isspace(s[i])){
@@ -41,7 +76,7 @@ void	remove_space(std::string& s)
 			break ;
 		}
 	}
-	for (int i = static_cast<int>(s.size()) - 1; i > 0; i--)
+	for (int i = static_cast<int>(s.size()) - 1; i >= 0; i--)
 	{
 		if (!isspace(s[i])){
 			eidx = i;
@@ -59,27 +94,13 @@ size_t	extract_key_value(std::string output, std::string& key, std::string& valu
 	value = output.substr(idx + 1, output.size());
 	remove_space(key);
 	remove_space(value);
-	// if (key.empty() || value.empty()) return std::string::npos; -> test and uncomment
+	if (key.empty() || value.empty()){
+		std::cerr << "key or value is empty." << "(Key: " << key << ", Value: " << value << ")" << std::endl;
+		exit(1);
+	}
 	return idx;
 }
-/*
-time_t	get_time_t(std::string timestr)
-{
-	std::string buff;
-	struct tm time_tm;
-	memset(&time_tm, 0, sizeof(tm));
 
-	buff = timestr.substr(0, 4);
-	time_tm.tm_year = strtol(buff.c_str(), NULL, 10);
-
-	buff = timestr.substr(5, 2);
-	time_tm.tm_mon = strtol(buff.c_str(), NULL, 10);
-
-	buff = timestr.substr(8, 2);
-	time_tm.tm_mday = strtol(buff.c_str(), NULL, 10);
-	return mktime(&time_tm);
-}
-*/
 int	load_data(std::map<std::string, dateData>& dd)
 {
 	std::ifstream file("data.csv", std::ifstream::in); 
@@ -91,15 +112,24 @@ int	load_data(std::map<std::string, dateData>& dd)
 	std::string	key;
 	std::string value;
 	getline(file, output);
+	size_t tval;
 	while (getline(file, output)){
 		if (extract_key_value(output, key, value, ",") == std::string::npos) continue ;
+		try {
+			tval = date_string_to_int(key);
+		}catch(...){
+			std::cerr << "invalid date -> " << key << std::endl;
+			exit(1);
+		}
 		dd[key].val = strtod(value.c_str(), NULL);
+		dd[key].date_int = tval;
 	}
 	file.close();
 	return 0;
 }
 enum BUFFER_ERRORS {
 	BAD_INPUT,
+	BAD_DATE,
 	LARGE_VAL,
 	NEGATIVE_VAL
 };
@@ -120,19 +150,22 @@ void	print_buffer_error(BUFFER_ERRORS berror, std::string& output)
 			std::cout << "Error: not a positive number." << std::endl;
 			break ;
 		}
+		case BAD_DATE:{
+			std::cout << "Error: invalid date => " << output << std::endl;
+			break ;
+		}
 	}
 }
 
-std::map<std::string, dateData>::iterator get_closest_lowest(std::string date, std::map<std::string, dateData>& dd){
+std::map<std::string, dateData>::iterator get_closest_lowest(size_t curr_dateint, std::map<std::string, dateData>& dd){
 	std::map<std::string, dateData>::iterator it;
 	std::map<std::string, dateData>::iterator min_it = dd.begin();
 
-	std::string curtime = date;
-	std::string it_time;
+	size_t it_time;
 	for (it = dd.begin(); it != dd.end(); it++)
 	{
-		it_time = it->first;
-		if (it_time < curtime && it_time > min_it->first) {
+		it_time = it->second.date_int;
+		if (it_time < curr_dateint && it_time > min_it->second.date_int) {
 			min_it = it; 
 		}
 	}
@@ -151,14 +184,21 @@ void	process_file_data(std::string fname, std::map<std::string, dateData>& dd)
 	std::string date;
 	std::string value;
 	float dval;
+	size_t curr_dateint;
 	while (getline(file, buffer))
 	{
 		if (extract_key_value(buffer, date, value, "|") == std::string::npos){
 			print_buffer_error(BAD_INPUT, buffer);
 			continue ;
 		}
+		try {
+			curr_dateint = date_string_to_int(date);
+		}catch(...) {
+			print_buffer_error(BAD_DATE, buffer);
+			continue ;
+		}
 		std::map<std::string, dateData>::iterator it = dd.find(date);
-		if (it == dd.end()) it = get_closest_lowest(date, dd);
+		if (it == dd.end()) it = get_closest_lowest(curr_dateint, dd);
 		dval = strtod(value.c_str(), NULL);
 		if (dval > 1000.0) {
 			print_buffer_error(LARGE_VAL, buffer);
