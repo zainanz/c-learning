@@ -10,7 +10,6 @@
 
 typedef struct s_dateData {
 	float		val;
-	time_t		utime;
 }	dateData;
 
 enum INVALID_DATA {
@@ -60,8 +59,10 @@ size_t	extract_key_value(std::string output, std::string& key, std::string& valu
 	value = output.substr(idx + 1, output.size());
 	remove_space(key);
 	remove_space(value);
+	// if (key.empty() || value.empty()) return std::string::npos; -> test and uncomment
 	return idx;
 }
+/*
 time_t	get_time_t(std::string timestr)
 {
 	std::string buff;
@@ -78,6 +79,7 @@ time_t	get_time_t(std::string timestr)
 	time_tm.tm_mday = strtol(buff.c_str(), NULL, 10);
 	return mktime(&time_tm);
 }
+*/
 int	load_data(std::map<std::string, dateData>& dd)
 {
 	std::ifstream file("data.csv", std::ifstream::in); 
@@ -92,7 +94,6 @@ int	load_data(std::map<std::string, dateData>& dd)
 	while (getline(file, output)){
 		if (extract_key_value(output, key, value, ",") == std::string::npos) continue ;
 		dd[key].val = strtod(value.c_str(), NULL);
-		dd[key].utime = get_time_t(key);
 	}
 	file.close();
 	return 0;
@@ -126,12 +127,12 @@ std::map<std::string, dateData>::iterator get_closest_lowest(std::string date, s
 	std::map<std::string, dateData>::iterator it;
 	std::map<std::string, dateData>::iterator min_it = dd.begin();
 
-	time_t curtime = get_time_t(date);
-	time_t it_time;
+	std::string curtime = date;
+	std::string it_time;
 	for (it = dd.begin(); it != dd.end(); it++)
 	{
-		it_time = it->second.utime;
-		if (it_time < curtime && it_time > min_it->second.utime) {
+		it_time = it->first;
+		if (it_time < curtime && it_time > min_it->first) {
 			min_it = it; 
 		}
 	}
